@@ -1,0 +1,4 @@
+name: Stuff
+version: '${version}'
+main: de.jonas.stuff.Stuf
+api-version: '1.20'
