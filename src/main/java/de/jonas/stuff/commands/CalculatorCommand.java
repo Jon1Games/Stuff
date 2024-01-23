@@ -44,7 +44,7 @@ public class CalculatorCommand {
                             double arg2 = (double) args.get("Zahl2");
                             double result = arg1 * arg2;
 
-                            Component msg = mm.deserialize("Das ergebnis von " + arg1 + " * " + arg2 + " ist: <green>" + result);
+                            Component msg = mm.deserialize("Das ergebnis von " + arg1 + " x " + arg2 + " ist: <green>" + result);
                             player.sendMessage(msg);
                         })
                 ).withSubcommand(new CommandAPICommand("/")

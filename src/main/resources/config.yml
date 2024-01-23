@@ -1,0 +1,9 @@
+# Features
+ # Boolen
+
+# Support:
+# Minimessage
+
+# Player placeholder: <player>
+JoinMessage: "<gray>[</gray><green>+</green><gray>]</gray> <player>"
+LeaveMessage: "<gray>[</gray><red>-</red><gray>]</gray> <player>"
