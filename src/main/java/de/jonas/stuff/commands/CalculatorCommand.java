@@ -1,4 +1,4 @@
-package org.gaminglounge.skyblock.commands;
+package de.jonas.stuff.commands;
 
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.DoubleArgument;
