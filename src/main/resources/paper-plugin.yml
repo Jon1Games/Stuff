@@ -1,4 +1,4 @@
 name: Stuff
 version: '${version}'
-main: de.jonas.stuff.Stuf
+main: de.jonas.stuff.Stuff
 api-version: '1.20'
