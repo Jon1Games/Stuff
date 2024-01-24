@@ -1,7 +1,12 @@
 package de.jonas.stuff;
 
 import de.jonas.stuff.commands.CalculatorCommand;
-import de.jonas.stuff.listener.JoinQuitListener;
+import de.jonas.stuff.commands.FlyCommand;
+import de.jonas.stuff.commands.MsgCommand;
+import de.jonas.stuff.commands.SpeedCommand;
+import de.jonas.stuff.listener.JoinFlyListener;
+import de.jonas.stuff.listener.JoinQuitMessageListener;
+import de.jonas.stuff.listener.JoinSpeedListener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -21,6 +26,9 @@ public final class Stuff extends JavaPlugin {
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
         if (getConfig().getBoolean("CalculatorCommand")) new CalculatorCommand();
+        if (getConfig().getBoolean("MsgCommand")) new MsgCommand();
+        if (getConfig().getBoolean("FlyCommand")) new FlyCommand();
+        if (getConfig().getBoolean("SpeedCommand")) new SpeedCommand();
     }
 
     @Override
@@ -50,7 +58,9 @@ public final class Stuff extends JavaPlugin {
     public void listener() {
         PluginManager pm = Bukkit.getPluginManager();
 
-        if (getConfig().getBoolean("CustomJoinQuitMessage")) pm.registerEvents(new JoinQuitListener(), this);
+        if (getConfig().getBoolean("CustomJoinQuitMessage")) pm.registerEvents(new JoinQuitMessageListener(), this);
+        if (getConfig().getBoolean("FlyCommand")) pm.registerEvents(new JoinFlyListener(), this);
+        if (getConfig().getBoolean("SpeedCommand")) pm.registerEvents(new JoinSpeedListener(), this);
     }
 }
 

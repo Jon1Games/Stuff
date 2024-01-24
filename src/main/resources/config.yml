@@ -1,6 +1,10 @@
 # Features
 CalculatorCommand: true
 CustomJoinQuitMessage: true
+MsgCommand: true
+FlyCommand: true
+SpeedCommand: true
+GamemodeCommand: true
 
 # Support:
 # Minimessage
@@ -8,3 +12,26 @@ CustomJoinQuitMessage: true
 # Player placeholder: <player>
 JoinMessage: "<gray>[</gray><green>+</green><gray>]</gray> <player>"
 LeaveMessage: "<gray>[</gray><red>-</red><gray>]</gray> <player>"
+
+# for MSGFormat use: <fromplayer> and <toplayer>
+# Use <message> as the Message given by the Player
+MSGFormatTo: "<gray>[</gray>Prefix<gray>]</gray> <fromplayer> -> <toplayer> <gold>:</gold> <message>"
+MSGFormatFrom: "<gray>[</gray>Prefix<gray>]</gray> <fromplayer> -> <toplayer> <gold>:</gold> <message>"
+
+# Fly Messages
+# Player placeholder: <player>
+EnterFlyMode: "Du bist in den Flugmodus gegangen."
+SelfOtherEnterFlyMode: "Du hast <green><player></green> in den Flugmodus gesetzt."
+OtherOtherEnterFlyMode: "Du wurdest von <green><player></green> in den Flugmodus gesetzt."
+ExitFlyMode: "Du bist aus dem Flugmodus gegangen."
+SelfOtherExitFlyMode: "Du hast <green><player></green> aus dem Flugmodus geholt."
+OtherOtherExitFlyMode: "Du wurdest von <green><player></green> aus dem Flugmodus geholt."
+ReturnInEnterFlyMode: "Der Flugmodus ist Aktiviert."
+
+# Speed Messages
+# Player placeholder: <player>
+# Speed placeholder: <speed>
+NewSpeed: "Deine neue Geschwindigkeit ist nun <gold><speed></gold>."
+SelfOtherNewSpeed: "Deine neue Geschwindigkeit wurde von <green><player></green> auf <gold><speed></gold> gesetzt."
+OtherOtherNewSpeed: "Du hast die Geschwindigkeit von <green><player></green> auf <gold><speed></gold>."
+ReturnSpeed: "Deine Geschwindigkeit ist <gold><speed></gold>"
