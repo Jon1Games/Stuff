@@ -1,5 +1,6 @@
 # Features
- # Boolen
+CalculatorCommand: true
+CustomJoinQuitMessage: true
 
 # Support:
 # Minimessage

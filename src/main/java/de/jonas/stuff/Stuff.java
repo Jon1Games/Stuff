@@ -2,15 +2,11 @@ package de.jonas.stuff;
 
 import de.jonas.stuff.commands.CalculatorCommand;
 import de.jonas.stuff.listener.JoinQuitListener;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
-
-import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,7 +20,7 @@ public final class Stuff extends JavaPlugin {
         this.logger = this.getLogger();
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
-        new CalculatorCommand();
+        if (getConfig().getBoolean("CalculatorCommand")) new CalculatorCommand();
     }
 
     @Override
@@ -38,8 +34,6 @@ public final class Stuff extends JavaPlugin {
         CommandAPI.onEnable();
 
         this.saveDefaultConfig();
-
-        FileConfiguration config = getConfig();
 
         logger.log(Level.INFO, "Activatet Plugin");
 
@@ -56,7 +50,7 @@ public final class Stuff extends JavaPlugin {
     public void listener() {
         PluginManager pm = Bukkit.getPluginManager();
 
-        pm.registerEvents(new JoinQuitListener(), this);
+        if (getConfig().getBoolean("CustomJoinQuitMessage")) pm.registerEvents(new JoinQuitListener(), this);
     }
 }
 
