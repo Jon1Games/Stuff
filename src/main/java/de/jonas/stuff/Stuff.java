@@ -1,9 +1,6 @@
 package de.jonas.stuff;
 
-import de.jonas.stuff.commands.CalculatorCommand;
-import de.jonas.stuff.commands.FlyCommand;
-import de.jonas.stuff.commands.MsgCommand;
-import de.jonas.stuff.commands.SpeedCommand;
+import de.jonas.stuff.commands.*;
 import de.jonas.stuff.listener.JoinFlyListener;
 import de.jonas.stuff.listener.JoinQuitMessageListener;
 import de.jonas.stuff.listener.JoinSpeedListener;
@@ -29,6 +26,7 @@ public final class Stuff extends JavaPlugin {
         if (getConfig().getBoolean("MsgCommand")) new MsgCommand();
         if (getConfig().getBoolean("FlyCommand")) new FlyCommand();
         if (getConfig().getBoolean("SpeedCommand")) new SpeedCommand();
+        if (getConfig().getBoolean("GamemodeCommand")) new GamemodeCommand();
     }
 
     @Override

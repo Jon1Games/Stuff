@@ -18,7 +18,7 @@ LeaveMessage: "<gray>[</gray><red>-</red><gray>]</gray> <player>"
 MSGFormatTo: "<gray>[</gray>Prefix<gray>]</gray> <fromplayer> -> <toplayer> <gold>:</gold> <message>"
 MSGFormatFrom: "<gray>[</gray>Prefix<gray>]</gray> <fromplayer> -> <toplayer> <gold>:</gold> <message>"
 
-# Fly Messages
+# Fly messages
 # Player placeholder: <player>
 EnterFlyMode: "Du bist in den Flugmodus gegangen."
 SelfOtherEnterFlyMode: "Du hast <green><player></green> in den Flugmodus gesetzt."
@@ -28,10 +28,25 @@ SelfOtherExitFlyMode: "Du hast <green><player></green> aus dem Flugmodus geholt.
 OtherOtherExitFlyMode: "Du wurdest von <green><player></green> aus dem Flugmodus geholt."
 ReturnInEnterFlyMode: "Der Flugmodus ist Aktiviert."
 
-# Speed Messages
+# Speed messages
 # Player placeholder: <player>
 # Speed placeholder: <speed>
 NewSpeed: "Deine neue Geschwindigkeit ist nun <gold><speed></gold>."
 SelfOtherNewSpeed: "Deine neue Geschwindigkeit wurde von <green><player></green> auf <gold><speed></gold> gesetzt."
 OtherOtherNewSpeed: "Du hast die Geschwindigkeit von <green><player></green> auf <gold><speed></gold>."
 ReturnSpeed: "Deine Geschwindigkeit ist <gold><speed></gold>"
+
+# Gamemode messages
+# Player placeholder: <player>
+GamemodeCreative: "Dein Spielmodus wurde auf Kreativ gesetzt."
+GamemodeSpectator : "Dein Spielmodus wurde auf Zuschauer gesetzt."
+GamemodeAdventure : "Dein Spielmodus wurde auf Abenteuer gesetzt."
+GamemodeSurvival : "Dein Spielmodus wurde auf Überleben gesetzt."
+SelfOtherGamemodeCreative: "Du hast <green><player></green> in den Kreativ Modus gesetzt."
+SelfOtherGamemodeSpectator : "Du hast <green><player></green> in den Zuschauer Modus gesetzt."
+SelfOtherGamemodeAdventure : "Du hast <green><player></green> in den Abenteuer Modus gesetzt."
+SelfOtherGamemodeSurvival : "Du hast <green><player></green> in den Überleben Modus gesetzt."
+OtherOtherGamemodeCreative: "Du wurdest von <green><player></green> in den Kreativ Modus gesetzt."
+OtherOtherGamemodeSpectator : "Du wurdest von <green><player></green> in den Zuschauer Modus gesetzt."
+OtherOtherGamemodeAdventure : "Du wurdest von <green><player></green> in den Abenteuer Modus gesetzt."
+OtherOtherGamemodeSurvival : "Du wurdest von <green><player></green> in den Überleben Modus gesetzt."
