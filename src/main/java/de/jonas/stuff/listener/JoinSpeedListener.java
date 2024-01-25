@@ -23,6 +23,7 @@ public class JoinSpeedListener implements Listener {
             float speed = player.getPersistentDataContainer().get(SpeedCommand.speedIdentifier, PersistentDataType.FLOAT);
             player.setWalkSpeed(speed);
             player.setFlySpeed(speed);
+            player.setFlying(true);
             int fullspeed = (int) (speed * 10);
             if (fullspeed == 2) return;
             player.sendMessage(mm.deserialize(stuff.getConfig().getString("ReturnSpeed"), Placeholder.component("speed", Component.text(fullspeed))));
