@@ -59,7 +59,7 @@ public class Tpa {
         if (!a.get(acceptor).containsKey(sender)) {
             acceptor.sendMessage(mm.deserialize(stuff.getConfig().getString("TpaCommand.Messages.Tpaccept.NoRequest"), Placeholder.component("player", sender.teamDisplayName())));
             return;
-        }.
+        }
         if (timeout < System.currentTimeMillis()) {
             acceptor.sendMessage(mm.deserialize(stuff.getConfig().getString("TpaCommand.Messages.Tpaccept.Timeout")));
             return;
