@@ -29,7 +29,7 @@ public final class Stuff extends JavaPlugin {
         if (getConfig().getBoolean("SpeedCommand.Enabled")) new SpeedCommand();
         if (getConfig().getBoolean("GamemodeCommand.Enabled")) new GamemodeCommand();
         if (getConfig().getBoolean("PortableInventoryCommand.Enabled")) new PortableInventoryCommand();
-        this.tpa = new Tpa();
+        if (getConfig().getBoolean("TpaCommand.Enabled")) this.tpa = new Tpa();
 
     }
 
