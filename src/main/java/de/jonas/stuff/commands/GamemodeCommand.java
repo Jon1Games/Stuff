@@ -4,7 +4,6 @@ import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.EntitySelectorArgument;
-import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.GameMode;
@@ -12,95 +11,89 @@ import org.bukkit.entity.Player;
 
 public class GamemodeCommand {
     public GamemodeCommand() {
+        Stuff stuff = Stuff.INSTANCE;
+        var mm = MiniMessage.miniMessage();
+
         CommandAPI.unregister("gamemode");
         // Create our command
         new CommandAPICommand("gamemode")
                 .withAliases("gm")
                 .withSubcommand(new CommandAPICommand("creative")
                         .withAliases("1")
-                        .withPermission("stuff.gamemode.creative")
+                        .withPermission(stuff.getConfig().getString("GamemodeCommand.messages.Creative.Permission"))
                         .withOptionalArguments(new EntitySelectorArgument.OneEntity("Spieler"))
                         .executesPlayer((player, args) -> {
                             Player target = (Player) args.get("Spieler");
-                            Stuff stuff = new Stuff();
-                            var mm = MiniMessage.miniMessage();
-
                             if (target == null) target = player;
 
                             target.setGameMode(GameMode.CREATIVE);
 
                             if (player == target) {
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCreative")));
+                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Creative.Self")));
                             } else {
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("OtherOtherGamemodeCreative"),
+                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Creative.Other.Other"),
                                         Placeholder.component("player", player.teamDisplayName())));
-                                player.sendMessage(mm.deserialize(stuff.getConfig().getString("SelfOtherGamemodeCreative"),
+                                player.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Creative.Other.Self"),
                                         Placeholder.component("player", target.teamDisplayName())));
                             }
                         })
                 ).withSubcommand(new CommandAPICommand("spectator")
                         .withAliases("3")
-                        .withPermission("stuff.gamemode.spectator")
+                        .withPermission(stuff.getConfig().getString("GamemodeCommand.messages.Spectator.Permission"))
                         .withOptionalArguments(new EntitySelectorArgument.OneEntity("Spieler"))
                         .executesPlayer((player, args) -> {
                             Player target = (Player) args.get("Spieler");
-                            Stuff stuff = new Stuff();
-                            var mm = MiniMessage.miniMessage();
 
                             if (target == null) target = player;
 
                             target.setGameMode(GameMode.SPECTATOR);
 
                             if (player == target) {
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeSpectator")));
+                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Spectator.Self")));
                             } else {
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("OtherOtherGamemodeSpectator"),
+                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Spectator.Other.Other"),
                                         Placeholder.component("player", player.teamDisplayName())));
-                                player.sendMessage(mm.deserialize(stuff.getConfig().getString("SelfOtherGamemodeSpectator"),
+                                player.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Spectator.Other.Self"),
                                         Placeholder.component("player", target.teamDisplayName())));
                             }
                         })
                 ).withSubcommand(new CommandAPICommand("adventure")
                         .withAliases("2")
-                        .withPermission("stuff.gamemode.adventure")
+                        .withPermission(stuff.getConfig().getString("GamemodeCommand.messages.Adventure.Permission"))
                         .withOptionalArguments(new EntitySelectorArgument.OneEntity("Spieler"))
                         .executesPlayer((player, args) -> {
                             Player target = (Player) args.get("Spieler");
-                            Stuff stuff = new Stuff();
-                            var mm = MiniMessage.miniMessage();
 
                             if (target == null) target = player;
 
                             target.setGameMode(GameMode.ADVENTURE);
 
                             if (player == target) {
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeAdventure")));
+                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Adventure.Self")));
                             } else {
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("OtherOtherGamemodeAdventure"),
+                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Adventure.Other.Other"),
                                         Placeholder.component("player", player.teamDisplayName())));
-                                player.sendMessage(mm.deserialize(stuff.getConfig().getString("SelfOtherGamemodeAdventure"),
+                                player.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Adventure.Other.Self"),
                                         Placeholder.component("player", target.teamDisplayName())));
                             }
                         })
                 ).withSubcommand(new CommandAPICommand("survival")
                         .withAliases("0")
-                        .withPermission("stuff.gamemode.survival")
+                        .withPermission(stuff.getConfig().getString("GamemodeCommand.messages.Survival.Permission"))
                         .withOptionalArguments(new EntitySelectorArgument.OneEntity("Spieler"))
                         .executesPlayer((player, args) -> {
                             Player target = (Player) args.get("Spieler");
-                            Stuff stuff = new Stuff();
-                            var mm = MiniMessage.miniMessage();
 
                             if (target == null) target = player;
 
                             target.setGameMode(GameMode.SURVIVAL);
 
                             if (player == target) {
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeSurvival")));
+                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Survival.Self")));
                             } else {
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("OtherOtherGamemodeSurvival"),
+                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Survival.Other.Other"),
                                         Placeholder.component("player", player.teamDisplayName())));
-                                player.sendMessage(mm.deserialize(stuff.getConfig().getString("SelfOtherGamemodeSurvival"),
+                                player.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Survival.Other.Self"),
                                         Placeholder.component("player", target.teamDisplayName())));
                             }
                         })

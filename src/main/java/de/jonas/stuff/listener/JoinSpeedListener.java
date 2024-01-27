@@ -17,16 +17,15 @@ public class JoinSpeedListener implements Listener {
     public void onJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
         var mm = MiniMessage.miniMessage();
-        Stuff stuff = new Stuff();
+        Stuff stuff = Stuff.INSTANCE;
 
         if (player.getPersistentDataContainer().has(SpeedCommand.speedIdentifier)) {
             float speed = player.getPersistentDataContainer().get(SpeedCommand.speedIdentifier, PersistentDataType.FLOAT);
             player.setWalkSpeed(speed);
             player.setFlySpeed(speed);
-            player.setFlying(true);
             int fullspeed = (int) (speed * 10);
             if (fullspeed == 2) return;
-            player.sendMessage(mm.deserialize(stuff.getConfig().getString("ReturnSpeed"), Placeholder.component("speed", Component.text(fullspeed))));
+            player.sendMessage(mm.deserialize(stuff.getConfig().getString("SpeedCommand.Messages.Self.ReturnSpeed"), Placeholder.component("speed", Component.text(fullspeed))));
         }
     }
 }

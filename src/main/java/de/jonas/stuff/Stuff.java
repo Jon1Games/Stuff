@@ -1,9 +1,7 @@
 package de.jonas.stuff;
 
 import de.jonas.stuff.commands.*;
-import de.jonas.stuff.listener.JoinFlyListener;
-import de.jonas.stuff.listener.JoinQuitMessageListener;
-import de.jonas.stuff.listener.JoinSpeedListener;
+import de.jonas.stuff.listener.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -17,22 +15,27 @@ public final class Stuff extends JavaPlugin {
     public static Stuff INSTANCE;
     public static String PREFIX;
     public Logger logger;
+    public Tpa tpa;
+    public CancelTeleport cancelTeleport = new CancelTeleport();;
 
     public void onLoad() {
+        INSTANCE = this;
         this.logger = this.getLogger();
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
-        if (getConfig().getBoolean("CalculatorCommand")) new CalculatorCommand();
-        if (getConfig().getBoolean("MsgCommand")) new MsgCommand();
-        if (getConfig().getBoolean("FlyCommand")) new FlyCommand();
-        if (getConfig().getBoolean("SpeedCommand")) new SpeedCommand();
-        if (getConfig().getBoolean("GamemodeCommand")) new GamemodeCommand();
+        if (getConfig().getBoolean("EnableCalculatorCommand")) new CalculatorCommand();
+        if (getConfig().getBoolean("MsgCommand.Enabled")) new MsgCommand();
+        if (getConfig().getBoolean("FlyCommand.Enabled")) new FlyCommand();
+        if (getConfig().getBoolean("SpeedCommand.Enabled")) new SpeedCommand();
+        if (getConfig().getBoolean("GamemodeCommand.Enabled")) new GamemodeCommand();
+        if (getConfig().getBoolean("PortableInventoryCommand.Enabled")) new PortableInventoryCommand();
+        this.tpa = new Tpa();
+
     }
 
     @Override
     public void onEnable() {
         // Plugin startup logic
-        INSTANCE = this;
         PREFIX = "[Stuff] ";
 
         this.listener();
@@ -42,6 +45,8 @@ public final class Stuff extends JavaPlugin {
         this.saveDefaultConfig();
 
         logger.log(Level.INFO, "Activatet Plugin");
+
+        logger.log(Level.WARNING, getConfig().getString("CustomJoinQuitMessage.Messages.JoinMessage"));
 
     }
 
@@ -56,9 +61,11 @@ public final class Stuff extends JavaPlugin {
     public void listener() {
         PluginManager pm = Bukkit.getPluginManager();
 
-        if (getConfig().getBoolean("CustomJoinQuitMessage")) pm.registerEvents(new JoinQuitMessageListener(), this);
-        if (getConfig().getBoolean("FlyCommand")) pm.registerEvents(new JoinFlyListener(), this);
-        if (getConfig().getBoolean("SpeedCommand")) pm.registerEvents(new JoinSpeedListener(), this);
+        if (getConfig().getBoolean("CustomJoinQuitMessage.Enabled")) pm.registerEvents(new JoinQuitMessageListener(), this);
+        if (getConfig().getBoolean("FlyCommand.Enabled")) pm.registerEvents(new JoinFlyListener(), this);
+        if (getConfig().getBoolean("SpeedCommand.Enabled")) pm.registerEvents(new JoinSpeedListener(), this);
+        if (getConfig().getBoolean("Format.Chat.Enabled")) pm.registerEvents(new ChatListener(), this);
+        pm.registerEvents(cancelTeleport, this);
     }
 }
 

@@ -18,14 +18,15 @@ public class JoinFlyListener implements WebSocket.Listener, Listener {
     public void onJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
         var mm = MiniMessage.miniMessage();
-        Stuff stuff = new Stuff();
+        Stuff stuff = Stuff.INSTANCE;
 
         if (player.getGameMode() == GameMode.CREATIVE) return;
         if (player.getGameMode() == GameMode.SPECTATOR) return;
 
         if (player.getPersistentDataContainer().has(FlyCommand.flyAllowidentifier)) {
             player.setAllowFlight(player.getPersistentDataContainer().get(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN));
-            e.joinMessage(mm.deserialize(stuff.getConfig().getString("ReturnInEnterFlyMode")));
+            player.setFlying(true);
+            e.getPlayer().sendMessage(mm.deserialize(stuff.getConfig().getString("FlyCommand.Messages.Self.ReturnInEnterFlyMode")));
         } else player.getPersistentDataContainer().set(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN, player.getAllowFlight());
     }
 }
