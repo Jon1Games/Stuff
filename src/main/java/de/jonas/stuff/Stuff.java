@@ -2,11 +2,16 @@ package de.jonas.stuff;
 
 import de.jonas.stuff.commands.*;
 import de.jonas.stuff.listener.*;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
+
+import java.io.File;
+import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,13 +21,14 @@ public final class Stuff extends JavaPlugin {
     public static String PREFIX;
     public Logger logger;
     public Tpa tpa;
-    public CancelTeleport cancelTeleport = new CancelTeleport();;
+    public CancelTeleport cancelTeleport = new CancelTeleport();
 
     public void onLoad() {
         INSTANCE = this;
         this.logger = this.getLogger();
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
+
         if (getConfig().getBoolean("EnableCalculatorCommand")) new CalculatorCommand();
         if (getConfig().getBoolean("MsgCommand.Enabled")) new MsgCommand();
         if (getConfig().getBoolean("FlyCommand.Enabled")) new FlyCommand();
@@ -38,9 +44,9 @@ public final class Stuff extends JavaPlugin {
         // Plugin startup logic
         PREFIX = "[Stuff] ";
 
-        this.listener();
-
         CommandAPI.onEnable();
+
+        this.listener();
 
         this.saveDefaultConfig();
 

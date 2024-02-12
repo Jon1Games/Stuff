@@ -108,7 +108,7 @@ TpaCommand:
   # PLaceholder: <player> <delay>
     Tpa:
       Sender: "Du hast <player> eine Teleportanfrage geschickt."
-      Reciver: "Du hast eine Teleportanfrage von <player> bekommen.<br><red>Ablehnen</red> <green>Annehmen</green>"
+      Reciver: "Du hast eine Teleportanfrage von <player> bekommen."
       Self: "Du kannst dir nicht selbst eine Teleportanfrage senden."
     Tpaccept:
       Sender: "Der Spieler <player> hat deine Teleportanfrage angenommen."
