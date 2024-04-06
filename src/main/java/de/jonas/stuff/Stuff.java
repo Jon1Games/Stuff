@@ -2,16 +2,12 @@ package de.jonas.stuff;
 
 import de.jonas.stuff.commands.*;
 import de.jonas.stuff.listener.*;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginManager;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,9 +46,7 @@ public final class Stuff extends JavaPlugin {
 
         this.saveDefaultConfig();
 
-        logger.log(Level.INFO, "Activatet Plugin");
-
-        logger.log(Level.WARNING, getConfig().getString("CustomJoinQuitMessage.Messages.JoinMessage"));
+        logger.log(Level.INFO, "Activated Plugin");
 
     }
 

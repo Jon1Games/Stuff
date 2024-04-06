@@ -46,7 +46,7 @@ FlyCommand:
 
 SpeedCommand:
   Enabled: true
-  Permission: "stuff.fly"
+  Permission: "stuff.speed"
   Messages:
   # Speed placeholder: <speed>
     Self:

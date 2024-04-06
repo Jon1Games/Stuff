@@ -2,8 +2,3 @@ name: Stuff
 version: '${version}'
 main: de.jonas.stuff.Stuff
 api-version: '1.20'
-permissions:
-  stuff.fly:
-    default: op
-  stuff.speed:
-    default: op

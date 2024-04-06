@@ -1,7 +1,6 @@
 package de.jonas.stuff.listener;
 
 import de.jonas.stuff.Stuff;
-import de.jonas.stuff.commands.Tpa;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.entity.Player;
