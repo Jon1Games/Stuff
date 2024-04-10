@@ -8,6 +8,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataType;
 
 public class GamemodeCommand {
     public GamemodeCommand() {
@@ -27,6 +28,7 @@ public class GamemodeCommand {
                             if (target == null) target = player;
 
                             target.setGameMode(GameMode.CREATIVE);
+                            target.getPersistentDataContainer().set(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN, true);
 
                             if (player == target) {
                                 target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Creative.Self")));
@@ -47,6 +49,7 @@ public class GamemodeCommand {
                             if (target == null) target = player;
 
                             target.setGameMode(GameMode.SPECTATOR);
+                            target.getPersistentDataContainer().set(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN, true);
 
                             if (player == target) {
                                 target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Spectator.Self")));
@@ -67,7 +70,7 @@ public class GamemodeCommand {
                             if (target == null) target = player;
 
                             target.setGameMode(GameMode.ADVENTURE);
-
+                            target.getPersistentDataContainer().set(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN, false);
                             if (player == target) {
                                 target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Adventure.Self")));
                             } else {
@@ -87,6 +90,7 @@ public class GamemodeCommand {
                             if (target == null) target = player;
 
                             target.setGameMode(GameMode.SURVIVAL);
+                            target.getPersistentDataContainer().set(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN, false);
 
                             if (player == target) {
                                 target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Survival.Self")));
