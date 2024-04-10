@@ -28,7 +28,8 @@ public class GamemodeCommand {
                             if (target == null) target = player;
 
                             target.setGameMode(GameMode.CREATIVE);
-                            target.getPersistentDataContainer().set(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN, true);
+                            target.setFlying(true);
+                            target.setAllowFlight(true);
 
                             if (player == target) {
                                 target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Creative.Self")));
@@ -49,7 +50,9 @@ public class GamemodeCommand {
                             if (target == null) target = player;
 
                             target.setGameMode(GameMode.SPECTATOR);
-                            target.getPersistentDataContainer().set(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN, true);
+                            target.setFlying(true);
+                            target.setAllowFlight(true);
+
 
                             if (player == target) {
                                 target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Spectator.Self")));
@@ -70,6 +73,10 @@ public class GamemodeCommand {
                             if (target == null) target = player;
 
                             target.setGameMode(GameMode.ADVENTURE);
+                            if (target.getPersistentDataContainer().get(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN) == true) {
+                                target.setAllowFlight(true);
+                                target.setFlying(true);
+                            }
 
                             if (player == target) {
                                 target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Adventure.Self")));
@@ -89,7 +96,12 @@ public class GamemodeCommand {
 
                             if (target == null) target = player;
 
+
                             target.setGameMode(GameMode.SURVIVAL);
+                            if (target.getPersistentDataContainer().get(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN) == true) {
+                                target.setAllowFlight(true);
+                                target.setFlying(true);
+                            }
 
                             if (player == target) {
                                 target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Survival.Self")));
