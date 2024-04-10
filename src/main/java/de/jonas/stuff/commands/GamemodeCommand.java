@@ -70,7 +70,7 @@ public class GamemodeCommand {
                             if (target == null) target = player;
 
                             target.setGameMode(GameMode.ADVENTURE);
-                            target.getPersistentDataContainer().set(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN, false);
+
                             if (player == target) {
                                 target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Adventure.Self")));
                             } else {
@@ -90,7 +90,6 @@ public class GamemodeCommand {
                             if (target == null) target = player;
 
                             target.setGameMode(GameMode.SURVIVAL);
-                            target.getPersistentDataContainer().set(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN, false);
 
                             if (player == target) {
                                 target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.messages.Survival.Self")));
