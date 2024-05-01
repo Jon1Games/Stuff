@@ -25,6 +25,8 @@ public class JoinQuitMessageListener implements Listener {
 
         var a = Stuff.INSTANCE.tpa.a;
 
+        if (a == null) return;
+
         if(a.containsKey(e.getPlayer())) a.remove(e.getPlayer());
         // save ne concurrent modification exception
         for(Map.Entry<Player, Map<Player, Long>> ent : a.entrySet())

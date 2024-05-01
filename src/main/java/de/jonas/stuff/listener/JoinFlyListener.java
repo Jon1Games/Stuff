@@ -30,7 +30,7 @@ public class JoinFlyListener implements Listener {
 
         if (player.getPersistentDataContainer().has(FlyCommand.flyAllowidentifier)) {
             player.setAllowFlight(player.getPersistentDataContainer().get(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN));
-            player.setFlying(true);
+            player.setFlying(player.getPersistentDataContainer().get(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN));
             e.getPlayer().sendMessage(mm.deserialize(stuff.getConfig().getString("FlyCommand.Messages.Self.ReturnInEnterFlyMode")));
         } else player.getPersistentDataContainer().set(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN, player.getAllowFlight());
     }
