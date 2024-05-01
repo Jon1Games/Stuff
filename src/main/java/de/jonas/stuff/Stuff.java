@@ -16,7 +16,6 @@ public final class Stuff extends JavaPlugin {
     public static Stuff INSTANCE;
     public static String PREFIX;
     public Logger logger;
-    public Tpa tpa;
     public CancelTeleport cancelTeleport = new CancelTeleport();
 
     public void onLoad() {
@@ -31,7 +30,6 @@ public final class Stuff extends JavaPlugin {
         if (getConfig().getBoolean("SpeedCommand.Enabled")) new SpeedCommand();
         if (getConfig().getBoolean("GamemodeCommand.Enabled")) new GamemodeCommand();
         if (getConfig().getBoolean("PortableInventoryCommand.Enabled")) new PortableInventoryCommand();
-        if (getConfig().getBoolean("TpaCommand.Enabled")) this.tpa = new Tpa();
     }
 
     @Override

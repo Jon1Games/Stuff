@@ -22,14 +22,5 @@ public class JoinQuitMessageListener implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent e){
         e.quitMessage(mm.deserialize(stuff.getConfig().getString("CustomJoinQuitMessage.Messages.LeaveMessage"), Placeholder.component("player", e.getPlayer().teamDisplayName())));
-
-        var a = Stuff.INSTANCE.tpa.a;
-
-        if (a == null) return;
-
-        if(a.containsKey(e.getPlayer())) a.remove(e.getPlayer());
-        // save ne concurrent modification exception
-        for(Map.Entry<Player, Map<Player, Long>> ent : a.entrySet())
-            if(ent.getValue().containsKey(e.getPlayer())) ent.getValue().remove(e.getPlayer());
     }
 }
