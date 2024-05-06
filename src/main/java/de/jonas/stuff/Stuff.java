@@ -7,7 +7,6 @@ import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +16,6 @@ public final class Stuff extends JavaPlugin {
     public static Stuff INSTANCE;
     public static String PREFIX;
     public Logger logger;
-    public CancelTeleport cancelTeleport;
     public TeamDisplaynameSet teamDisplaynameSet;
 
     public void onLoad() {
@@ -26,7 +24,6 @@ public final class Stuff extends JavaPlugin {
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
 
-        cancelTeleport = new CancelTeleport();
         teamDisplaynameSet = new TeamDisplaynameSet();
         teamDisplaynameSet.onLoad();
 
@@ -72,7 +69,6 @@ public final class Stuff extends JavaPlugin {
         if (getConfig().getBoolean("SpeedCommand.Enabled")) pm.registerEvents(new JoinSpeedListener(), this);
         if (getConfig().getBoolean("Format.Chat.Enabled")) pm.registerEvents(new ChatListener(), this);
         if (getConfig().getBoolean("Format.PlayerNames.Enabled")) pm.registerEvents(teamDisplaynameSet, this);
-        pm.registerEvents(cancelTeleport, this);
     }
 }
 
