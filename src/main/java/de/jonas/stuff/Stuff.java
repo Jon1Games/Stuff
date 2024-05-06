@@ -7,6 +7,7 @@ import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +17,8 @@ public final class Stuff extends JavaPlugin {
     public static Stuff INSTANCE;
     public static String PREFIX;
     public Logger logger;
-    public CancelTeleport cancelTeleport = new CancelTeleport();
+    public CancelTeleport cancelTeleport;
+    public TeamDisplaynameSet teamDisplaynameSet;
 
     public void onLoad() {
         INSTANCE = this;
@@ -24,12 +26,17 @@ public final class Stuff extends JavaPlugin {
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
 
+        cancelTeleport = new CancelTeleport();
+        teamDisplaynameSet = new TeamDisplaynameSet();
+        teamDisplaynameSet.onLoad();
+
         if (getConfig().getBoolean("EnableCalculatorCommand")) new CalculatorCommand();
         if (getConfig().getBoolean("MsgCommand.Enabled")) new MsgCommand();
         if (getConfig().getBoolean("FlyCommand.Enabled")) new FlyCommand();
         if (getConfig().getBoolean("SpeedCommand.Enabled")) new SpeedCommand();
         if (getConfig().getBoolean("GamemodeCommand.Enabled")) new GamemodeCommand();
         if (getConfig().getBoolean("PortableInventoryCommand.Enabled")) new PortableInventoryCommand();
+        new ReloadCommand();
     }
 
     @Override
@@ -38,6 +45,8 @@ public final class Stuff extends JavaPlugin {
         PREFIX = "[Stuff] ";
 
         CommandAPI.onEnable();
+
+        teamDisplaynameSet.onEnable();
 
         this.listener();
 
@@ -62,6 +71,7 @@ public final class Stuff extends JavaPlugin {
         if (getConfig().getBoolean("FlyCommand.Enabled")) pm.registerEvents(new JoinFlyListener(), this);
         if (getConfig().getBoolean("SpeedCommand.Enabled")) pm.registerEvents(new JoinSpeedListener(), this);
         if (getConfig().getBoolean("Format.Chat.Enabled")) pm.registerEvents(new ChatListener(), this);
+        if (getConfig().getBoolean("Format.PlayerNames.Enabled")) pm.registerEvents(teamDisplaynameSet, this);
         pm.registerEvents(cancelTeleport, this);
     }
 }

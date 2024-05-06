@@ -94,6 +94,17 @@ PortableInventoryCommand:
   SmithingtablePermission: "stuff.portableinventory.smithingtable"
 
 Format:
+  PlayerNames:
+    Enabled: true
+    Prefix:
+      Enabled: true
+      Prefix: "%luckperms_prefix%"
+    Suffix:
+      Enabled: true
+      Suffix: "%luckperms_suffix%"
+    TabSorting:
+        Enabled: true
+        MaxWeight: 100
   Chat:
     Enabled: true
     # Placeholder: <player>, <message>
