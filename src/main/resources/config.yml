@@ -102,10 +102,10 @@ Format:
     Enabled: true
     Prefix:
       Enabled: true
-      Prefix: "%luckperms_prefix%"
+      Prefix: "%luckperms_prefix% "
     Suffix:
       Enabled: true
-      Suffix: "%luckperms_suffix%"
+      Suffix: " %luckperms_suffix%"
     TabSorting:
         Enabled: true
         MaxWeight: 1000
