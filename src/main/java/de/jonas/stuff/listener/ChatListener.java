@@ -24,8 +24,16 @@ public class ChatListener implements Listener {
 
     private Component renderMessage(Player source, Component sourceDisplayName, Component message, Audience viewer) {
         String messageT = PlainTextComponentSerializer.plainText().serialize(message);
-        Component messageC = mm.deserialize(messageT,
-                Placeholder.component("i", source.getInventory().getItemInMainHand().displayName()));
+        Component messageC;
+        if (stuff.getConfig().getString("Format.Chat.ColorType").equalsIgnoreCase("vanilla")) {
+            messageC = LegacyComponentSerializer.legacyAmpersand().deserialize(messageT);
+        } else if (stuff.getConfig().getString("Format.Chat.ColorType").equalsIgnoreCase("minimessage")) {
+            messageC = mm.deserialize(messageT,
+                    Placeholder.component("i", source.getInventory().getItemInMainHand().displayName()),
+                    Placeholder.component("I", source.getInventory().getItemInMainHand().displayName()));
+        } else {
+            messageC = message;
+        }
         return mm.deserialize(stuff.getConfig().getString("Format.Chat.Format"),
                 Placeholder.component("player", source.teamDisplayName()),
                 Placeholder.component("message", messageC));

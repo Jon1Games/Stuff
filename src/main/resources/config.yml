@@ -113,6 +113,11 @@ Format:
     Enabled: true
     # Placeholder: <player>, <message>
     Format: "<player> <gray><message></gray>"
+    # options vanilla (&4 text in dark red) and minimessage ( <red> text in red )
+    ColorType: minimessage
+    InChatPlaceholder:
+      # displaying held item, placeholder: <i> or <I>
+      ItemInHand: true
 
 TpaCommand:
   Enabled: true
