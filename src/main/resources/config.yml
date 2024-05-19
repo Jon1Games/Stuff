@@ -5,6 +5,10 @@
 # Implementet plugins (usable in this Plugin):
 # Minimessage (https://docs.advntr.dev/minimessage/format.html)
 
+# Required Plugins
+# LuckPerms
+# PlaceHolderApi
+
 EnableCalculatorCommand: true
 
 CustomJoinQuitMessage:
@@ -104,7 +108,7 @@ Format:
       Suffix: "%luckperms_suffix%"
     TabSorting:
         Enabled: true
-        MaxWeight: 100
+        MaxWeight: 1000
   Chat:
     Enabled: true
     # Placeholder: <player>, <message>

@@ -24,9 +24,10 @@ public class ChatListener implements Listener {
 
     private Component renderMessage(Player source, Component sourceDisplayName, Component message, Audience viewer) {
         String messageT = PlainTextComponentSerializer.plainText().serialize(message);
-        Component displayText = LegacyComponentSerializer.legacyAmpersand().deserialize(messageT);
+        Component messageC = mm.deserialize(messageT,
+                Placeholder.component("i", source.getInventory().getItemInMainHand().displayName()));
         return mm.deserialize(stuff.getConfig().getString("Format.Chat.Format"),
                 Placeholder.component("player", source.teamDisplayName()),
-                Placeholder.component("message", displayText));
+                Placeholder.component("message", messageC));
     }
 }
