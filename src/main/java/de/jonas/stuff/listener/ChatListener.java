@@ -29,8 +29,7 @@ public class ChatListener implements Listener {
             messageC = LegacyComponentSerializer.legacyAmpersand().deserialize(messageT);
         } else if (stuff.getConfig().getString("Format.Chat.ColorType").equalsIgnoreCase("minimessage")) {
             messageC = mm.deserialize(messageT,
-                    Placeholder.component("i", source.getInventory().getItemInMainHand().displayName()),
-                    Placeholder.component("I", source.getInventory().getItemInMainHand().displayName()));
+                    Placeholder.component("i", source.getInventory().getItemInMainHand().displayName()));
         } else {
             messageC = message;
         }

@@ -116,7 +116,7 @@ Format:
     # options vanilla (&4 text in dark red) and minimessage ( <red> text in red )
     ColorType: minimessage
     InChatPlaceholder:
-      # displaying held item, placeholder: <i> or <I>
+      # displaying held item, placeholder: <i> or <I> (only supported by ColorType: minimessage)
       ItemInHand: true
 
 TpaCommand:
