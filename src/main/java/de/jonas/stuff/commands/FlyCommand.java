@@ -17,6 +17,7 @@ public class FlyCommand {
 
         // Create our command
         new CommandAPICommand("fly")
+            .withAliases("stuff:fly", "Stuff:fly")
             .withOptionalArguments(new EntitySelectorArgument.OnePlayer("Spieler"))
             .withPermission(stuff.getConfig().getString("FlyCommand.Permission"))
             .executesPlayer((player, args) -> {

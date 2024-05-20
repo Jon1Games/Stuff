@@ -2,6 +2,7 @@ package de.jonas.stuff.commands;
 
 import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPICommand;
+import dev.jorel.commandapi.CommandPermission;
 import org.bukkit.Bukkit;
 import org.bukkit.scoreboard.Scoreboard;
 
@@ -9,8 +10,9 @@ public class ReloadCommand {
     Stuff stuff = Stuff.INSTANCE;
 
     public ReloadCommand() {
-        new CommandAPICommand("Stuff:Reload")
-                .withAliases("Stuff:reload", "stuff:Reload", "stuff:reload")
+        new CommandAPICommand("Stuff:reload")
+                .withAliases("stuff:reload")
+                .withPermission(CommandPermission.OP)
                     .withSubcommand(new CommandAPICommand("TeamDisplayName")
                             .executes(((commandSender, args) -> {
                                 Bukkit.getOnlinePlayers().forEach(pl -> {

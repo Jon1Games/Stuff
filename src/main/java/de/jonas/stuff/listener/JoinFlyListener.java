@@ -28,10 +28,13 @@ public class JoinFlyListener implements Listener {
             return;
         }
 
-        if (player.getPersistentDataContainer().has(FlyCommand.flyAllowidentifier)) {
+        if (player.getPersistentDataContainer().has(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN)) {
             player.setAllowFlight(player.getPersistentDataContainer().get(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN));
             player.setFlying(player.getPersistentDataContainer().get(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN));
-            e.getPlayer().sendMessage(mm.deserialize(stuff.getConfig().getString("FlyCommand.Messages.Self.ReturnInEnterFlyMode")));
         } else player.getPersistentDataContainer().set(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN, player.getAllowFlight());
+
+        if (player.getAllowFlight()) {
+            e.getPlayer().sendMessage(mm.deserialize(stuff.getConfig().getString("FlyCommand.Messages.Self.ReturnInEnterFlyMode")));
+        }
     }
 }

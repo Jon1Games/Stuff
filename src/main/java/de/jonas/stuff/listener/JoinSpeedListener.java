@@ -19,10 +19,19 @@ public class JoinSpeedListener implements Listener {
         var mm = MiniMessage.miniMessage();
         Stuff stuff = Stuff.INSTANCE;
 
-        if (player.getPersistentDataContainer().has(SpeedCommand.speedIdentifier)) {
-            float speed = player.getPersistentDataContainer().get(SpeedCommand.speedIdentifier, PersistentDataType.FLOAT);
-            player.setWalkSpeed(speed);
+        if (player.getPersistentDataContainer().has(SpeedCommand.flySpeedIdentifier) &&
+                player.getPersistentDataContainer().get(SpeedCommand.flySpeedIdentifier, PersistentDataType.FLOAT) > 1) {
+            float speed = player.getPersistentDataContainer().get(SpeedCommand.flySpeedIdentifier, PersistentDataType.FLOAT);
             player.setFlySpeed(speed);
+            int fullspeed = (int) (speed * 10);
+            if (fullspeed == 2) return;
+            player.sendMessage(mm.deserialize(stuff.getConfig().getString("SpeedCommand.Messages.Self.ReturnSpeed"), Placeholder.component("speed", Component.text(fullspeed))));
+        }
+
+        if (player.getPersistentDataContainer().has(SpeedCommand.walkSpeedIdentifier) &&
+                player.getPersistentDataContainer().get(SpeedCommand.walkSpeedIdentifier, PersistentDataType.FLOAT) > 1) {
+            float speed = player.getPersistentDataContainer().get(SpeedCommand.walkSpeedIdentifier, PersistentDataType.FLOAT);
+            player.setWalkSpeed(speed);
             int fullspeed = (int) (speed * 10);
             if (fullspeed == 2) return;
             player.sendMessage(mm.deserialize(stuff.getConfig().getString("SpeedCommand.Messages.Self.ReturnSpeed"), Placeholder.component("speed", Component.text(fullspeed))));

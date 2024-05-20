@@ -33,7 +33,9 @@ public final class Stuff extends JavaPlugin {
         if (getConfig().getBoolean("SpeedCommand.Enabled")) new SpeedCommand();
         if (getConfig().getBoolean("GamemodeCommand.Enabled")) new GamemodeCommand();
         if (getConfig().getBoolean("PortableInventoryCommand.Enabled")) new PortableInventoryCommand();
+        if (getConfig().getBoolean("InfoCommands.Enabled")) new InfoCommands();
         new ReloadCommand();
+        new AdminCommand();
     }
 
     @Override

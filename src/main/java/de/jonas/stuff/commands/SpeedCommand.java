@@ -12,27 +12,26 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 
 public class SpeedCommand {
-    public static final NamespacedKey speedIdentifier = new NamespacedKey("stuff", "speed");
+    public static final NamespacedKey flySpeedIdentifier = new NamespacedKey("stuff", "fly_speed");
+    public static final NamespacedKey walkSpeedIdentifier = new NamespacedKey("stuff", "walk_speed");
     public SpeedCommand() {
         Stuff stuff = Stuff.INSTANCE;
         var mm = MiniMessage.miniMessage();
 
-        // Create our command
-        new CommandAPICommand("speed")
-                .withAliases("FlySpeed", "WalkSpeed","Geschwindigkeit")
+        new CommandAPICommand("flySpeed")
+                .withPermission(stuff.getConfig().getString("SpeedCommand.Permission"))
+                .withAliases("flugGeschwindigkeit", "stuff:flyspeed", "Stuff:walkSpeed")
                 .withArguments(new IntegerArgument("Geschwindigkeit", -10 ,10))
                 .withOptionalArguments(new EntitySelectorArgument.OnePlayer("Spieler"))
-                .withPermission(stuff.getConfig().getString("SpeedCommand.Permission"))
                 .executesPlayer((player, args) -> {
                     Player target = (Player) args.get("Spieler");
                     float speed = (int) args.get("Geschwindigkeit") / 10.0f;
 
                     if (target == null) target = player;
 
-                    target.getPersistentDataContainer().set(speedIdentifier, PersistentDataType.FLOAT, speed);
+                    target.getPersistentDataContainer().set(flySpeedIdentifier, PersistentDataType.FLOAT, speed);
 
                     target.setFlySpeed(speed);
-                    target.setWalkSpeed(speed);
 
                     int fullspeed = (int) (speed * 10);
 
@@ -44,5 +43,31 @@ public class SpeedCommand {
                     }
                 })
                 .register();
+
+            new CommandAPICommand("walkSpeed")
+                    .withPermission(stuff.getConfig().getString("SpeedCommand.Permission"))
+                    .withAliases("laufGeschwindigkeit", "stuff:walkSpeed", "Stuff:walkSpeed")
+                    .withArguments(new IntegerArgument("Geschwindigkeit", -10 ,10))
+                    .withOptionalArguments(new EntitySelectorArgument.OnePlayer("Spieler"))
+                    .executesPlayer((player, args) -> {
+                        Player target = (Player) args.get("Spieler");
+                        float speed = (int) args.get("Geschwindigkeit") / 10.0f;
+
+                        if (target == null) target = player;
+
+                        target.getPersistentDataContainer().set(walkSpeedIdentifier, PersistentDataType.FLOAT, speed);
+
+                        target.setWalkSpeed(speed);
+
+                        int fullspeed = (int) (speed * 10);
+
+                        if (target == player) {
+                            target.sendMessage(mm.deserialize(stuff.getConfig().getString("SpeedCommand.Messages.Self.NewSpeed"), Placeholder.component("speed", Component.text(fullspeed))));
+                        } else {
+                            target.sendMessage(mm.deserialize(stuff.getConfig().getString("SpeedCommand.Messages.Other.Other.NewSpeed"), Placeholder.component("player", player.teamDisplayName()), Placeholder.component("speed", Component.text(fullspeed))));
+                            player.sendMessage(mm.deserialize(stuff.getConfig().getString("SpeedCommand.Messages.Other.Self.NewSpeed"), Placeholder.component("player", target.teamDisplayName()), Placeholder.component("speed", Component.text(fullspeed))));
+                        }
+                    })
+                    .register();
     }
 }

@@ -2,7 +2,7 @@
 # Discord: jon1games
 # GitHub: https://github.com/Jon1Games/
 
-# Implementet plugins (usable in this Plugin):
+# Implemented plugins (usable in this Plugin):
 # Minimessage (https://docs.advntr.dev/minimessage/format.html)
 
 # Required Plugins
@@ -34,8 +34,8 @@ FlyCommand:
   Permission: "stuff.fly"
   Messages:
     Self:
-      EnterFlyMode: "Du bist in den Flugmodus gegangen."
-      ExitFlyMode: "Du bist aus dem Flugmodus gegangen."
+      EnterFlyMode: "Du befindest in den Flugmodus gegangen."
+      ExitFlyMode: "Du befindest aus dem Flugmodus gegangen."
       ReturnInEnterFlyMode: "Der Flugmodus ist Aktiviert."
     Other:
     # Player placeholder: <player>
@@ -138,3 +138,27 @@ TpaCommand:
     Delay: "Bewege dich nicht, Du wirst in <delay> Sekunden Teleportiert..."
     Error:
       Move: "Der Teleport wurde abgebrochen, da du dich bewegt hast."
+
+InfoCommands:
+  Enabled: true
+  Links:
+    Enabled: false
+    Messages: "Ein Link Text"
+  Discord:
+    Enabled: false
+    Message: "Unseren Discord Server findet ihr unterdem folgendem link<br> <click:open_url:'https://discord.gaminglounge.me'>https://discord.gaminglounge.me</click>"
+  TikTok:
+    Enabled: false
+    Message: "Unseren TikTok Account findet ihr unterdem folgendem link<br> <click:open_url:'https://tiktok.gaminglounge.me'>https://tiktok.gaminglounge.me</click>"
+  Instagram:
+    Enabled: false
+    Message: "Unser Instagram Profiel findet ihr unterdem folgendem link<br> <click:open_url:'https://instagram.gaminglounge.me'>https://instagram.gaminglounge.me</click>"
+  Twitter:
+    Enabled: false
+    Message: "Unser Twitter Profiel findet ihr unterdem folgendem link<br> <click:open_url:'https://twitter.exmaple.me'>https://twitter.exmaple.me</click>"
+  X:
+    Enabled: false
+    Message: "Unser X Profiel findet ihr unterdem folgendem link<br> <click:open_url:'https://X.exmaple.me'>https://X.exmaple.me</click>"
+  MinecraftMap:
+    Enabled: false
+    Message: "Unser ingame Minecraft Wellt findet ihr unterdem folgendem link<br> <click:open_url:'https://map.gaminglounge.me/minecraft/freebuild/'>https://map.gaminglounge.me/minecraft/freebuild/</click>"
