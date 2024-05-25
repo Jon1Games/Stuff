@@ -4,7 +4,6 @@ import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandPermission;
 import org.bukkit.Bukkit;
-import org.bukkit.scoreboard.Scoreboard;
 
 public class ReloadCommand {
     Stuff stuff = Stuff.INSTANCE;

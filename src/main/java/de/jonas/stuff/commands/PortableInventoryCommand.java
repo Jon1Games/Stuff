@@ -2,7 +2,6 @@ package de.jonas.stuff.commands;
 
 import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPICommand;
-import org.bukkit.Location;
 
 public class PortableInventoryCommand {
 

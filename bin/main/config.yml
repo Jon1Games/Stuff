@@ -162,9 +162,3 @@ InfoCommands:
   MinecraftMap:
     Enabled: false
     Message: "Unser ingame Minecraft Wellt findet ihr unterdem folgendem link<br> <click:open_url:'https://map.gaminglounge.me/minecraft/freebuild/'>https://map.gaminglounge.me/minecraft/freebuild/</click>"
-
-PlayTimeCommand:
-  Enabled: true
-  Messages:
-    self: "<green>Du hast <days> Tage, <hours> Stunden, <min> Minuten und <sec> Sekunden Spielzeit"
-    other: "<green><player> hat <days> Tage, <hours> Stunden, <min> Minuten und <sec> Sekunden Spielzeit"

@@ -7,6 +7,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 
 public class CalculatorCommand {
 
+    @SuppressWarnings("null")
     public CalculatorCommand() {
         // Create our command
         new CommandAPICommand("Rechner")
@@ -18,6 +19,7 @@ public class CalculatorCommand {
                             var mm = MiniMessage.miniMessage();
                             double arg1 = (double) args.get("Zahl1");
                             double arg2 = (double) args.get("Zahl2");
+
                             double result = arg1 + arg2;
 
                             Component msg = mm.deserialize(arg1 + " + " + arg2 + " = <green>" + result);

@@ -14,6 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 public class SpeedCommand {
     public static final NamespacedKey flySpeedIdentifier = new NamespacedKey("stuff", "fly_speed");
     public static final NamespacedKey walkSpeedIdentifier = new NamespacedKey("stuff", "walk_speed");
+    @SuppressWarnings("null")
     public SpeedCommand() {
         Stuff stuff = Stuff.INSTANCE;
         var mm = MiniMessage.miniMessage();

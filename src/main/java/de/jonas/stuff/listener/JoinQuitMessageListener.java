@@ -3,13 +3,10 @@ package de.jonas.stuff.listener;
 import de.jonas.stuff.Stuff;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-
-import java.util.Map;
 
 public class JoinQuitMessageListener implements Listener {
 

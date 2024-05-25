@@ -1,0 +1,13 @@
+name: Stuff
+version: '${version}'
+main: de.jonas.stuff.Stuff
+api-version: '1.20'
+dependencies:
+  server:
+    PlaceholderAPI:
+      load: BEFORE
+      required: true
+    LuckPerms:
+      load: BEFORE
+      required: true
+      join-classpath: true

@@ -30,6 +30,7 @@ public class MsgCommand {
                     Player target = (Player) args.get("Spieler");
 
                     assert target != null;
+                    @SuppressWarnings("null")
                     Component prefixto = mm.deserialize(Objects.requireNonNull(stuff.getConfig().getString("MsgCommand.MessageFormat.To")),
                             Placeholder.component("fromplayer", player.teamDisplayName()), Placeholder.component("toplayer", target.teamDisplayName()),
                             Placeholder.component("message", Component.text((String) args.get(stuff.getConfig().getString("MsgCommand.ArgumentName")))));

@@ -36,6 +36,7 @@ public final class Stuff extends JavaPlugin {
         if (getConfig().getBoolean("InfoCommands.Enabled")) new InfoCommands();
         new ReloadCommand();
         new AdminCommand();
+        new PlayTimeCommand();
     }
 
     @Override

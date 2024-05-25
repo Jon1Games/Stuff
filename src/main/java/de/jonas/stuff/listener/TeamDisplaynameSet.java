@@ -7,7 +7,6 @@ import java.util.logging.Level;
 
 import de.jonas.stuff.Stuff;
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.luckperms.api.LuckPermsProvider;
@@ -40,11 +39,9 @@ public class TeamDisplaynameSet implements Listener {
 
     public void onLoad() {
         teams = new HashMap<>();
-        if (stuff.getConfig().getBoolean("Format.PlayerNames.Enabled")) {
-            CommandAPI.unregister("tm", true);
-            CommandAPI.unregister("teammsg", true);
-            CommandAPI.unregister("team", true);
-        }
+        CommandAPI.unregister("tm", true);
+        CommandAPI.unregister("teammsg", true);
+        CommandAPI.unregister("team", true);
         teamWeightFormat = NumberFormat.getIntegerInstance();
         teamWeightFormat.setMinimumIntegerDigits(String.valueOf(stuff.getConfig()
                 .getInt("Format.PlayerNames.TabSorting.MaxWeight")).length());
@@ -168,8 +165,6 @@ public class TeamDisplaynameSet implements Listener {
                 if (pl != player) addTeam(lscore, opti, pl);
             });
         }, 1);
-        Component tabNameCom = Component.join(JoinConfiguration.separator(Component.text("")), prefixcom,
-                player.displayName(), suffixcom);
         Bukkit.getScheduler().runTaskLater(stuff,
                 () -> player.playerListName(),
                 1);
