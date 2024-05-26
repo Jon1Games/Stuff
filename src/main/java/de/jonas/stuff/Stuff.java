@@ -35,8 +35,8 @@ public final class Stuff extends JavaPlugin {
         if (getConfig().getBoolean("PortableInventoryCommand.Enabled")) new PortableInventoryCommand();
         if (getConfig().getBoolean("InfoCommands.Enabled")) new InfoCommands();
         new ReloadCommand();
-        new AdminCommand();
-        new PlayTimeCommand();
+        if (getConfig().getBoolean("PlayTimeCommand.Enabled")) new PlayTimeCommand();
+        if (getConfig().getBoolean("PingCommand.Enabled")) new PingCommand();
     }
 
     @Override

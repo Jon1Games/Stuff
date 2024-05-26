@@ -119,28 +119,8 @@ Format:
       # displaying held item, placeholder: <i> or <I> (only supported by ColorType: minimessage)
       ItemInHand: true
 
-TpaCommand:
-  Enabled: true
-  Delay:
-    Enabled: true
-    Amount: 3
-  Messages:
-  # PLaceholder: <player> <delay>
-    Tpa:
-      Sender: "Du hast <player> eine Teleportanfrage geschickt."
-      Reciver: "Du hast eine Teleportanfrage von <player> bekommen."
-      Self: "Du kannst dir nicht selbst eine Teleportanfrage senden."
-    Tpaccept:
-      Sender: "Der Spieler <player> hat deine Teleportanfrage angenommen."
-      Reciver: "Du hast die Teleportanfrage von <player> angenommen."
-      NoRequest: "Du hast keine Teleportanfrage von <player> bekommen."
-      Timeout: "Diese Teleportanfrage ist abgelaufen."
-    Delay: "Bewege dich nicht, Du wirst in <delay> Sekunden Teleportiert..."
-    Error:
-      Move: "Der Teleport wurde abgebrochen, da du dich bewegt hast."
-
 InfoCommands:
-  Enabled: true
+  Enabled: false
   Links:
     Enabled: false
     Messages: "Ein Link Text"
@@ -165,6 +145,14 @@ InfoCommands:
 
 PlayTimeCommand:
   Enabled: true
+  # Placeholders: for both: <days> <hours> <min> <sec> , for other: <player>
   Messages:
     self: "<green>Du hast <days> Tage, <hours> Stunden, <min> Minuten und <sec> Sekunden Spielzeit"
     other: "<green><player> hat <days> Tage, <hours> Stunden, <min> Minuten und <sec> Sekunden Spielzeit"
+
+PingCommand:
+  Enabled: true
+  # Placeholders: for both: <ping> , for other: <player>
+  Messages:
+    self: "Dein Ping beträgt <gold><ping><reset>."
+    other: "Der Ping von <green><player><reset> Ping beträgt <gold><ping><reset>."

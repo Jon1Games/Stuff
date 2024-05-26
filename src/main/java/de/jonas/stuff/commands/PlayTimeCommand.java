@@ -16,6 +16,7 @@ public class PlayTimeCommand {
     public PlayTimeCommand() {
 
         new CommandAPICommand("stuff:playtime")
+                .withAliases("playtime", "Playtime")
                 .withOptionalArguments(new PlayerArgument("Spieler"))
                 .executesPlayer(((player, commandArguments) -> {
                     Player target = (Player) commandArguments.get("Spieler");

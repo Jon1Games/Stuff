@@ -20,27 +20,29 @@ public class FlyCommand {
             .withAliases("stuff:fly", "Stuff:fly")
             .withOptionalArguments(new EntitySelectorArgument.OnePlayer("Spieler"))
             .withPermission(stuff.getConfig().getString("FlyCommand.Permission"))
-            .executesPlayer((player, args) -> {
+            .executes((executor, args) -> {
                 Player target = (Player) args.get("Spieler");
 
-                if (target == null) target = player;
+                if (executor instanceof Player && target == null) target = (Player) executor;
 
                 var a = !target.getAllowFlight();
                 target.getPersistentDataContainer().set(flyAllowidentifier, PersistentDataType.BOOLEAN, a);
 
                 target.setAllowFlight(a);
 
-                if (target == player) {
+                if (target == executor || !(executor instanceof Player)) {
                     if (a) {
                         target.sendMessage(mm.deserialize(stuff.getConfig().getString("FlyCommand.Messages.Self.EnterFlyMode")));
                     } else target.sendMessage(mm.deserialize(stuff.getConfig().getString("FlyCommand.Messages.Self.ExitFlyMode")));
                 } else {
                     if (a) {
-                        target.sendMessage(mm.deserialize(stuff.getConfig().getString("FlyCommand.Messages.Other.Other.EnterFlyMode"), Placeholder.component("player", player.teamDisplayName())));
-                        player.sendMessage(mm.deserialize(stuff.getConfig().getString("FlyCommand.Messages.Other.Self.EnterFlyMode"), Placeholder.component("player", target.teamDisplayName())));
+                        Player executorP = (Player) executor;
+                        target.sendMessage(mm.deserialize(stuff.getConfig().getString("FlyCommand.Messages.Other.Other.EnterFlyMode"), Placeholder.component("player", executorP.teamDisplayName())));
+                        executor.sendMessage(mm.deserialize(stuff.getConfig().getString("FlyCommand.Messages.Other.Self.EnterFlyMode"), Placeholder.component("player", target.teamDisplayName())));
                     } else {
-                        target.sendMessage(mm.deserialize(stuff.getConfig().getString("FlyCommand.Messages.Other.Other.ExitFlyMode"), Placeholder.component("player", player.teamDisplayName())));
-                        player.sendMessage(mm.deserialize(stuff.getConfig().getString("FlyCommand.Messages.Other.Self.ExitFlyMode"), Placeholder.component("player", target.teamDisplayName())));
+                        Player executorP = (Player) executor;
+                        target.sendMessage(mm.deserialize(stuff.getConfig().getString("FlyCommand.Messages.Other.Other.ExitFlyMode"), Placeholder.component("player", executorP.teamDisplayName())));
+                        executor.sendMessage(mm.deserialize(stuff.getConfig().getString("FlyCommand.Messages.Other.Self.ExitFlyMode"), Placeholder.component("player", target.teamDisplayName())));
                     }
                 }
     })
