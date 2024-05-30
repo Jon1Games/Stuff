@@ -25,7 +25,7 @@ public class JoinSpeedListener implements Listener {
             player.setFlySpeed(speed);
             int fullspeed = (int) (speed * 10);
             if (fullspeed == 2) return;
-            player.sendMessage(mm.deserialize(stuff.getConfig().getString("SpeedCommand.Messages.Self.ReturnSpeed"), Placeholder.component("speed", Component.text(fullspeed))));
+            player.sendMessage(mm.deserialize(stuff.getConfig().getString("FlySpeedCommand.Messages.Self.ReturnSpeed"), Placeholder.component("speed", Component.text(fullspeed))));
         }
 
         if (player.getPersistentDataContainer().has(SpeedCommand.walkSpeedIdentifier) &&
@@ -34,7 +34,7 @@ public class JoinSpeedListener implements Listener {
             player.setWalkSpeed(speed);
             int fullspeed = (int) (speed * 10);
             if (fullspeed == 2) return;
-            player.sendMessage(mm.deserialize(stuff.getConfig().getString("SpeedCommand.Messages.Self.ReturnSpeed"), Placeholder.component("speed", Component.text(fullspeed))));
+            player.sendMessage(mm.deserialize(stuff.getConfig().getString("WalkSpeedCommand.Messages.Self.ReturnSpeed"), Placeholder.component("speed", Component.text(fullspeed))));
         }
     }
 }

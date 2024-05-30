@@ -7,19 +7,25 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Statistic;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class PlayTimeCommand {
+    Stuff stuff = Stuff.INSTANCE;
+    FileConfiguration conf = stuff.getConfig();
+    String suggestion = conf.getString("PlayTimeCommand.suggestionName.Player");
+    List<String> aliases = conf.getStringList("PlayTimeCommand.Aliases");
 
     public PlayTimeCommand() {
 
         new CommandAPICommand("stuff:playtime")
-                .withAliases("playtime", "Playtime")
-                .withOptionalArguments(new PlayerArgument("Spieler"))
+                .withAliases(aliases.toArray(new String[aliases.size()]))
+                .withOptionalArguments(new PlayerArgument(suggestion))
                 .executesPlayer(((player, commandArguments) -> {
-                    Player target = (Player) commandArguments.get("Spieler");
+                    Player target = (Player) commandArguments.get(suggestion);
                     if (target == null) target = player;
 
                     target.sendMessage(calculateTime(target.getStatistic(Statistic.PLAY_ONE_MINUTE) / 20,

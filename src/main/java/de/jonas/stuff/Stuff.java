@@ -27,16 +27,18 @@ public final class Stuff extends JavaPlugin {
         teamDisplaynameSet = new TeamDisplaynameSet();
         teamDisplaynameSet.onLoad();
 
-        if (getConfig().getBoolean("EnableCalculatorCommand")) new CalculatorCommand();
+        if (getConfig().getBoolean("EnableCalculatorCommand.Enabled")) new CalculatorCommand();
         if (getConfig().getBoolean("MsgCommand.Enabled")) new MsgCommand();
         if (getConfig().getBoolean("FlyCommand.Enabled")) new FlyCommand();
-        if (getConfig().getBoolean("SpeedCommand.Enabled")) new SpeedCommand();
+        new SpeedCommand();
         if (getConfig().getBoolean("GamemodeCommand.Enabled")) new GamemodeCommand();
         if (getConfig().getBoolean("PortableInventoryCommand.Enabled")) new PortableInventoryCommand();
         if (getConfig().getBoolean("InfoCommands.Enabled")) new InfoCommands();
         new ReloadCommand();
         if (getConfig().getBoolean("PlayTimeCommand.Enabled")) new PlayTimeCommand();
         if (getConfig().getBoolean("PingCommand.Enabled")) new PingCommand();
+        if (getConfig().getBoolean("CommandCommand.Enabled")) new CommandCommand();
+        if (getConfig().getBoolean("BroadcastCommand.Enabled")) new BroadcastCommand();
     }
 
     @Override
