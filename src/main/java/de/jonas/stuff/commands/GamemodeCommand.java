@@ -3,7 +3,6 @@ package de.jonas.stuff.commands;
 import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.arguments.EntitySelectorArgument;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -30,9 +29,9 @@ public class GamemodeCommand {
         CommandAPI.unregister("gamemode");
         // Create our command
         new CommandAPICommand("gamemode")
-                .withAliases(aliasesC.toArray(new String[aliasesC.size()]))
+                .withAliases(aliases.toArray(new String[aliases.size()]))
                 .withSubcommand(new CommandAPICommand("creative")
-                        .withAliases(aliases.toArray(new String[aliases.size()]))
+                        .withAliases(aliasesC.toArray(new String[aliasesC.size()]))
                         .withPermission(conf.getString("GamemodeCommand.Messages.Creative.Permission"))
                         .withOptionalArguments(new PlayerArgument(suggestion))
                         .executes((executor, args) -> {

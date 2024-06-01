@@ -5,8 +5,6 @@ import dev.jorel.commandapi.CommandAPICommand;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 
-import java.util.logging.Level;
-
 public class CommandCommand {
 
     Stuff stuff = Stuff.INSTANCE;

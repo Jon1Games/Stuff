@@ -1,6 +1,8 @@
 package de.jonas.stuff.listener;
 
+import de.jonas.stuff.ChatChannelManager;
 import de.jonas.stuff.Stuff;
+import de.jonas.stuff.api.ChatChannel;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -16,9 +18,13 @@ import org.bukkit.event.Listener;
 public class ChatListener implements Listener {
     Stuff stuff = Stuff.INSTANCE;
     MiniMessage mm = MiniMessage.miniMessage();
+    ChatChannelManager chatChannelManager = stuff.chatChannelManager;
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onChat(AsyncChatEvent e) {
+        Player p = e.getPlayer();
+        ChatChannel chatChannel = chatChannelManager.getChannel(p);
+        e.viewers().removeIf(viewer -> !chatChannel.canSeeMessage(p, viewer));
         e.renderer(this::renderMessage);
     }
 
@@ -33,8 +39,7 @@ public class ChatListener implements Listener {
         } else {
             messageC = message;
         }
-        return mm.deserialize(stuff.getConfig().getString("Format.Chat.Format"),
-                Placeholder.component("player", source.teamDisplayName()),
-                Placeholder.component("message", messageC));
+
+        return chatChannelManager.getChannel(source).render(source, source.teamDisplayName(), messageC, viewer);
     }
 }

@@ -34,6 +34,7 @@ public class InfoCommands {
                                         sender.name())));
                     })
                     .register();
+            stuff.increaseCommandCount();
         }
     }
 }

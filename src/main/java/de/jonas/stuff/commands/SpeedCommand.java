@@ -2,7 +2,6 @@ package de.jonas.stuff.commands;
 
 import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.arguments.EntitySelectorArgument;
 import dev.jorel.commandapi.arguments.IntegerArgument;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import net.kyori.adventure.text.Component;
@@ -18,7 +17,6 @@ import java.util.List;
 public class SpeedCommand {
     public static final NamespacedKey flySpeedIdentifier = new NamespacedKey("stuff", "fly_speed");
     public static final NamespacedKey walkSpeedIdentifier = new NamespacedKey("stuff", "walk_speed");
-    @SuppressWarnings("null")
     public SpeedCommand() {
         Stuff stuff = Stuff.INSTANCE;
         FileConfiguration conf = stuff.getConfig();

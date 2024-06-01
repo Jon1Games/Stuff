@@ -1,11 +1,14 @@
 package de.jonas.stuff;
 
+import de.jonas.stuff.chatchannels.AbstractChannel;
+import de.jonas.stuff.chatchannels.Default;
 import de.jonas.stuff.commands.*;
 import de.jonas.stuff.listener.*;
 import de.jonas.stuff.utility.PermToOp;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.util.logging.Level;
@@ -16,12 +19,18 @@ public final class Stuff extends JavaPlugin {
     public TeamDisplaynameSet teamDisplaynameSet;
     public int commands;
     public int listeners;
+    public ChatChannelManager chatChannelManager;
+    public int channels;
 
     public void onLoad() {
 
         getLogger().log(Level.INFO, "Starting Plugin");
 
         INSTANCE = this;
+
+        chatChannelManager = new ChatChannelManager();
+        Default defaultChannel = new Default();
+        chatChannelManager.setDefaultChannel(defaultChannel);
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
 
@@ -56,10 +65,7 @@ public final class Stuff extends JavaPlugin {
             new PortableInventoryCommand();
             increaseCommandCount();
         }
-        if (getConfig().getBoolean("InfoCommands.Enabled")) {
-            new InfoCommands();
-            increaseCommandCount();
-        }
+        if (getConfig().getBoolean("InfoCommands.Enabled")) new InfoCommands();
         if (getConfig().getBoolean("PlayTimeCommand.Enabled")) {
             new PlayTimeCommand();
             increaseCommandCount();
@@ -74,6 +80,10 @@ public final class Stuff extends JavaPlugin {
         }
         if (getConfig().getBoolean("BroadcastCommand.Enabled")) {
             new BroadcastCommand();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("SwitchChannel.Enabled") && getConfig().getBoolean("Format.Chat.Enabled")) {
+            new SwitchChannel();
             increaseCommandCount();
         }
         
@@ -94,13 +104,31 @@ public final class Stuff extends JavaPlugin {
             permToOp.onEnable();
         }
 
-        listeners = 0;
-        this.listener();
-        if (listeners != 0) {
-            getLogger().log(Level.INFO, listeners + " listener registered.");
-        } else {
+        chatChannelManager.onEnable();
+
+        ConfigurationSection sec = getConfig().getConfigurationSection("Channels");
+        for (String a : sec.getKeys(false)) {
+            ConfigurationSection cs = sec.getConfigurationSection(a);
+
+            if (!cs.getBoolean("Enabled")) continue;
+
+            AbstractChannel abstractChannel = new AbstractChannel(
+                    cs.getString("Permission.See"),
+                    cs.getString("Permission.Join"),
+                    cs.getString("Format"),
+                    cs.getBoolean("CanSeeOwnMessages")
+            );
+
+            chatChannelManager.registerChannel(a.toLowerCase(), abstractChannel);
+
+            increaseChannelCount();
 
         }
+
+        getLogger().log(Level.INFO, channels+ " channels registered");
+
+        this.listener();
+        getLogger().log(Level.INFO, listeners + " listener registered");
 
         this.saveDefaultConfig();
 
@@ -151,6 +179,10 @@ public final class Stuff extends JavaPlugin {
     
     public void increaseListenerCount() {
         listeners++;
+    }
+
+    public void increaseChannelCount() {
+        channels++;
     }
 }
 

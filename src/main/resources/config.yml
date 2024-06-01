@@ -210,6 +210,32 @@ BroadcastCommand:
   # Placeholder: <message>
   Message: "<gray>[<red>Broadcast</red>]</gray> <message>"
 
+SwitchChannel:
+  Enabled: true
+  Permission: "stuff.switchchannel"
+  suggestionName:
+    Channel: "Kanal"
+  Aliases:
+    - "kanal"
+    - "channel"
+  DefaultChannelName: "Standart"
+  Messages:
+    # Placeholder: <channel>
+    NotExistend: "<red>Der Kanal \"<channel>\" existiert nicht!</red>"
+    NoPermissionsChannel: "<red>Du hast keine Rechte auf den Kanal \"<channel>\"!</red>"
+    JoinedChannel: "<green>Du bist erfolgreich dem Kanal \"<channel>\" begetreten.<br>Alle Weiteren nachrichten werden nun in diesem Kanal gesendet.</green>"
+
+Channels:
+  Admin:
+    Enabled: true
+    Permission:
+      See: "stuff.adminchannel.see"
+      Join: "stuff.adminchannel.join"
+    # Only affects if player can write but not see messages
+    CanSeeOwnMessages: true
+    # Placeholder: <player>, <message>
+    Format: "<gray>[<red>Admin</red>]</gray> <player> <gray><message></gray>"
+
 InfoCommands:
   Enabled: true
   # Placeholders: <player>
