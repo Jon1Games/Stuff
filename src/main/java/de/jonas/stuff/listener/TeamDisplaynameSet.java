@@ -139,7 +139,7 @@ public class TeamDisplaynameSet implements Listener {
                 prefixcom = LegacyComponentSerializer.legacy('&').deserialize(prefix);
                 pti.prefix = prefixcom;
             } else {
-                stuff.logger.log(Level.WARNING, "Prefix is not defined!");
+                stuff.getLogger().log(Level.WARNING, "Prefix is not defined!");
             }
         }
         String suffix = null;
@@ -151,7 +151,7 @@ public class TeamDisplaynameSet implements Listener {
                 suffixcom = LegacyComponentSerializer.legacy('&').deserialize(suffix);
                 pti.suffix = suffixcom;
             } else {
-                stuff.logger.log(Level.WARNING, "Suffix is not defined!");
+                stuff.getLogger().log(Level.WARNING, "Suffix is not defined!");
             }
         }
         teams.put(player, pti);

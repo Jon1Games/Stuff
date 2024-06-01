@@ -2,30 +2,28 @@ package de.jonas.stuff;
 
 import de.jonas.stuff.commands.*;
 import de.jonas.stuff.listener.*;
+import de.jonas.stuff.utility.PermToOp;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public final class Stuff extends JavaPlugin {
 
     public static Stuff INSTANCE;
-    public static String PREFIX;
-    public Logger logger;
     public TeamDisplaynameSet teamDisplaynameSet;
 
     public void onLoad() {
         INSTANCE = this;
-        this.logger = this.getLogger();
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
 
-        teamDisplaynameSet = new TeamDisplaynameSet();
-        teamDisplaynameSet.onLoad();
+        if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
+            teamDisplaynameSet = new TeamDisplaynameSet();
+            teamDisplaynameSet.onLoad();
+        }
 
         if (getConfig().getBoolean("EnableCalculatorCommand.Enabled")) new CalculatorCommand();
         if (getConfig().getBoolean("MsgCommand.Enabled")) new MsgCommand();
@@ -44,17 +42,21 @@ public final class Stuff extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        PREFIX = "[Stuff] ";
 
         CommandAPI.onEnable();
 
-        teamDisplaynameSet.onEnable();
+        if (getConfig().getBoolean("Format.PlayerNames.Enabled")) teamDisplaynameSet.onEnable();
+
+        if (getConfig().getBoolean("GiveOpPermission.Enabled")) {
+            PermToOp permToOp = new PermToOp();
+            permToOp.onEnable();
+        }
 
         this.listener();
 
         this.saveDefaultConfig();
 
-        logger.log(Level.INFO, "Activated Plugin");
+        getLogger().log(Level.INFO, "Activated Plugin");
 
     }
 
@@ -63,7 +65,7 @@ public final class Stuff extends JavaPlugin {
         // Plugin shutdown logic
         CommandAPI.onDisable();
 
-        logger.log(Level.INFO,"Plugin deaktiviert.");
+        getLogger().log(Level.INFO,"Plugin deaktiviert.");
     }
 
     public void listener() {

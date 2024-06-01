@@ -10,7 +10,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public class BroadcastCommand {
 
-    Stuff stuff = new Stuff();
+    Stuff stuff = Stuff.INSTANCE;
     FileConfiguration conf = stuff.getConfig();
     MiniMessage mm = MiniMessage.miniMessage();
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CalculatorCommand {
 
-    Stuff stuff = new Stuff();
+    Stuff stuff = Stuff.INSTANCE;
 
     public CalculatorCommand() {
         // Create our command
