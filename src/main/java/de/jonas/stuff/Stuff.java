@@ -14,29 +14,71 @@ public final class Stuff extends JavaPlugin {
 
     public static Stuff INSTANCE;
     public TeamDisplaynameSet teamDisplaynameSet;
+    public int commands;
+    public int listeners;
 
     public void onLoad() {
+
+        getLogger().log(Level.INFO, "-- Starting Plugin --");
+
         INSTANCE = this;
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
 
         if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
+            getLogger().log(Level.INFO, " -> Enabling playername formatting.");
             teamDisplaynameSet = new TeamDisplaynameSet();
             teamDisplaynameSet.onLoad();
+        } else {
+            getLogger().log(Level.INFO, " -> Playername formatting is disabled.");
         }
 
-        if (getConfig().getBoolean("EnableCalculatorCommand.Enabled")) new CalculatorCommand();
-        if (getConfig().getBoolean("MsgCommand.Enabled")) new MsgCommand();
-        if (getConfig().getBoolean("FlyCommand.Enabled")) new FlyCommand();
-        new SpeedCommand();
-        if (getConfig().getBoolean("GamemodeCommand.Enabled")) new GamemodeCommand();
-        if (getConfig().getBoolean("PortableInventoryCommand.Enabled")) new PortableInventoryCommand();
-        if (getConfig().getBoolean("InfoCommands.Enabled")) new InfoCommands();
         new ReloadCommand();
-        if (getConfig().getBoolean("PlayTimeCommand.Enabled")) new PlayTimeCommand();
-        if (getConfig().getBoolean("PingCommand.Enabled")) new PingCommand();
-        if (getConfig().getBoolean("CommandCommand.Enabled")) new CommandCommand();
-        if (getConfig().getBoolean("BroadcastCommand.Enabled")) new BroadcastCommand();
+        commands = 1;
+        if (getConfig().getBoolean("EnableCalculatorCommand.Enabled")) {
+            new CalculatorCommand();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("MsgCommand.Enabled")) {
+            new MsgCommand();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("FlyCommand.Enabled")) {
+            new FlyCommand();
+            increaseCommandCount();
+        }
+        new SpeedCommand();
+        if (getConfig().getBoolean("GamemodeCommand.Enabled")) {
+            new GamemodeCommand();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("PortableInventoryCommand.Enabled")) {
+            new PortableInventoryCommand();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("InfoCommands.Enabled")) {
+            new InfoCommands();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("PlayTimeCommand.Enabled")) {
+            new PlayTimeCommand();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("PingCommand.Enabled")) {
+            new PingCommand();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("CommandCommand.Enabled")) {
+            new CommandCommand();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("BroadcastCommand.Enabled")) {
+            new BroadcastCommand();
+            increaseCommandCount();
+        }
+        
+        getLogger().log(Level.INFO, " -> " + commands + " commands registered.");
+        
     }
 
     @Override
@@ -52,11 +94,17 @@ public final class Stuff extends JavaPlugin {
             permToOp.onEnable();
         }
 
+        listeners = 0;
         this.listener();
+        if (listeners != 0) {
+            getLogger().log(Level.INFO, " -> " + listeners + " listener registered.");
+        } else {
+
+        }
 
         this.saveDefaultConfig();
 
-        getLogger().log(Level.INFO, "Activated Plugin");
+        getLogger().log(Level.INFO, "-- Startup Complete --");
 
     }
 
@@ -71,11 +119,34 @@ public final class Stuff extends JavaPlugin {
     public void listener() {
         PluginManager pm = Bukkit.getPluginManager();
 
-        if (getConfig().getBoolean("CustomJoinQuitMessage.Enabled")) pm.registerEvents(new JoinQuitMessageListener(), this);
-        if (getConfig().getBoolean("FlyCommand.Enabled")) pm.registerEvents(new JoinFlyListener(), this);
-        if (getConfig().getBoolean("SpeedCommand.Enabled")) pm.registerEvents(new JoinSpeedListener(), this);
-        if (getConfig().getBoolean("Format.Chat.Enabled")) pm.registerEvents(new ChatListener(), this);
-        if (getConfig().getBoolean("Format.PlayerNames.Enabled")) pm.registerEvents(teamDisplaynameSet, this);
+        if (getConfig().getBoolean("CustomJoinQuitMessage.Enabled")) {
+            pm.registerEvents(new JoinQuitMessageListener(), this);
+            increaseListenerCount();
+        }
+        if (getConfig().getBoolean("FlyCommand.Enabled")) {
+            pm.registerEvents(new JoinFlyListener(), this);
+            increaseListenerCount();
+        }
+        if (getConfig().getBoolean("SpeedCommand.Enabled")) {
+            pm.registerEvents(new JoinSpeedListener(), this);
+            increaseListenerCount();
+        }
+        if (getConfig().getBoolean("Format.Chat.Enabled")) {
+            pm.registerEvents(new ChatListener(), this);
+            increaseListenerCount();
+        }
+        if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
+            pm.registerEvents(teamDisplaynameSet, this);
+            increaseListenerCount();
+        }
+    }
+    
+    public void increaseCommandCount() {
+        commands++;
+    }
+    
+    public void increaseListenerCount() {
+        listeners++;
     }
 }
 

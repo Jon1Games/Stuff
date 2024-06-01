@@ -17,12 +17,14 @@ public class PermToOp {
         PluginManager pm = Bukkit.getPluginManager();
         List<String> listPOp = stuff.getConfig().getStringList("GiveOpPermission.Permissions");
 
-        stuff.getLogger().log(Level.INFO, "Start Permission assignment");
+        stuff.getLogger().log(Level.INFO, " -> -- Start Permission assignment --");
 
         for (String a : listPOp) {
             setPermissionDefault(pm, a, PermissionDefault.OP);
-            stuff.getLogger().log(Level.INFO, "Permission: \"" + a + "\" assigned to OP");
+            stuff.getLogger().log(Level.INFO, " -> Permission \"" + a + "\" assigned to OP");
         }
+
+        stuff.getLogger().log(Level.INFO, "-> -- Permission assignment complete --");
 
     }
 

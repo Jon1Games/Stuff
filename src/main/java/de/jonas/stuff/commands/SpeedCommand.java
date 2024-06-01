@@ -61,6 +61,7 @@ public class SpeedCommand {
                         }
                     })
                     .register();
+            stuff.increaseCommandCount();
         }
 
             if (conf.getBoolean("WalkSpeedCommand.Enabled")) {
@@ -95,6 +96,7 @@ public class SpeedCommand {
                             }
                         })
                         .register();
+                stuff.increaseCommandCount();
             }
     }
 }
