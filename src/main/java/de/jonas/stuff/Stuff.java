@@ -19,18 +19,18 @@ public final class Stuff extends JavaPlugin {
 
     public void onLoad() {
 
-        getLogger().log(Level.INFO, "-- Starting Plugin --");
+        getLogger().log(Level.INFO, "Starting Plugin");
 
         INSTANCE = this;
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
 
         if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
-            getLogger().log(Level.INFO, " -> Enabling playername formatting.");
+            getLogger().log(Level.INFO, "Enabling playername formatting");
             teamDisplaynameSet = new TeamDisplaynameSet();
             teamDisplaynameSet.onLoad();
         } else {
-            getLogger().log(Level.INFO, " -> Playername formatting is disabled.");
+            getLogger().log(Level.INFO, "Playername formatting is disabled");
         }
 
         new ReloadCommand();
@@ -77,7 +77,7 @@ public final class Stuff extends JavaPlugin {
             increaseCommandCount();
         }
         
-        getLogger().log(Level.INFO, " -> " + commands + " commands registered.");
+        getLogger().log(Level.INFO, commands + " commands registered");
         
     }
 
@@ -97,23 +97,27 @@ public final class Stuff extends JavaPlugin {
         listeners = 0;
         this.listener();
         if (listeners != 0) {
-            getLogger().log(Level.INFO, " -> " + listeners + " listener registered.");
+            getLogger().log(Level.INFO, listeners + " listener registered.");
         } else {
 
         }
 
         this.saveDefaultConfig();
 
-        getLogger().log(Level.INFO, "-- Startup Complete --");
+        getLogger().log(Level.INFO, "Startup Complete");
 
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        CommandAPI.onDisable();
 
-        getLogger().log(Level.INFO,"Plugin deaktiviert.");
+        getLogger().log(Level.INFO," Starting disabling");
+
+        CommandAPI.onDisable();
+        getLogger().log(Level.INFO, "CommandAPI disabled");
+
+        getLogger().log(Level.INFO,"Disabling complete");
     }
 
     public void listener() {
