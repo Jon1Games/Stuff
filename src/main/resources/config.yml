@@ -225,6 +225,17 @@ SwitchChannel:
     NoPermissionsChannel: "<red>Du hast keine Rechte auf den Kanal \"<channel>\"!</red>"
     JoinedChannel: "<green>Du bist erfolgreich dem Kanal \"<channel>\" begetreten.<br>Alle Weiteren nachrichten werden nun in diesem Kanal gesendet.</green>"
 
+FirstJoinTitle:
+  Enabled: true
+    # Placeholder: <player>
+    Title: "Wilkommen"
+    SubTitle: "<player>"
+
+FirstJoniMessage:
+  Enabled: True
+  # Placeholder: <player>
+  Message: "Willkommen auf unserem Server <player>."
+
 Channels:
   Admin:
     Enabled: true
