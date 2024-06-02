@@ -87,7 +87,8 @@ public class GamemodeCommand {
                             if (executor instanceof Player && target == null) target = (Player) executor;
 
                             target.setGameMode(GameMode.ADVENTURE);
-                            if (target.getPersistentDataContainer().get(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN) == true) {
+                            if (target.getPersistentDataContainer().has(FlyCommand.flyAllowidentifier) &&
+                                target.getPersistentDataContainer().get(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN) == true) {
                                 target.setAllowFlight(true);
                                 target.setFlying(true);
                             }
@@ -112,7 +113,8 @@ public class GamemodeCommand {
                             if (executor instanceof Player && target == null) target = (Player) executor;
 
                             target.setGameMode(GameMode.SURVIVAL);
-                            if (target.getPersistentDataContainer().get(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN) == true) {
+                            if (target.getPersistentDataContainer().has(FlyCommand.flyAllowidentifier) &&
+                                target.getPersistentDataContainer().get(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN) == true) {
                                 target.setAllowFlight(true);
                                 target.setFlying(true);
                             }

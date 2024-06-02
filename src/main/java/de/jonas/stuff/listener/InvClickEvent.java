@@ -18,7 +18,7 @@ public class InvClickEvent implements Listener{
         if (!container.has(ItemBuilderManager.inventoryClickEvent)) return;
 
         int pdv = container.get(ItemBuilderManager.inventoryClickEvent, PersistentDataType.INTEGER);
-        ClickEvent ev = Stuff.INSTANCE.itemBuilderManager.get(pdv);
+        ClickEvent ev = Stuff.INSTANCE.itemBuilderManager.getClickEvent(pdv);
         if (ev != null) {
             ev.onClick(e);
         }

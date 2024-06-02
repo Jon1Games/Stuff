@@ -182,6 +182,8 @@ public final class Stuff extends JavaPlugin {
         }
         pm.registerEvents(new InvClickEvent(), this);
         increaseListenerCount();
+        pm.registerEvents(new BlockPlace(), this);
+        increaseListenerCount();
         pm.registerEvents(new FirstJoin(), this);
         increaseListenerCount();
     }
