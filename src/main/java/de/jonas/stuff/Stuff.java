@@ -33,6 +33,8 @@ public final class Stuff extends JavaPlugin {
 
         INSTANCE = this;
 
+        this.saveDefaultConfig();
+
         chatChannelManager = new ChatChannelManager();
         Default defaultChannel = new Default();
         chatChannelManager.setDefaultChannel(defaultChannel);
@@ -52,8 +54,6 @@ public final class Stuff extends JavaPlugin {
         } else {
             getLogger().log(Level.INFO, "Playername formatting is disabled");
         }
-
-        chatChannelManager = new ChatChannelManager();
 
         new ReloadCommand();
         commands = 1;
@@ -142,8 +142,6 @@ public final class Stuff extends JavaPlugin {
 
         this.listener();
         getLogger().log(Level.INFO, listeners + " listener registered");
-
-        this.saveDefaultConfig();
 
         getLogger().log(Level.INFO, "Startup Complete");
 

@@ -227,9 +227,9 @@ SwitchChannel:
 
 FirstJoinTitle:
   Enabled: true
-    # Placeholder: <player>
-    Title: "Wilkommen"
-    SubTitle: "<player>"
+  # Placeholder: <player>
+  Title: "Wilkommen"
+  SubTitle: "<player>"
 
 FirstJoniMessage:
   Enabled: True
