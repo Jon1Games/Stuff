@@ -21,6 +21,8 @@ public final class Stuff extends JavaPlugin {
     public int listeners;
     public ChatChannelManager chatChannelManager;
     public int channels;
+    public ItemBuilderManager itemBuilderManager;
+    public int itemBuilds;
 
     public void onLoad() {
 
@@ -31,6 +33,11 @@ public final class Stuff extends JavaPlugin {
         chatChannelManager = new ChatChannelManager();
         Default defaultChannel = new Default();
         chatChannelManager.setDefaultChannel(defaultChannel);
+
+        itemBuilds = 0;
+        itemBuilderManager = new ItemBuilderManager();
+
+        getLogger().log(Level.INFO, itemBuilds + " Item builded");
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
 
@@ -86,7 +93,7 @@ public final class Stuff extends JavaPlugin {
             new SwitchChannel();
             increaseCommandCount();
         }
-        
+
         getLogger().log(Level.INFO, commands + " commands registered");
         
     }
@@ -171,6 +178,7 @@ public final class Stuff extends JavaPlugin {
             pm.registerEvents(teamDisplaynameSet, this);
             increaseListenerCount();
         }
+        pm.registerEvents(new InvClickEvent(), this);
     }
     
     public void increaseCommandCount() {
@@ -183,6 +191,10 @@ public final class Stuff extends JavaPlugin {
 
     public void increaseChannelCount() {
         channels++;
+    }
+
+    public void increaseitemBuildsCount() {
+        itemBuilds++;
     }
 }
 
