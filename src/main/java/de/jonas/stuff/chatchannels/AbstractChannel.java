@@ -1,12 +1,13 @@
 package de.jonas.stuff.chatchannels;
 
-import de.jonas.stuff.api.ChatChannel;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permissible;
+
+import de.jonas.stuff.interfaced.ChatChannel;
 
 public class AbstractChannel implements ChatChannel {
 

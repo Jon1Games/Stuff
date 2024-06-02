@@ -2,7 +2,8 @@ package de.jonas.stuff;
 
 import org.bukkit.NamespacedKey;
 
-import de.jonas.stuff.api.ClickEvent;
+import de.jonas.stuff.interfaced.ClickEvent;
+
 import java.util.Map;
 import java.util.HashMap;;
 

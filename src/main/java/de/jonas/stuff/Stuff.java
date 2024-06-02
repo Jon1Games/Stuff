@@ -3,6 +3,7 @@ package de.jonas.stuff;
 import de.jonas.stuff.chatchannels.AbstractChannel;
 import de.jonas.stuff.chatchannels.Default;
 import de.jonas.stuff.commands.*;
+import de.jonas.stuff.interfaced.ChatChannel;
 import de.jonas.stuff.listener.*;
 import de.jonas.stuff.utility.PermToOp;
 import dev.jorel.commandapi.CommandAPI;
@@ -23,6 +24,8 @@ public final class Stuff extends JavaPlugin {
     public int channels;
     public ItemBuilderManager itemBuilderManager;
     public int itemBuilds;
+    public ChatChannel inputChatChannel;
+    public ChatCaptureManager captureManager;
 
     public void onLoad() {
 
@@ -36,8 +39,9 @@ public final class Stuff extends JavaPlugin {
 
         itemBuilds = 0;
         itemBuilderManager = new ItemBuilderManager();
-
         getLogger().log(Level.INFO, itemBuilds + " Item builded");
+
+        captureManager = new ChatCaptureManager();
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
 
@@ -48,6 +52,8 @@ public final class Stuff extends JavaPlugin {
         } else {
             getLogger().log(Level.INFO, "Playername formatting is disabled");
         }
+
+        chatChannelManager = new ChatChannelManager();
 
         new ReloadCommand();
         commands = 1;
@@ -170,10 +176,8 @@ public final class Stuff extends JavaPlugin {
             pm.registerEvents(new JoinSpeedListener(), this);
             increaseListenerCount();
         }
-        if (getConfig().getBoolean("Format.Chat.Enabled")) {
-            pm.registerEvents(new ChatListener(), this);
-            increaseListenerCount();
-        }
+        pm.registerEvents(new ChatListener(), this);
+        increaseListenerCount();
         if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
             pm.registerEvents(teamDisplaynameSet, this);
             increaseListenerCount();

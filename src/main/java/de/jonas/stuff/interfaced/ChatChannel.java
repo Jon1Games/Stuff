@@ -1,4 +1,4 @@
-package de.jonas.stuff.api;
+package de.jonas.stuff.interfaced;
 
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;

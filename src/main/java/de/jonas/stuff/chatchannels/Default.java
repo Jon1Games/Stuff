@@ -1,7 +1,7 @@
 package de.jonas.stuff.chatchannels;
 
 import de.jonas.stuff.Stuff;
-import de.jonas.stuff.api.ChatChannel;
+import de.jonas.stuff.interfaced.ChatChannel;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;

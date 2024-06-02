@@ -1,4 +1,4 @@
-package de.jonas.stuff.api;
+package de.jonas.stuff.interfaced;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
 

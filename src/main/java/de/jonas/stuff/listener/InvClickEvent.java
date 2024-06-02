@@ -7,7 +7,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import de.jonas.stuff.ItemBuilderManager;
 import de.jonas.stuff.Stuff;
-import de.jonas.stuff.api.ClickEvent;
+import de.jonas.stuff.interfaced.ClickEvent;
 
 public class InvClickEvent implements Listener{
     

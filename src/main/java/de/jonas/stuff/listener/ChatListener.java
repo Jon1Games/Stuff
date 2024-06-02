@@ -1,8 +1,10 @@
 package de.jonas.stuff.listener;
 
+import de.jonas.stuff.ChatCaptureManager;
 import de.jonas.stuff.ChatChannelManager;
 import de.jonas.stuff.Stuff;
-import de.jonas.stuff.api.ChatChannel;
+import de.jonas.stuff.interfaced.ChatChannel;
+import de.jonas.stuff.interfaced.PlayerChatEvent;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -19,10 +21,18 @@ public class ChatListener implements Listener {
     Stuff stuff = Stuff.INSTANCE;
     MiniMessage mm = MiniMessage.miniMessage();
     ChatChannelManager chatChannelManager = stuff.chatChannelManager;
+    ChatCaptureManager captureManager = stuff.captureManager;
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onChat(AsyncChatEvent e) {
         Player p = e.getPlayer();
+        PlayerChatEvent playerChatEvent = captureManager.getPlayer(p);
+        if (playerChatEvent != null) {
+            captureManager.unsetPlayerCapture(p);
+            e.setCancelled(true);
+            playerChatEvent.onMessage(p, PlainTextComponentSerializer.plainText().serialize(e.originalMessage()));
+            return;
+        } 
         ChatChannel chatChannel = chatChannelManager.getChannel(p);
         e.viewers().removeIf(viewer -> !chatChannel.canSeeMessage(p, viewer));
         e.renderer(this::renderMessage);

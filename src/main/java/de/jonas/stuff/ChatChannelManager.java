@@ -1,7 +1,8 @@
 package de.jonas.stuff;
 
-import de.jonas.stuff.api.ChatChannel;
 import org.bukkit.entity.Player;
+
+import de.jonas.stuff.interfaced.ChatChannel;
 
 import java.util.*;
 

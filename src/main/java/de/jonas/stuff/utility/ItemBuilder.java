@@ -2,20 +2,20 @@ package de.jonas.stuff.utility;
 
 import de.jonas.stuff.ItemBuilderManager;
 import de.jonas.stuff.Stuff;
-import de.jonas.stuff.api.ClickEvent;
+import de.jonas.stuff.interfaced.ClickEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import java.lang.IllegalArgumentException;
+import java.lang.IllegalStateException;
 
 public class ItemBuilder {
 
@@ -27,9 +27,11 @@ public class ItemBuilder {
     private boolean glint;
     private int clickID;
     private List<Component> lore;
+    private boolean hasClickedEvent;
 
     public ItemBuilder() {
         lore = new ArrayList<>();
+        hasClickedEvent = false;
     }
 
     public ItemBuilder setMaterial(Material itemMaterial) {
@@ -68,21 +70,28 @@ public class ItemBuilder {
     }
 
     public ItemBuilder whenClicked(ClickEvent listener) {
+        if (hasClickedEvent) {
+            throw new IllegalStateException("This item already has an click listener");
+        }
         int pdv = stuff.itemBuilderManager.addEvent(listener);
         clickID = pdv;
+        hasClickedEvent = true;
         return this;
     }
 
     public ItemStack build() {
+        if (material == null) {
+            throw new IllegalArgumentException("Material may not be null");
+        }
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
-        meta.displayName(name);
+        if (name != null) meta.displayName(name);
         if (glint) {
             meta.addEnchant(Enchantment.DURABILITY, 10, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
-        meta.lore(lore);
-        meta.getPersistentDataContainer().set(ItemBuilderManager.inventoryClickEvent, PersistentDataType.INTEGER, clickID);
+        if (lore != null) meta.lore(lore);
+        if (hasClickedEvent) meta.getPersistentDataContainer().set(ItemBuilderManager.inventoryClickEvent, PersistentDataType.INTEGER, clickID);
         item.setItemMeta(meta);
         Stuff.INSTANCE.increaseitemBuildsCount();
         return item;
