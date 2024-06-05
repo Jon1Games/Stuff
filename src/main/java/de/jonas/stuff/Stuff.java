@@ -26,6 +26,7 @@ public final class Stuff extends JavaPlugin {
     public int itemBuilds;
     public ChatChannel inputChatChannel;
     public ChatCaptureManager captureManager;
+    public Events events;
 
     public void onLoad() {
 
@@ -44,6 +45,8 @@ public final class Stuff extends JavaPlugin {
         getLogger().log(Level.INFO, itemBuilds + " Item builded");
 
         captureManager = new ChatCaptureManager();
+
+        events = new Events();
 
         CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
 

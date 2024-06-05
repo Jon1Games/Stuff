@@ -26,7 +26,7 @@ public class ItemBuilder {
     private Material material;
     private Component name;
     private boolean glint, hasClickedEvent, hasPlaceEvent;
-    private int clickID, placeID;
+    private String clickID, placeID;
     private List<Component> lore;
 
     public ItemBuilder() {
@@ -69,20 +69,40 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder whenClicked(ClickEvent listener) {
+    public ItemBuilder whenClicked(String pdv) {
         if (hasClickedEvent) {
             throw new IllegalStateException("This item already has an click listener");
         }
-        clickID = stuff.itemBuilderManager.addClickEvent(listener);
+        clickID = pdv;
         hasClickedEvent = true;
         return this;
     }
 
-    public ItemBuilder whenPlaced(PlaceEvent listener) {
+    public ItemBuilder whenClicked(ClickEvent lisstener, String pdv) {
+        if (hasClickedEvent) {
+            throw new IllegalStateException("This item already has an click listener");
+        }
+        stuff.itemBuilderManager.addClickEvent(lisstener, pdv);
+        clickID = pdv;
+        hasClickedEvent = true;
+        return this;
+    }
+
+    public ItemBuilder whenPlaced(String pdv) {
         if (hasPlaceEvent) {
             throw new IllegalStateException("This item already has an place listener");
         }
-        placeID = stuff.itemBuilderManager.addPlaceEvent(listener);
+        placeID = pdv;
+        hasPlaceEvent = true;
+        return this;
+    }
+
+    public ItemBuilder whenPlaced(PlaceEvent listener, String pdv) {
+        if (hasPlaceEvent) {
+            throw new IllegalStateException("This item already has an place listener");
+        }
+        placeID = pdv;
+        stuff.itemBuilderManager.addPlaceEvent(listener, pdv);
         hasPlaceEvent = true;
         return this;
     }
@@ -100,8 +120,8 @@ public class ItemBuilder {
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
         if (lore != null) meta.lore(lore);
-        if (hasClickedEvent) meta.getPersistentDataContainer().set(ItemBuilderManager.inventoryClickEvent, PersistentDataType.INTEGER, clickID);
-        if (hasPlaceEvent) meta.getPersistentDataContainer().set(ItemBuilderManager.blockPlaceEvent, PersistentDataType.INTEGER, placeID);
+        if (hasClickedEvent) meta.getPersistentDataContainer().set(ItemBuilderManager.inventoryClickEvent, PersistentDataType.STRING, clickID);
+        if (hasPlaceEvent) meta.getPersistentDataContainer().set(ItemBuilderManager.blockPlaceEvent, PersistentDataType.STRING, placeID);
         item.setItemMeta(meta);
         Stuff.INSTANCE.increaseitemBuildsCount();
         return item;

@@ -12,43 +12,27 @@ public class ItemBuilderManager {
 
     public static final NamespacedKey inventoryClickEvent = new NamespacedKey("stuff", "inventory_click_event");
     public static final NamespacedKey blockPlaceEvent = new NamespacedKey("stuff", "block_place_event");
-    private Map<Integer, ClickEvent> handlerMap;
-    private Map<Integer, PlaceEvent> handlerMap2;
-    private int count;
+    private Map<String, ClickEvent> handlerMap;
+    private Map<String, PlaceEvent> handlerMap2;
 
     public ItemBuilderManager() {
         handlerMap = new HashMap<>();
         handlerMap2 = new HashMap<>();
-        count = 0;
     }
 
-    public int addClickEvent(ClickEvent event) {
-        for (Map.Entry<Integer, ClickEvent> e : handlerMap.entrySet()) {
-            if (e.getValue() == event) {
-                return e.getKey();
-            }
-        }
-        int pdv = count++;
+    public void addClickEvent(ClickEvent event, String pdv) {
         handlerMap.put(pdv, event);
-        return pdv;
     }
 
-    public ClickEvent getClickEvent(int pdv) {
+    public ClickEvent getClickEvent(String pdv) {
         return handlerMap.get(pdv);
     }
 
-    public int addPlaceEvent(PlaceEvent event) {
-        for (Map.Entry<Integer, PlaceEvent> e : handlerMap2.entrySet()) {
-            if (e.getValue() == event) {
-                return e.getKey();
-            }
-        }
-        int pdv = count++;
+    public void addPlaceEvent(PlaceEvent event, String pdv) {
         handlerMap2.put(pdv, event);
-        return pdv;
     }
 
-    public PlaceEvent getPlaceEvent(int pdv) {
+    public PlaceEvent getPlaceEvent(String pdv) {
         return handlerMap2.get(pdv);
     }
 

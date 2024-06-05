@@ -17,7 +17,7 @@ public class BlockPlace implements Listener{
         PersistentDataContainer container = e.getItemInHand().getItemMeta().getPersistentDataContainer();
         if (!container.has(ItemBuilderManager.blockPlaceEvent)) return;
 
-        int pdv = container.get(ItemBuilderManager.blockPlaceEvent, PersistentDataType.INTEGER);
+        String pdv = container.get(ItemBuilderManager.blockPlaceEvent, PersistentDataType.STRING);
         PlaceEvent ev = Stuff.INSTANCE.itemBuilderManager.getPlaceEvent(pdv);
         if (ev != null) {
             ev.onPlace(e);
