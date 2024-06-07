@@ -7,14 +7,19 @@ import de.jonas.stuff.interfaced.PlaceEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+
+import com.destroystokyo.paper.profile.PlayerProfile;
+
 import java.lang.IllegalArgumentException;
 import java.lang.IllegalStateException;
 
@@ -28,6 +33,7 @@ public class ItemBuilder {
     private boolean glint, hasClickedEvent, hasPlaceEvent;
     private String clickID, placeID;
     private List<Component> lore;
+    private UUID skullPlayerUUID;
 
     public ItemBuilder() {
         lore = new ArrayList<>();
@@ -36,6 +42,11 @@ public class ItemBuilder {
 
     public ItemBuilder setMaterial(Material itemMaterial) {
         material = itemMaterial;
+        return this;
+    }
+
+    public ItemBuilder setSkull(UUID playerUUID) {
+        skullPlayerUUID = playerUUID;
         return this;
     }
 
@@ -108,11 +119,23 @@ public class ItemBuilder {
     }
 
     public ItemStack build() {
-        if (material == null) {
+        if (skullPlayerUUID != null) {
+            material = Material.PLAYER_HEAD;
+        } else if (material == null) {
             throw new IllegalArgumentException("Material may not be null");
         }
         ItemStack item = new ItemStack(material);
             
+        if (skullPlayerUUID != null) {
+            SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
+            OfflinePlayer p = Bukkit.getOfflinePlayer(skullPlayerUUID);
+            PlayerProfile prof = p.getPlayerProfile();
+            if (!prof.isComplete()) {
+                prof.complete();
+            }
+            skullMeta.setPlayerProfile(prof);
+            item.setItemMeta(skullMeta);
+        }
         ItemMeta meta = item.getItemMeta();
         if (name != null) meta.displayName(name);
         if (glint) {

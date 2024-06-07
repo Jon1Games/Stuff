@@ -27,7 +27,7 @@ public class PagenationInventory implements InventoryHolder{
             inv.setItem(a,
                 new ItemBuilder()
                     .setName("")
-                    .setMaterial(Material.BLACK_STAINED_GLASS_PANE)
+                    .setMaterial(Material.LIGHT_GRAY_STAINED_GLASS_PANE)
                     .whenClicked("stuff:cancelevent")
                     .build()
             );
@@ -63,11 +63,11 @@ public class PagenationInventory implements InventoryHolder{
 
     @Override
     public @NotNull Inventory getInventory() {
-        if (nextName.isEmpty()) {
+        if (nextName == null) {
             nextName = "Weiter";
-        } else if (backName.isEmpty()) {
+        } else if (backName == null) {
             backName = "Zurück";
-        }else if (nextName.isEmpty()) {
+        }else if (nextName == null) {
             closeName = "Schließen";
         }
         return this.inv;
