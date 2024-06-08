@@ -27,7 +27,7 @@ public class PagenationInventory implements InventoryHolder{
             inv.setItem(a,
                 new ItemBuilder()
                     .setName("")
-                    .setMaterial(Material.LIGHT_GRAY_STAINED_GLASS_PANE)
+                    .setMaterial(Material.GRAY_STAINED_GLASS_PANE)
                     .whenClicked("stuff:cancelevent")
                     .build()
             );

@@ -6,10 +6,10 @@ import de.jonas.stuff.utility.PagenationInventory;
 
 public class Events {
     
-    public static final ClickEvent closeInv = Events::closeInvI;
-    public static final ClickEvent cancelEvent = Events::cancelEventI;
-    public static final ClickEvent prevPage = pageOffset(-1);
-    public static final ClickEvent nextPage = pageOffset(1);
+    private static final ClickEvent closeInv = Events::closeInvI;
+    private static final ClickEvent cancelEvent = Events::cancelEventI;
+    private static final ClickEvent prevPage = pageOffset(-1);
+    private static final ClickEvent nextPage = pageOffset(1);
 
     public Events() {
         Stuff.INSTANCE.itemBuilderManager.addClickEvent(closeInv, "stuff:closeinv");
@@ -27,7 +27,7 @@ public class Events {
         e.setCancelled(true);
     }
 
-    public static ClickEvent pageOffset(int offset) {
+    private static ClickEvent pageOffset(int offset) {
         return e -> {
             if (e.getInventory().getHolder() instanceof PagenationInventory pgi) {
                 e.setCancelled(true);

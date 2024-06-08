@@ -28,7 +28,7 @@ public class PermToOp {
 
     }
 
-    public static void setPermissionDefault(PluginManager pm, String permission, PermissionDefault level) {
+    private static void setPermissionDefault(PluginManager pm, String permission, PermissionDefault level) {
         Permission perm = pm.getPermission(permission);
         if(perm != null) {
             perm.setDefault(level);
