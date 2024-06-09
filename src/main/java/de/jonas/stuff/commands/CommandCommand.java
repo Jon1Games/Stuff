@@ -24,16 +24,17 @@ public class CommandCommand {
             String command = cmd.getString("Command");
 
             new CommandAPICommand(("stuff:command:" + a))
-                    .withAliases(cmd.getStringList("Aliases").toArray(num -> new String[num]))
-                    .executes((sender, args) -> {
-                        if (console) {
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command
-                                    .replaceAll("<player>", sender.getName()));
-                        } else {
-                            Bukkit.dispatchCommand(sender, command.replaceAll("<player>", sender.getName()));
-                        }
-                    })
-                    .register();
+                .withPermission(cmd.getString("Permission"))
+                .withAliases(cmd.getStringList("Aliases").toArray(num -> new String[num]))
+                .executes((sender, args) -> {
+                    if (console) {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command
+                                .replaceAll("<player>", sender.getName()));
+                    } else {
+                        Bukkit.dispatchCommand(sender, command.replaceAll("<player>", sender.getName()));
+                    }
+                })
+                .register();
         }
     }
 }

@@ -251,10 +251,10 @@ InfoCommands:
   Enabled: true
   # Placeholders: <player>
   # You can add as many Commands here as you want
-  Text:
-    Enabled: true
+  ExampleCommand:
+    Enabled: false
     Aliases:
-      - "text"
+      - "ExmapleCommand"
     Message: "Ein Text Text"
 
 CommandCommand:
@@ -262,15 +262,30 @@ CommandCommand:
   # Placeholders: <player>
   # You can add as many Commands here as you want
   TestMessage:
-    Enabled: true
+    Enabled: false
     Aliases:
       - "testmessage"
+    Permission: "stuff.commandcommand.testmessage"  
     RunAsConsole: false
     Command: "say test"
 
+TimedMessages:
+  Enabled: true
+  # You can add as many timed messages here as you want
+  ExampleMessage:
+    Enabled: false
+    # Random: true will send one of the Messages, false will send ALL the messages at once
+    Random: True
+    # in sec 
+    Period: 1800
+    Messages:
+      - "Ich bin eine Test MNachricht nr.1"
+      - "Ich bin eine Test MNachricht nr.2"
+      - "Ich bin eine Test MNachricht nr.3"
+
 # EXPERIMENTAL NOT TESTED
-# This option gives OP permissions what are listened below, this is usefull for plugins who set their permission but
-# don´t assign them to OP´s.
+# This option gives OP permissions what are listened below, this is usefull for plugins who set their permission 
+#  but don´t assign them to OP´s.
 GiveOpPermission:
   Enabled: false
   Permissions:

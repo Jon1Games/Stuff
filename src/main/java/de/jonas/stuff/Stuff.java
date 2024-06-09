@@ -6,6 +6,7 @@ import de.jonas.stuff.commands.*;
 import de.jonas.stuff.interfaced.ChatChannel;
 import de.jonas.stuff.listener.*;
 import de.jonas.stuff.utility.PermToOp;
+import de.jonas.stuff.utility.TimedMessages;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import org.bukkit.Bukkit;
@@ -138,6 +139,8 @@ public final class Stuff extends JavaPlugin {
             chatChannelManager.registerChannel(a.toLowerCase(), abstractChannel);
 
             increaseChannelCount();
+
+            new TimedMessages();
 
         }
 
