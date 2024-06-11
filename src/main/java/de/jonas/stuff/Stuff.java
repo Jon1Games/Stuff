@@ -49,7 +49,7 @@ public final class Stuff extends JavaPlugin {
 
         events = new Events();
 
-        CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
+        if (!CommandAPI.isLoaded()) CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
 
         if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
             getLogger().log(Level.INFO, "Enabling playername formatting");
