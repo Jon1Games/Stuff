@@ -1,13 +1,15 @@
 package de.jonas.stuff.utility;
 
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
 import net.kyori.adventure.text.Component;
-import java.util.*;
 
 public class PagenationInventory implements InventoryHolder{
 
@@ -102,5 +104,18 @@ public class PagenationInventory implements InventoryHolder{
                 }
             }
         } catch(IndexOutOfBoundsException | NullPointerException e) {}
+
+        for (int a = inv.firstEmpty(); a<44; a++) {
+            if (a == 18 || a == 27 || a == 36 ||
+            a == 17 || a == 26 || a == 35) continue;
+            inv.setItem(a,
+                new ItemBuilder()
+                    .setMaterial(Material.LIGHT_GRAY_STAINED_GLASS_PANE)
+                    .setName("")
+                    .whenClicked("stuff:cancelevent")
+                    .build()
+            );
+        }
+
     }
 }

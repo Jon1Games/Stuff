@@ -1,5 +1,21 @@
 package de.jonas.stuff.utility;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataType;
+
+import com.destroystokyo.paper.profile.PlayerProfile;
+
 import de.jonas.stuff.ItemBuilderManager;
 import de.jonas.stuff.Stuff;
 import de.jonas.stuff.interfaced.ClickEvent;
@@ -7,21 +23,6 @@ import de.jonas.stuff.interfaced.PlaceEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import java.util.*;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
-
-import com.destroystokyo.paper.profile.PlayerProfile;
-
-import java.lang.IllegalArgumentException;
-import java.lang.IllegalStateException;
 
 public class ItemBuilder {
 
