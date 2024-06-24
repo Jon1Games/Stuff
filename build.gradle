@@ -1,10 +1,9 @@
 plugins {
     id 'java'
-    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group = 'de.jonas'
-version = '3.4'
+version = '4.0'
 
 repositories {
     mavenCentral()
@@ -29,15 +28,14 @@ repositories {
 }
 
 dependencies {
-    compileOnly "io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT"
-    implementation('com.zaxxer:HikariCP:5.1.0')
-    implementation "dev.jorel:commandapi-bukkit-shade:9.3.0"
-    implementation 'com.mojang:authlib:1.5.25'
+    compileOnly "io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT"
+    implementation "dev.jorel:commandapi-bukkit-shade-mojang-mapped:9.5.1"
+    compileOnly 'com.mojang:authlib:1.5.25'
     compileOnly 'net.luckperms:api:5.4'
     compileOnly 'me.clip:placeholderapi:2.11.5'
 }
 
-def targetJavaVersion = 17
+def targetJavaVersion = 21
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
@@ -60,10 +58,4 @@ processResources {
     filesMatching('paper-plugin.yml') {
         expand props
     }
-}
-
-shadowJar {
-    archiveBaseName.set('stuff')
-    archiveClassifier.set('')
-    relocate("dev.jorel.commandapi", "de.jonas.stuff.commandapi")
 }

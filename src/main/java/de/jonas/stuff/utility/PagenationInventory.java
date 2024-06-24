@@ -35,12 +35,28 @@ public class PagenationInventory implements InventoryHolder{
             );
         }
 
+        fillPage(0);
+
+    }
+
+    @Override
+    public @NotNull Inventory getInventory() {
+        if (nextName == null) {
+            nextName = "Weiter";
+        }
+        if (backName == null) {
+            backName = "Zurück";
+        }
+        if (nextName == null) {
+            closeName = "Schließen";
+        }
+
         inv.setItem(45, 
-            new ItemBuilder()
-                .setMaterial(Material.SPECTRAL_ARROW)
-                .setName("Zurück")
-                .whenClicked("stuff:prev_page")
-                .build()
+        new ItemBuilder()
+            .setMaterial(Material.SPECTRAL_ARROW)
+            .setName("Zurück")
+            .whenClicked("stuff:prev_page")
+            .build()
         );
 
         inv.setItem(49, 
@@ -59,19 +75,6 @@ public class PagenationInventory implements InventoryHolder{
                 .build()
         );
 
-        fillPage(0);
-
-    }
-
-    @Override
-    public @NotNull Inventory getInventory() {
-        if (nextName == null) {
-            nextName = "Weiter";
-        } else if (backName == null) {
-            backName = "Zurück";
-        }else if (nextName == null) {
-            closeName = "Schließen";
-        }
         return this.inv;
     }
 

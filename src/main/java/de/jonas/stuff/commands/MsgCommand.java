@@ -1,17 +1,19 @@
 package de.jonas.stuff.commands;
 
-import de.jonas.stuff.Stuff;
-import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.arguments.*;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import java.util.List;
+import java.util.Objects;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import java.util.List;
-import java.util.Objects;
+import de.jonas.stuff.Stuff;
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPICommand;
+import dev.jorel.commandapi.arguments.GreedyStringArgument;
+import dev.jorel.commandapi.arguments.PlayerArgument;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 
 public class MsgCommand {
 
@@ -44,13 +46,13 @@ public class MsgCommand {
                             Placeholder.component("fromplayer", player.teamDisplayName()), Placeholder.component
                                     ("toplayer", target.teamDisplayName()),
                             Placeholder.component("message", Component.text((String) args.get(stuff.getConfig().
-                                    getString("MsgCommand.ArgumentName")))));
+                                    getString("MsgCommand.suggestionName.Message")))));
                     Component prefixfrom = mm.deserialize(Objects.requireNonNull(stuff.getConfig().getString
                                     ("MsgCommand.Messages.From")),
                             Placeholder.component("fromplayer", player.teamDisplayName()), Placeholder.component
                                     ("toplayer", target.teamDisplayName()),
                             Placeholder.component("message", Component.text((String) args.get(stuff.getConfig()
-                                    .getString("MsgCommand.ArgumentName")))));
+                                    .getString("MsgCommand.suggestionName.Message")))));
 
                     target.sendMessage(prefixto);
                     player.sendMessage(prefixfrom);

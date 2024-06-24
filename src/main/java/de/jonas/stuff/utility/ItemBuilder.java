@@ -140,7 +140,7 @@ public class ItemBuilder {
         ItemMeta meta = item.getItemMeta();
         if (name != null) meta.displayName(name);
         if (glint) {
-            meta.addEnchant(Enchantment.DURABILITY, 10, true);
+            meta.addEnchant(Enchantment.UNBREAKING, 10, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
         if (lore != null) meta.lore(lore);
