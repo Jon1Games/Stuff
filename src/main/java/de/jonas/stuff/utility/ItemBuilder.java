@@ -147,7 +147,6 @@ public class ItemBuilder {
         if (hasClickedEvent) meta.getPersistentDataContainer().set(ItemBuilderManager.inventoryClickEvent, PersistentDataType.STRING, clickID);
         if (hasPlaceEvent) meta.getPersistentDataContainer().set(ItemBuilderManager.blockPlaceEvent, PersistentDataType.STRING, placeID);
         item.setItemMeta(meta);
-        Stuff.INSTANCE.increaseitemBuildsCount();
         return item;
     } 
 

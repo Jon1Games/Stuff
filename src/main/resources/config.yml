@@ -8,10 +8,12 @@
 # Required Plugins
 # LuckPerms
 # PlaceHolderApi
-  # /papi ecloud download luckperms
+# /papi ecloud download luckperms
 
 # Infos
 # suggestionName is the name that shows up over the chat for you what you know what to type there.
+
+OnlyUseAPI: false
 
 EnableCalculatorCommand:
   Enabled: True
@@ -23,7 +25,7 @@ EnableCalculatorCommand:
 CustomJoinQuitMessage:
   Enabled: true
   Messages:
-  # Player placeholder: <player>
+    # Player placeholder: <player>
     JoinMessage: "<gray>[</gray><green>+</green><gray>]</gray> <player>"
     LeaveMessage: "<gray>[</gray><red>-</red><gray>]</gray> <player>"
 
@@ -128,26 +130,26 @@ GamemodeCommand:
       Aliases:
         - "3"
       Permission: "stuff.gamemode.spectator"
-      Self : "Dein Spielmodus wurde auf Zuschauer gesetzt."
+      Self: "Dein Spielmodus wurde auf Zuschauer gesetzt."
       Other:
-        Self : "Du hast <green><player></green> in den Zuschauer Modus gesetzt."
-        Other : "Du wurdest von <green><player></green> in den Zuschauer Modus gesetzt."
+        Self: "Du hast <green><player></green> in den Zuschauer Modus gesetzt."
+        Other: "Du wurdest von <green><player></green> in den Zuschauer Modus gesetzt."
     Adventure:
       Aliases:
         - "2"
       Permission: "stuff.gamemode.adventure"
-      Self : "Dein Spielmodus wurde auf Abenteuer gesetzt."
+      Self: "Dein Spielmodus wurde auf Abenteuer gesetzt."
       Other:
-        Self : "Du hast <green><player></green> in den Abenteuer Modus gesetzt."
-        Other : "Du wurdest von <green><player></green> in den Abenteuer Modus gesetzt."
+        Self: "Du hast <green><player></green> in den Abenteuer Modus gesetzt."
+        Other: "Du wurdest von <green><player></green> in den Abenteuer Modus gesetzt."
     Survival:
       Aliases:
         - "0"
       Permission: "stuff.gamemode.survival"
-      Self : "Dein Spielmodus wurde auf Überleben gesetzt."
+      Self: "Dein Spielmodus wurde auf Überleben gesetzt."
       Other:
-        Self : "Du hast <green><player></green> in den Überleben Modus gesetzt."
-        Other : "Du wurdest von <green><player></green> in den Überleben Modus gesetzt."
+        Self: "Du hast <green><player></green> in den Überleben Modus gesetzt."
+        Other: "Du wurdest von <green><player></green> in den Überleben Modus gesetzt."
 
 PortableInventoryCommand:
   Enabled: true
@@ -166,8 +168,8 @@ Format:
       Enabled: true
       Suffix: " %luckperms_suffix%"
     TabSorting:
-        Enabled: true
-        MaxWeight: 1000
+      Enabled: true
+      MaxWeight: 1000
   Chat:
     Enabled: true
     # Placeholder: <player>, <message>
@@ -221,9 +223,9 @@ SwitchChannel:
   DefaultChannelName: "Standart"
   Messages:
     # Placeholder: <channel>
-    NotExistend: "<red>Der Kanal \"<channel>\" existiert nicht!</red>"
-    NoPermissionsChannel: "<red>Du hast keine Rechte auf den Kanal \"<channel>\"!</red>"
-    JoinedChannel: "<green>Du bist erfolgreich dem Kanal \"<channel>\" begetreten.<br>Alle Weiteren nachrichten werden nun in diesem Kanal gesendet.</green>"
+    NotExistend: '<red>Der Kanal "<channel>" existiert nicht!</red>'
+    NoPermissionsChannel: '<red>Du hast keine Rechte auf den Kanal "<channel>"!</red>'
+    JoinedChannel: '<green>Du bist erfolgreich dem Kanal "<channel>" begetreten.<br>Alle Weiteren nachrichten werden nun in diesem Kanal gesendet.</green>'
 
 FirstJoinTitle:
   Enabled: true
@@ -265,7 +267,7 @@ CommandCommand:
     Enabled: false
     Aliases:
       - "testmessage"
-    Permission: "stuff.commandcommand.testmessage"  
+    Permission: "stuff.commandcommand.testmessage"
     RunAsConsole: false
     Command: "say test"
 
@@ -276,16 +278,16 @@ TimedMessages:
     Enabled: false
     # Random: true will send one of the Messages, false will send ALL the messages at once
     Random: True
-    # in sec 
-    Period: 1800
+    # in sec
+    Period: 60
     Messages:
       - "Ich bin eine Test MNachricht nr.1"
       - "Ich bin eine Test MNachricht nr.2"
       - "Ich bin eine Test MNachricht nr.3"
 
 # EXPERIMENTAL NOT TESTED
-# This option gives OP permissions what are listened below, this is usefull for plugins who set their permission 
-#  but don´t assign them to OP´s.
+# This option gives OP permissions what are listened below, this is usefull for plugins who set their permission
+# but don´t assign them to OP´s.
 GiveOpPermission:
   Enabled: false
   Permissions:

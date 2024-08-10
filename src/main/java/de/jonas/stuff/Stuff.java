@@ -1,19 +1,40 @@
 package de.jonas.stuff;
 
-import de.jonas.stuff.chatchannels.AbstractChannel;
-import de.jonas.stuff.chatchannels.Default;
-import de.jonas.stuff.commands.*;
-import de.jonas.stuff.interfaced.ChatChannel;
-import de.jonas.stuff.listener.*;
-import de.jonas.stuff.utility.PermToOp;
-import de.jonas.stuff.utility.TimedMessages;
-import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import java.util.logging.Level;
+
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import java.util.logging.Level;
+
+import de.jonas.stuff.chatchannels.AbstractChannel;
+import de.jonas.stuff.chatchannels.Default;
+import de.jonas.stuff.commands.BroadcastCommand;
+import de.jonas.stuff.commands.CalculatorCommand;
+import de.jonas.stuff.commands.CommandCommand;
+import de.jonas.stuff.commands.FlyCommand;
+import de.jonas.stuff.commands.GamemodeCommand;
+import de.jonas.stuff.commands.InfoCommands;
+import de.jonas.stuff.commands.MsgCommand;
+import de.jonas.stuff.commands.PingCommand;
+import de.jonas.stuff.commands.PlayTimeCommand;
+import de.jonas.stuff.commands.PortableInventoryCommand;
+import de.jonas.stuff.commands.ReloadCommand;
+import de.jonas.stuff.commands.SpeedCommand;
+import de.jonas.stuff.commands.SwitchChannel;
+import de.jonas.stuff.interfaced.ChatChannel;
+import de.jonas.stuff.listener.BlockPlace;
+import de.jonas.stuff.listener.ChatListener;
+import de.jonas.stuff.listener.FirstJoin;
+import de.jonas.stuff.listener.InvClickEvent;
+import de.jonas.stuff.listener.JoinFlyListener;
+import de.jonas.stuff.listener.JoinQuitMessageListener;
+import de.jonas.stuff.listener.JoinSpeedListener;
+import de.jonas.stuff.listener.TeamDisplaynameSet;
+import de.jonas.stuff.utility.PermToOp;
+import de.jonas.stuff.utility.TimedMessages;
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPIBukkitConfig;
 
 public final class Stuff extends JavaPlugin {
 
@@ -41,13 +62,13 @@ public final class Stuff extends JavaPlugin {
         Default defaultChannel = new Default();
         chatChannelManager.setDefaultChannel(defaultChannel);
 
-        itemBuilds = 0;
         itemBuilderManager = new ItemBuilderManager();
-        getLogger().log(Level.INFO, itemBuilds + " Item builded");
 
         captureManager = new ChatCaptureManager();
 
         events = new Events();
+        
+        if(getConfig().getBoolean("OnlyUseAPI")) return;
 
         if (!CommandAPI.isLoaded()) CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
 
@@ -112,15 +133,6 @@ public final class Stuff extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
 
-        CommandAPI.onEnable();
-
-        if (getConfig().getBoolean("Format.PlayerNames.Enabled")) teamDisplaynameSet.onEnable();
-
-        if (getConfig().getBoolean("GiveOpPermission.Enabled")) {
-            PermToOp permToOp = new PermToOp();
-            permToOp.onEnable();
-        }
-
         chatChannelManager.onEnable();
 
         ConfigurationSection sec = getConfig().getConfigurationSection("Channels");
@@ -139,12 +151,22 @@ public final class Stuff extends JavaPlugin {
             chatChannelManager.registerChannel(a.toLowerCase(), abstractChannel);
 
             increaseChannelCount();
-
-            new TimedMessages();
-
         }
 
         getLogger().log(Level.INFO, channels+ " channels registered");
+
+        if(getConfig().getBoolean("OnlyUseAPI")) return;
+
+        CommandAPI.onEnable();
+
+        if (getConfig().getBoolean("Format.PlayerNames.Enabled")) teamDisplaynameSet.onEnable();
+
+        if (getConfig().getBoolean("GiveOpPermission.Enabled")) {
+            PermToOp permToOp = new PermToOp();
+            permToOp.onEnable();
+        }
+
+        if (getConfig().getBoolean("TimedMessages.Enabled")) new TimedMessages();
 
         this.listener();
         getLogger().log(Level.INFO, listeners + " listener registered");
@@ -204,10 +226,6 @@ public final class Stuff extends JavaPlugin {
 
     public void increaseChannelCount() {
         channels++;
-    }
-
-    public void increaseitemBuildsCount() {
-        itemBuilds++;
     }
 }
 
