@@ -1,17 +1,20 @@
 package de.jonas.stuff.commands;
 
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
+
 import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.CommandPermission;
-import org.bukkit.Bukkit;
 
 public class ReloadCommand {
+
     Stuff stuff = Stuff.INSTANCE;
+    FileConfiguration conf = stuff.getConfig();
 
     public ReloadCommand() {
         new CommandAPICommand("Stuff:reload")
                 .withAliases("stuff:reload")
-                .withPermission(CommandPermission.OP)
+                .withPermission(conf.getString("ReloadCommand.permission"))
                     .withSubcommand(new CommandAPICommand("TeamDisplayName")
                             .executes(((commandSender, args) -> {
                                 Bukkit.getOnlinePlayers().forEach(pl -> {

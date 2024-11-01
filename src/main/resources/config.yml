@@ -15,6 +15,9 @@
 
 OnlyUseAPI: false
 
+ReloadCommand:
+  permission: "stuff.reload"
+
 EnableCalculatorCommand:
   Enabled: True
   suggestionName:

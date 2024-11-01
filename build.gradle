@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'de.jonas'
-version = '4.0'
+version = '4.1'
 
 repositories {
     mavenCentral()
@@ -29,7 +29,7 @@ repositories {
 
 dependencies {
     compileOnly "io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT"
-    implementation "dev.jorel:commandapi-bukkit-shade-mojang-mapped:9.5.1"
+    implementation "dev.jorel:commandapi-bukkit-shade-mojang-mapped:9.6.0"
     compileOnly 'com.mojang:authlib:1.5.25'
     compileOnly 'net.luckperms:api:5.4'
     compileOnly 'me.clip:placeholderapi:2.11.5'

@@ -1,7 +1,7 @@
 name: Stuff
 version: "${version}"
 main: de.jonas.stuff.Stuff
-api-version: "1.21"
+api-version: "1.21.1"
 loader: de.jonas.stuff.Stuffloader
 dependencies:
   server:
