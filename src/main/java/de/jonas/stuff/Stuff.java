@@ -52,7 +52,11 @@ public final class Stuff extends JavaPlugin {
 
     public void onLoad() {
 
-        getLogger().log(Level.INFO, "Starting Plugin");
+        if (getConfig().getBoolean("OnlyUseAPI")) {
+            getLogger().log(Level.INFO, "Starting Plugin in APi only mode");
+        } else {
+            getLogger().log(Level.INFO, "Starting Plugin");
+        }
 
         INSTANCE = this;
 
@@ -68,64 +72,66 @@ public final class Stuff extends JavaPlugin {
 
         events = new Events();
         
-        if(getConfig().getBoolean("OnlyUseAPI")) return;
+        if(getConfig().getBoolean("OnlyUseAPI")) {
 
-        if (!CommandAPI.isLoaded()) CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
+            if (!CommandAPI.isLoaded()) CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
 
-        if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
-            getLogger().log(Level.INFO, "Enabling playername formatting");
-            teamDisplaynameSet = new TeamDisplaynameSet();
-            teamDisplaynameSet.onLoad();
-        } else {
-            getLogger().log(Level.INFO, "Playername formatting is disabled");
-        }
+            if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
+                getLogger().log(Level.INFO, "Enabling playername formatting");
+                teamDisplaynameSet = new TeamDisplaynameSet();
+                teamDisplaynameSet.onLoad();
+            } else {
+                getLogger().log(Level.INFO, "Playername formatting is disabled");
+            }
 
-        new ReloadCommand();
-        commands = 1;
-        if (getConfig().getBoolean("EnableCalculatorCommand.Enabled")) {
-            new CalculatorCommand();
-            increaseCommandCount();
-        }
-        if (getConfig().getBoolean("MsgCommand.Enabled")) {
-            new MsgCommand();
-            increaseCommandCount();
-        }
-        if (getConfig().getBoolean("FlyCommand.Enabled")) {
-            new FlyCommand();
-            increaseCommandCount();
-        }
-        new SpeedCommand();
-        if (getConfig().getBoolean("GamemodeCommand.Enabled")) {
-            new GamemodeCommand();
-            increaseCommandCount();
-        }
-        if (getConfig().getBoolean("PortableInventoryCommand.Enabled")) {
-            new PortableInventoryCommand();
-            increaseCommandCount();
-        }
-        if (getConfig().getBoolean("InfoCommands.Enabled")) new InfoCommands();
-        if (getConfig().getBoolean("PlayTimeCommand.Enabled")) {
-            new PlayTimeCommand();
-            increaseCommandCount();
-        }
-        if (getConfig().getBoolean("PingCommand.Enabled")) {
-            new PingCommand();
-            increaseCommandCount();
-        }
-        if (getConfig().getBoolean("CommandCommand.Enabled")) {
-            new CommandCommand();
-            increaseCommandCount();
-        }
-        if (getConfig().getBoolean("BroadcastCommand.Enabled")) {
-            new BroadcastCommand();
-            increaseCommandCount();
-        }
-        if (getConfig().getBoolean("SwitchChannel.Enabled") && getConfig().getBoolean("Format.Chat.Enabled")) {
-            new SwitchChannel();
-            increaseCommandCount();
-        }
+            new ReloadCommand();
+            commands = 1;
+            if (getConfig().getBoolean("EnableCalculatorCommand.Enabled")) {
+                new CalculatorCommand();
+                increaseCommandCount();
+            }
+            if (getConfig().getBoolean("MsgCommand.Enabled")) {
+                new MsgCommand();
+                increaseCommandCount();
+            }
+            if (getConfig().getBoolean("FlyCommand.Enabled")) {
+                new FlyCommand();
+                increaseCommandCount();
+            }
+            new SpeedCommand();
+            if (getConfig().getBoolean("GamemodeCommand.Enabled")) {
+                new GamemodeCommand();
+                increaseCommandCount();
+            }
+            if (getConfig().getBoolean("PortableInventoryCommand.Enabled")) {
+                new PortableInventoryCommand();
+                increaseCommandCount();
+            }
+            if (getConfig().getBoolean("InfoCommands.Enabled")) new InfoCommands();
+            if (getConfig().getBoolean("PlayTimeCommand.Enabled")) {
+                new PlayTimeCommand();
+                increaseCommandCount();
+            }
+            if (getConfig().getBoolean("PingCommand.Enabled")) {
+                new PingCommand();
+                increaseCommandCount();
+            }
+            if (getConfig().getBoolean("CommandCommand.Enabled")) {
+                new CommandCommand();
+                increaseCommandCount();
+            }
+            if (getConfig().getBoolean("BroadcastCommand.Enabled")) {
+                new BroadcastCommand();
+                increaseCommandCount();
+            }
+            if (getConfig().getBoolean("SwitchChannel.Enabled") && getConfig().getBoolean("Format.Chat.Enabled")) {
+                new SwitchChannel();
+                increaseCommandCount();
+            }
 
-        getLogger().log(Level.INFO, commands + " commands registered");
+            getLogger().log(Level.INFO, commands + " commands registered");
+
+        }
         
     }
 
@@ -135,43 +141,48 @@ public final class Stuff extends JavaPlugin {
 
         chatChannelManager.onEnable();
 
-        ConfigurationSection sec = getConfig().getConfigurationSection("Channels");
-        for (String a : sec.getKeys(false)) {
-            ConfigurationSection cs = sec.getConfigurationSection(a);
+        if(getConfig().getBoolean("OnlyUseAPI")) {
 
-            if (!cs.getBoolean("Enabled")) continue;
+            ConfigurationSection sec = getConfig().getConfigurationSection("Channels");
+            for (String a : sec.getKeys(false)) {
+                ConfigurationSection cs = sec.getConfigurationSection(a);
 
-            AbstractChannel abstractChannel = new AbstractChannel(
-                    cs.getString("Permission.See"),
-                    cs.getString("Permission.Join"),
-                    cs.getString("Format"),
-                    cs.getBoolean("CanSeeOwnMessages")
-            );
+                if (!cs.getBoolean("Enabled")) continue;
 
-            chatChannelManager.registerChannel(a.toLowerCase(), abstractChannel);
+                AbstractChannel abstractChannel = new AbstractChannel(
+                        cs.getString("Permission.See"),
+                        cs.getString("Permission.Join"),
+                        cs.getString("Format"),
+                        cs.getBoolean("CanSeeOwnMessages")
+                );
 
-            increaseChannelCount();
+                chatChannelManager.registerChannel(a.toLowerCase(), abstractChannel);
+
+                increaseChannelCount();
+            }
+
+            getLogger().log(Level.INFO, channels+ " channels registered");
+
+            CommandAPI.onEnable();
+
+            if (getConfig().getBoolean("Format.PlayerNames.Enabled")) teamDisplaynameSet.onEnable();
+
+            if (getConfig().getBoolean("GiveOpPermission.Enabled")) {
+                PermToOp permToOp = new PermToOp();
+                permToOp.onEnable();
+            }
+
+            if (getConfig().getBoolean("TimedMessages.Enabled")) new TimedMessages();
+
         }
-
-        getLogger().log(Level.INFO, channels+ " channels registered");
-
-        if(getConfig().getBoolean("OnlyUseAPI")) return;
-
-        CommandAPI.onEnable();
-
-        if (getConfig().getBoolean("Format.PlayerNames.Enabled")) teamDisplaynameSet.onEnable();
-
-        if (getConfig().getBoolean("GiveOpPermission.Enabled")) {
-            PermToOp permToOp = new PermToOp();
-            permToOp.onEnable();
-        }
-
-        if (getConfig().getBoolean("TimedMessages.Enabled")) new TimedMessages();
 
         this.listener();
-        getLogger().log(Level.INFO, listeners + " listener registered");
 
-        getLogger().log(Level.INFO, "Startup Complete");
+        if (getConfig().getBoolean("OnlyUseAPI")) {
+            getLogger().log(Level.INFO, "Startup in APi only mode Complete");
+        } else {
+            getLogger().log(Level.INFO, "Startup Complete");
+        }
 
     }
 
@@ -190,6 +201,7 @@ public final class Stuff extends JavaPlugin {
     public void listener() {
         PluginManager pm = Bukkit.getPluginManager();
 
+        
         if (getConfig().getBoolean("CustomJoinQuitMessage.Enabled")) {
             pm.registerEvents(new JoinQuitMessageListener(), this);
             increaseListenerCount();
@@ -208,12 +220,14 @@ public final class Stuff extends JavaPlugin {
             pm.registerEvents(teamDisplaynameSet, this);
             increaseListenerCount();
         }
-        pm.registerEvents(new InvClickEvent(), this);
-        increaseListenerCount();
-        pm.registerEvents(new BlockPlace(), this);
-        increaseListenerCount();
-        pm.registerEvents(new FirstJoin(), this);
-        increaseListenerCount();
+        getLogger().log(Level.INFO, listeners + " listener registered");
+
+        if(getConfig().getBoolean("OnlyUseAPI")) {
+            pm.registerEvents(new InvClickEvent(), this);
+            pm.registerEvents(new BlockPlace(), this);
+            pm.registerEvents(new FirstJoin(), this);
+            getLogger().log(Level.INFO, "3 API listener registered");
+        }
     }
     
     public void increaseCommandCount() {
