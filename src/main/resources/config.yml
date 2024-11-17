@@ -7,13 +7,21 @@
 
 # Required Plugins
 # LuckPerms
-# PlaceHolderApi
+# PlaceHoderApi
 # /papi ecloud download luckperms
 
 # Infos
 # suggestionName is the name that shows up over the chat for you what you know what to type there.
+# aliases are the normally used commands, the default command is "stuff:<command>"
 
 OnlyUseAPI: false
+
+DebugCommands:
+  Enabled: true
+  unregister:
+    - debug
+  Aliases:
+    - debug
 
 ReloadCommand:
   permission: "stuff.reload"
@@ -34,6 +42,7 @@ CustomJoinQuitMessage:
 
 MsgCommand:
   Enabled: true
+  Permission: "stuff.msg.send"
   suggestionName:
     Message: "Nachricht"
     Player: "Spieler"
@@ -47,14 +56,21 @@ MsgCommand:
     - "msg"
     - "tell"
     - "wisper"
+  # Quick answer last user who send you an msg
+  AnswerCommand:
+    Permission: "stuff.msg.answer"
+    Aliases:
+      - r
   # Placeholder: <toplayer> <frompalyer> <message>
   Messages:
     # Message for case the sender is the target
     same: "<red>Du kannst dir selbst keine Nachricht schicken!</red>"
     # Message for the MSG target
-    To: "<gray>[</gray>Prefix<gray>]</gray> <fromplayer> -> <toplayer> <gold>:</gold> <message>"
+    To: "<gray>[</gray>Prefix<gray>]</gray> <fromplayer> -> <toplayer><gold>:</gold> <message>"
     # Message for the MSG sender
-    From: "<gray>[</gray>Prefix<gray>]</gray> <fromplayer> -> <toplayer> <gold>:</gold> <message>"
+    From: "<gray>[</gray>Prefix<gray>]</gray> <fromplayer> -> <toplayer><gold>:</gold> <message>"
+    PlayerOffline: "<red>Der Spieler <player> ist nicht Online.</red>"
+    NoAnswerPlayer: "<red>Du must erst eine MSG senden oder Erhalten um /r nutzen zu können.</red>"
 
 FlyCommand:
   Enabled: true
@@ -82,7 +98,7 @@ FlySpeedCommand:
   Permission: "stuff.speed"
   suggestionName:
     Speed: "Geschwindigkeit"
-    Player: "Spieelr"
+    Player: "Spieler"
   Aliases:
     - "flyspeed"
   # Speed placeholder: <speed>
@@ -166,10 +182,10 @@ Format:
     Enabled: true
     Prefix:
       Enabled: true
-      Prefix: "%luckperms_prefix% "
+      Prefix: "%luckperms_prefix%"
     Suffix:
       Enabled: true
-      Suffix: " %luckperms_suffix%"
+      Suffix: "%luckperms_suffix%"
     TabSorting:
       Enabled: true
       MaxWeight: 1000
@@ -214,6 +230,114 @@ BroadcastCommand:
     - "broadcast"
   # Placeholder: <message>
   Message: "<gray>[<red>Broadcast</red>]</gray> <message>"
+
+TeleportCommands:
+  Enabled: True
+  Spawn:
+    Enabled: true
+    Permission: "stuff.teleport.spawn"
+    # Default: overworld = world, nether = world_nether, end = world_the_end
+    World: world
+    Pos_X: 5.5
+    Pos_Y: 80
+    Pos_Z: -42.5
+    Pos_YAW: 0
+    Pos_PITCH: 0
+    Aliases:
+      - Spawn
+  SetSpawn:
+    Enabled: true
+    Permission: "stuff.teleport.setspawn"
+    Aliases:
+      - setspawn
+  TPA:
+    Enabled: True
+    Permission: "stuff.teleport.tpa"
+    Aliases:
+      - tpa
+    # in seconds
+    RequestDuration: 60
+    Cooldown: 30
+    CooldownBypassPermission: "stuff.teleport.tpa.cooldown.bypass"
+    NotMoveFor: 3
+    NotMoveForBypassPermission: "stuff.teleport.tpa.notmovefor.bypass"
+  TPAACCEPT:
+    Enabled: True
+    Permission: "stuff.teleport.tpac"
+    Aliases:
+      - tpac
+      - tpaccept
+      - tpaaccept
+  TPADECLINE:
+    Enabled: True
+    Permission: "stuff.teleport.tpad"
+    Aliases:
+      - tpad
+      - tpdecline
+      - tpadecline
+  RTP:
+    Enabled: True
+    Permission: "stuff.teleport.rtp"
+    Aliases:
+      - rtp
+    Cooldown: 300
+    CooldownBypassPermission: "stuff.teleport.rtp.cooldown.bypass"
+    NotMoveFor: 3
+    NotMoveForBypassPermission: "stuff.teleport.rtp.notmovefor.bypass"
+    Worlds:
+      # needs to be the worlds name
+      # MinY and MaxY can be disabled by not setting it
+      # For Disabled worlds do this (you can ignore the other settings if the world is disabled):
+      # world:
+      #   Enabled: False
+      world:
+        Enabled: True
+        Permission: "stuff.teleport.rtp.worlds.world"
+        MinDistance: 1000
+        MaxDistance: 5000
+        MinY: 50
+        MaxY:
+      world_nether:
+        Enabled: True
+        Permission: "stuff.teleport.rtp.worlds.world_nether"
+        MinDistance: 500
+        MaxDistance: 2500
+        MinY: 25
+        MaxY: 120
+      world_the_end:
+        Enabled: True
+        Permission: "stuff.teleport.rtp.worlds.world_the_end"
+        MinDistance: 2000
+        MaxDistance: 7000
+        MinY:
+        MaxY:
+  suggestionName:
+    Player: "Spieler"
+  Messages:
+    # Placeholder: <player>, <accept>TEXT</accept>, <decline>TEXT</decline>
+    tpaRCP: "<aqua>Der spieler <player> hat dir eine TPA gesenden.</aqua><br><green><bold><accept>Annehmen</accept></bold></green> <gray>|</gray> <dark_red><decline>Ablehnen</decline></dark_red>"
+    # Placeholder: <player>
+    tpaSender: "<aqua>Du hast <player> eine TPA gesendet.</aqua>"
+    tpaAccepted: "<green>Du hast die TPA von <player> angenommen.</green>"
+    # Playceholder: <world>
+    noPerms: "<red>Du darfst in <underlined><world></underlined> RTP nicht benutzen!</red>"
+    worldDisabled: "<red>Für der Wellt <green><world></green> ist RTP deaktiviert.</red>"
+    noWorld: "<red>In der Wellt <green><world></green> existiert keine RTP Konfiguration, melde dich bei einem Admin.</red>"
+    # Placeholder: <time_left>
+    cooldownTPA: "<red>Du kannst TPA erst in <time_left> Sekunden wieder benutzen!</red>"
+    cooldownRTP: "<red>Du kannst RTP erst in <time_left> Sekunden wieder benutzen!</red>"
+    countdown: "<aqua><bold><time_left></bold></aqua>"
+    # Placeholder: None
+    noDestination: "<red>Du musst einen Spieler als TPA-Ziel angeben!</red>"
+    tpaToSelf: "<red>Du kannst dir nicht selber eine TPA senden!</red>"
+    noAcceptor: "<red>Du musst einen Spieler angeben!</red>"
+    acceptSelf: "<red>Du kanst keine TPA von dir selbst annehmen!</red>"
+    declineSelf: "<red>Du kannstt keine TPA von dir selbst Ablehnen!</red>"
+    noTPA: "<red>Du hast keine TPA von diesem Spieler</red>"
+    searchingForPos: "<aqua>Es wird nach einer sicheren position für dich gesucht!</aqua>"
+    saveLocationFound: "<aqua>Es wurde ein sicherer Ort gefunden du wirst nun teleportiert.</aqua>"
+    newSpawn: "<green>Der Spawn wurde aktualisiert.</green>"
+    moved: "<red>Du hast dich bewegt, der Teleportvorgang wird abgebrochen!</red>"
 
 SwitchChannel:
   Enabled: true

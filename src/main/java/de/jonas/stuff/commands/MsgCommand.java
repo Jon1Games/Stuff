@@ -1,10 +1,15 @@
 package de.jonas.stuff.commands;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPI;
@@ -15,13 +20,17 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 
-public class MsgCommand {
+public class MsgCommand implements Listener{
+
+    Map<Player, Player> a = new HashMap<>();
+    //onquit
 
     public MsgCommand() {
         Stuff stuff = Stuff.INSTANCE;
         FileConfiguration conf = stuff.getConfig();
         String suggestion = conf.getString("MsgCommand.suggestionName.Player");
-        List<String> aliases = conf.getStringList("MsgCommand.Aliases");
+        List<String> aliases_MSG = conf.getStringList("MsgCommand.Aliases");
+        List<String> aliases_ANSWER = conf.getStringList("MsgCommand.AnswerCommand.Aliases");
         var mm = MiniMessage.miniMessage();
 
         for (String a : conf.getStringList("MsgCommand.unregister")) {
@@ -29,7 +38,8 @@ public class MsgCommand {
         }
 
         new CommandAPICommand("stuff:msg")
-                .withAliases(aliases.toArray(new String[aliases.size()]))
+            .withPermission(stuff.getConfig().getString("MsgCommand.Permission"))
+                .withAliases(aliases_MSG.toArray(new String[aliases_MSG.size()]))
                 .withArguments(new PlayerArgument(suggestion))
                 .withArguments(new GreedyStringArgument(conf.getString("MsgCommand.suggestionName.Message")))
                 .executesPlayer((player, args) -> {
@@ -40,7 +50,19 @@ public class MsgCommand {
                         return;
                     }
 
-                    assert target != null;
+                    if (target == null) {
+                        return;
+                    }
+                    if (!target.isOnline()) {
+                        player.sendMessage(mm.deserialize(stuff.getConfig().getString("MsgCommand.Messages.PlayerOffline"),
+                            Placeholder.component("player", mm.deserialize(String.valueOf(target)))
+                        ));
+                        return;
+                    }
+
+                    a.put(player, target);
+                    a.put(target, player);
+
                     Component prefixto = mm.deserialize(Objects.requireNonNull(stuff.getConfig().getString
                                     ("MsgCommand.Messages.To")),
                             Placeholder.component("fromplayer", player.teamDisplayName()), Placeholder.component
@@ -58,5 +80,50 @@ public class MsgCommand {
                     player.sendMessage(prefixfrom);
                 })
                 .register();
+
+        new CommandAPICommand("stuff:msganswer")
+            .withPermission(stuff.getConfig().getString("MsgCommand.AnswerCommand.Permission"))
+            .withAliases(aliases_ANSWER.toArray(new String[aliases_ANSWER.size()]))
+            .withArguments(new GreedyStringArgument(conf.getString("MsgCommand.suggestionName.Message")))
+            .executesPlayer((player, args) -> {
+
+                Player target = a.get(player);
+                if (target == null) {
+                    player.sendMessage(mm.deserialize(stuff.getConfig().getString("MsgCommand.Messages.NoAnswerPlayer")));
+                    return;
+                }
+                if (!target.isOnline()) {
+                    player.sendMessage(mm.deserialize(stuff.getConfig().getString("MsgCommand.Messages.PlayerOffline"),
+                        Placeholder.component("player", mm.deserialize(String.valueOf(target)))
+                    ));
+                    return;
+                }
+
+                a.put(target, player);
+
+                Component prefixto = mm.deserialize(Objects.requireNonNull(stuff.getConfig().getString
+                                ("MsgCommand.Messages.To")),
+                        Placeholder.component("fromplayer", player.teamDisplayName()), Placeholder.component
+                                ("toplayer", target.teamDisplayName()),
+                        Placeholder.component("message", Component.text((String) args.get(stuff.getConfig().
+                                getString("MsgCommand.suggestionName.Message")))));
+                Component prefixfrom = mm.deserialize(Objects.requireNonNull(stuff.getConfig().getString
+                                ("MsgCommand.Messages.From")),
+                        Placeholder.component("fromplayer", player.teamDisplayName()), Placeholder.component
+                                ("toplayer", target.teamDisplayName()),
+                        Placeholder.component("message", Component.text((String) args.get(stuff.getConfig()
+                                .getString("MsgCommand.suggestionName.Message")))));
+
+                target.sendMessage(prefixto);
+                player.sendMessage(prefixfrom);
+            })
+        .register();
     }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent e){
+        Player player = e.getPlayer();
+        a.get(player).remove();
+    }
+
 }

@@ -5,11 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
-import de.jonas.stuff.Stuff;
-import me.clip.placeholderapi.PlaceholderAPI;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -20,12 +15,18 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
+import org.jetbrains.annotations.NotNull;
+
+import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPI;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.luckperms.api.LuckPerms;
-import org.jetbrains.annotations.NotNull;
+import net.luckperms.api.LuckPermsProvider;
 
 public class TeamDisplaynameSet implements Listener {
 
@@ -136,6 +137,9 @@ public class TeamDisplaynameSet implements Listener {
             prefix = stuff.getConfig().getString("Format.PlayerNames.Prefix.Prefix");
             if (prefix != null) {
                 prefix = PlaceholderAPI.setPlaceholders(player, prefix);
+                if (!prefix.endsWith(" ") && prefix.length() != 0) {
+                    prefix += " ";
+                }
                 prefixcom = LegacyComponentSerializer.legacy('&').deserialize(prefix);
                 pti.prefix = prefixcom;
             } else {
@@ -148,6 +152,9 @@ public class TeamDisplaynameSet implements Listener {
             suffix = stuff.getConfig().getString("Format.PlayerNames.Suffix.Suffix");
             if (suffix != null) {
                 suffix = PlaceholderAPI.setPlaceholders(player, suffix);
+                if (!suffix.startsWith(" ") && suffix.length() != 0) {
+                    suffix = " " + suffix;
+                }
                 suffixcom = LegacyComponentSerializer.legacy('&').deserialize(suffix);
                 pti.suffix = suffixcom;
             } else {

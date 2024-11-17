@@ -12,6 +12,7 @@ import de.jonas.stuff.chatchannels.Default;
 import de.jonas.stuff.commands.BroadcastCommand;
 import de.jonas.stuff.commands.CalculatorCommand;
 import de.jonas.stuff.commands.CommandCommand;
+import de.jonas.stuff.commands.DebugCommands;
 import de.jonas.stuff.commands.FlyCommand;
 import de.jonas.stuff.commands.GamemodeCommand;
 import de.jonas.stuff.commands.InfoCommands;
@@ -22,6 +23,7 @@ import de.jonas.stuff.commands.PortableInventoryCommand;
 import de.jonas.stuff.commands.ReloadCommand;
 import de.jonas.stuff.commands.SpeedCommand;
 import de.jonas.stuff.commands.SwitchChannel;
+import de.jonas.stuff.commands.Teleportation;
 import de.jonas.stuff.interfaced.ChatChannel;
 import de.jonas.stuff.listener.BlockPlace;
 import de.jonas.stuff.listener.ChatListener;
@@ -39,6 +41,7 @@ import dev.jorel.commandapi.CommandAPIBukkitConfig;
 public final class Stuff extends JavaPlugin {
 
     public static Stuff INSTANCE;
+    public Teleportation teleportation;
     public TeamDisplaynameSet teamDisplaynameSet;
     public int commands;
     public int listeners;
@@ -49,6 +52,7 @@ public final class Stuff extends JavaPlugin {
     public ChatChannel inputChatChannel;
     public ChatCaptureManager captureManager;
     public Events events;
+    public MsgCommand msgCommand;
 
     public void onLoad() {
 
@@ -72,7 +76,7 @@ public final class Stuff extends JavaPlugin {
 
         events = new Events();
         
-        if(getConfig().getBoolean("OnlyUseAPI")) {
+        if(!getConfig().getBoolean("OnlyUseAPI")) {
 
             if (!CommandAPI.isLoaded()) CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
 
@@ -86,12 +90,16 @@ public final class Stuff extends JavaPlugin {
 
             new ReloadCommand();
             commands = 1;
+            if (getConfig().getBoolean("DebugCommands.Enabled")) {
+                new DebugCommands();
+                increaseCommandCount();
+            }
             if (getConfig().getBoolean("EnableCalculatorCommand.Enabled")) {
                 new CalculatorCommand();
                 increaseCommandCount();
             }
             if (getConfig().getBoolean("MsgCommand.Enabled")) {
-                new MsgCommand();
+                msgCommand = new MsgCommand();
                 increaseCommandCount();
             }
             if (getConfig().getBoolean("FlyCommand.Enabled")) {
@@ -124,6 +132,9 @@ public final class Stuff extends JavaPlugin {
                 new BroadcastCommand();
                 increaseCommandCount();
             }
+            if (getConfig().getBoolean("TeleportCommands.Enabled")) {
+                teleportation = new Teleportation();
+            }
             if (getConfig().getBoolean("SwitchChannel.Enabled") && getConfig().getBoolean("Format.Chat.Enabled")) {
                 new SwitchChannel();
                 increaseCommandCount();
@@ -139,9 +150,11 @@ public final class Stuff extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
 
+        this.listener();
+
         chatChannelManager.onEnable();
 
-        if(getConfig().getBoolean("OnlyUseAPI")) {
+        if(!getConfig().getBoolean("OnlyUseAPI")) {
 
             ConfigurationSection sec = getConfig().getConfigurationSection("Channels");
             for (String a : sec.getKeys(false)) {
@@ -174,12 +187,12 @@ public final class Stuff extends JavaPlugin {
 
             if (getConfig().getBoolean("TimedMessages.Enabled")) new TimedMessages();
 
+            teleportation.onEnable();
+
         }
 
-        this.listener();
-
         if (getConfig().getBoolean("OnlyUseAPI")) {
-            getLogger().log(Level.INFO, "Startup in APi only mode Complete");
+            getLogger().log(Level.INFO, "Startup in API only mode Complete");
         } else {
             getLogger().log(Level.INFO, "Startup Complete");
         }
@@ -190,7 +203,7 @@ public final class Stuff extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
 
-        getLogger().log(Level.INFO," Starting disabling");
+        getLogger().log(Level.INFO,"Disabling Plugin");
 
         CommandAPI.onDisable();
         getLogger().log(Level.INFO, "CommandAPI disabled");
@@ -201,32 +214,39 @@ public final class Stuff extends JavaPlugin {
     public void listener() {
         PluginManager pm = Bukkit.getPluginManager();
 
-        
-        if (getConfig().getBoolean("CustomJoinQuitMessage.Enabled")) {
-            pm.registerEvents(new JoinQuitMessageListener(), this);
-            increaseListenerCount();
-        }
-        if (getConfig().getBoolean("FlyCommand.Enabled")) {
-            pm.registerEvents(new JoinFlyListener(), this);
-            increaseListenerCount();
-        }
-        if (getConfig().getBoolean("SpeedCommand.Enabled")) {
-            pm.registerEvents(new JoinSpeedListener(), this);
-            increaseListenerCount();
-        }
-        pm.registerEvents(new ChatListener(), this);
-        increaseListenerCount();
-        if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
-            pm.registerEvents(teamDisplaynameSet, this);
-            increaseListenerCount();
-        }
-        getLogger().log(Level.INFO, listeners + " listener registered");
+        pm.registerEvents(new InvClickEvent(), this);
+        pm.registerEvents(new BlockPlace(), this);
+        pm.registerEvents(new FirstJoin(), this);
+        getLogger().log(Level.INFO, "3 API listener registered");
 
-        if(getConfig().getBoolean("OnlyUseAPI")) {
-            pm.registerEvents(new InvClickEvent(), this);
-            pm.registerEvents(new BlockPlace(), this);
-            pm.registerEvents(new FirstJoin(), this);
-            getLogger().log(Level.INFO, "3 API listener registered");
+        if(!getConfig().getBoolean("OnlyUseAPI")) {
+            if (getConfig().getBoolean("CustomJoinQuitMessage.Enabled")) {
+                pm.registerEvents(new JoinQuitMessageListener(), this);
+                increaseListenerCount();
+            }
+            if (getConfig().getBoolean("FlyCommand.Enabled")) {
+                pm.registerEvents(new JoinFlyListener(), this);
+                increaseListenerCount();
+            }
+            if (getConfig().getBoolean("SpeedCommand.Enabled")) {
+                pm.registerEvents(new JoinSpeedListener(), this);
+                increaseListenerCount();
+            }
+            pm.registerEvents(new ChatListener(), this);
+            increaseListenerCount();
+            if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
+                pm.registerEvents(teamDisplaynameSet, this);
+                increaseListenerCount();
+            }
+            if (getConfig().getBoolean("TeleportCommands.TPA.Enabled")) {
+                pm.registerEvents(teleportation, this);
+                increaseListenerCount();
+            }
+            if (getConfig().getBoolean("MsgCommand.Enabled")) {
+                pm.registerEvents(msgCommand, this);
+                increaseListenerCount();
+            }
+            getLogger().log(Level.INFO, listeners + " listener registered");
         }
     }
     

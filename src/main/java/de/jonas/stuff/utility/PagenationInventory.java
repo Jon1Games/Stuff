@@ -9,6 +9,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import de.jonas.stuff.api.GuiPlaceholder;
 import net.kyori.adventure.text.Component;
 
 public class PagenationInventory implements InventoryHolder{
@@ -25,7 +26,8 @@ public class PagenationInventory implements InventoryHolder{
         this.inv = Bukkit.createInventory(this, 9 * 6, Component.text("Seite: " + (currentpage + 1)));
 
         int[] placeholder = {0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,44,46,47,48,50,51,52};
-        for (int a : placeholder) {
+        inv = new GuiPlaceholder(inv, placeholder).getInventory();
+        /* for (int a : placeholder) {
             inv.setItem(a,
                 new ItemBuilder()
                     .setName("")
@@ -33,49 +35,8 @@ public class PagenationInventory implements InventoryHolder{
                     .whenClicked("stuff:cancelevent")
                     .build()
             );
-        }
-
+        }*/ 
         fillPage(0);
-
-    }
-
-    @Override
-    public @NotNull Inventory getInventory() {
-        if (nextName == null) {
-            nextName = "Weiter";
-        }
-        if (backName == null) {
-            backName = "Zurück";
-        }
-        if (nextName == null) {
-            closeName = "Schließen";
-        }
-
-        inv.setItem(45, 
-        new ItemBuilder()
-            .setMaterial(Material.SPECTRAL_ARROW)
-            .setName("Zurück")
-            .whenClicked("stuff:prev_page")
-            .build()
-        );
-
-        inv.setItem(49, 
-            new ItemBuilder()
-                .setMaterial(Material.BARRIER)
-                .setName("Schließen")
-                .whenClicked("stuff:closeinv")
-                .build()
-        );
-
-        inv.setItem(53,
-            new ItemBuilder()
-                .setMaterial(Material.ARROW)
-                .setName("Weiter")
-                .whenClicked("stuff:next_page")
-                .build()
-        );
-
-        return this.inv;
     }
 
     public void setBackName(String name) {
@@ -93,6 +54,46 @@ public class PagenationInventory implements InventoryHolder{
         return;
     }
 
+
+    @Override
+    public @NotNull Inventory getInventory() {
+        if (nextName == null) {
+            nextName = "Weiter";
+        }
+        if (backName == null) {
+            backName = "Zurück";
+        }
+        if (nextName == null) {
+            closeName = "Schließen";
+        }
+
+        inv.setItem(45, 
+        new ItemBuilder()
+            .setMaterial(Material.SPECTRAL_ARROW)
+            .setName(backName)
+            .whenClicked("stuff:prev_page")
+            .build()
+        );
+
+        inv.setItem(49, 
+            new ItemBuilder()
+                .setMaterial(Material.BARRIER)
+                .setName(closeName)
+                .whenClicked("stuff:closeinv")
+                .build()
+        );
+
+        inv.setItem(53,
+            new ItemBuilder()
+                .setMaterial(Material.ARROW)
+                .setName(nextName)
+                .whenClicked("stuff:next_page")
+                .build()
+        );
+
+        return this.inv;
+    }
+
     public void fillPage(int pageNum) {
         currentpage = pageNum;
         for (int y = 0; y < 4; y++) {
@@ -103,7 +104,7 @@ public class PagenationInventory implements InventoryHolder{
         try {
             for (int y = 0; y < 4; y++) {
                 for (int x = 0; x < 7; x++) {
-                    inv.setItem((y + 1) * 9 + x + 1, items.get(y*5 + x +pageNum*numItemsOnPage));
+                    inv.setItem((y + 1) * 9 + x + 1, items.get(y*7 + x +pageNum*numItemsOnPage));
                 }
             }
         } catch(IndexOutOfBoundsException | NullPointerException e) {}
