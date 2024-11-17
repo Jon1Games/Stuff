@@ -1,6 +1,7 @@
 package de.jonas.stuff;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
+
 import de.jonas.stuff.interfaced.ClickEvent;
 import de.jonas.stuff.utility.PagenationInventory;
 

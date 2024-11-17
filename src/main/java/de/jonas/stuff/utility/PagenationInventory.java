@@ -18,54 +18,46 @@ public class PagenationInventory implements InventoryHolder{
     public List<ItemStack> items;
     public int currentpage;
     public static final int numItemsOnPage =  7 * 4;
-    String nextName, backName, closeName;
+    private Component nextName;
+    private Component backName;
+    private Component closeName;
 
     public PagenationInventory(List<ItemStack> items) {
         this.items = items;
-
-        this.inv = Bukkit.createInventory(this, 9 * 6, Component.text("Seite: " + (currentpage + 1)));
-
-        int[] placeholder = {0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,44,46,47,48,50,51,52};
-        inv = new GuiPlaceholder(inv, placeholder).getInventory();
-        /* for (int a : placeholder) {
-            inv.setItem(a,
-                new ItemBuilder()
-                    .setName("")
-                    .setMaterial(Material.GRAY_STAINED_GLASS_PANE)
-                    .whenClicked("stuff:cancelevent")
-                    .build()
-            );
-        }*/ 
-        fillPage(0);
     }
 
-    public void setBackName(String name) {
+    public PagenationInventory setBackName(Component name) {
         backName = name;
-        return;
+        return this;
     }
 
-    public void setNextName(String name) {
+    public PagenationInventory setNextName(Component name) {
         nextName = name;
-        return;
+        return this;
     }
 
-    public void setCloseName(String name) {
+    public PagenationInventory setCloseName(Component name) {
         closeName = name;
-        return;
+        return this;
     }
 
 
     @Override
     public @NotNull Inventory getInventory() {
         if (nextName == null) {
-            nextName = "Weiter";
+            nextName = Component.text("Weiter");
         }
         if (backName == null) {
-            backName = "Zurück";
+            backName = Component.text("Zurück");
         }
         if (nextName == null) {
-            closeName = "Schließen";
+            closeName = Component.text("Schließen");
         }
+
+        this.inv = Bukkit.createInventory(this, 9 * 6, Component.text(" "));
+
+        int[] placeholder = {0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,44,46,47,48,50,51,52};
+        inv = new GuiPlaceholder(inv, placeholder).getInventory(); 
 
         inv.setItem(45, 
         new ItemBuilder()
@@ -91,6 +83,8 @@ public class PagenationInventory implements InventoryHolder{
                 .build()
         );
 
+        fillPage(0);
+
         return this.inv;
     }
 
@@ -110,6 +104,7 @@ public class PagenationInventory implements InventoryHolder{
         } catch(IndexOutOfBoundsException | NullPointerException e) {}
 
         for (int a = inv.firstEmpty(); a<44; a++) {
+            if (a == -1) break;
             if (a == 18 || a == 27 || a == 36 ||
             a == 17 || a == 26 || a == 35) continue;
             inv.setItem(a,

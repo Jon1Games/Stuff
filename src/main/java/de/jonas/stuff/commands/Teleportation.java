@@ -312,12 +312,6 @@ public class Teleportation implements Listener {
             if(ent.getValue().containsKey(e.getPlayer())) ent.getValue().remove(e.getPlayer());
     }
 
-    /*@EventHandler
-    public void onMove(PlayerMoveEvent e){
-        if(!b.containsKey(e.getPlayer())) return;
-        
-    }*/
-
     public static double alignChunk(double v) {
         return v - (v % 16) + (v < 0 ? -16 : 0);
     }

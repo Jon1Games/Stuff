@@ -122,8 +122,7 @@ public class MsgCommand implements Listener{
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e){
-        Player player = e.getPlayer();
-        a.get(player).remove();
+        if(a.containsKey(e.getPlayer())) a.remove(e.getPlayer());
     }
 
 }
