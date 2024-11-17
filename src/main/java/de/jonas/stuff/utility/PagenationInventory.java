@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import de.jonas.stuff.api.GuiPlaceholder;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 
 public class PagenationInventory implements InventoryHolder{
 
@@ -45,13 +46,13 @@ public class PagenationInventory implements InventoryHolder{
     @Override
     public @NotNull Inventory getInventory() {
         if (nextName == null) {
-            nextName = Component.text("Weiter");
+            nextName = Component.text("Weiter").decoration(TextDecoration.ITALIC, false);
         }
         if (backName == null) {
-            backName = Component.text("Zurück");
+            backName = Component.text("Zurück").decoration(TextDecoration.ITALIC, false);
         }
         if (nextName == null) {
-            closeName = Component.text("Schließen");
+            closeName = Component.text("Schließen").decoration(TextDecoration.ITALIC, false);
         }
 
         this.inv = Bukkit.createInventory(this, 9 * 6, Component.text(" "));

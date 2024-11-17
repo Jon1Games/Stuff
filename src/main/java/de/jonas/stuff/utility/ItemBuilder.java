@@ -19,7 +19,9 @@ import com.destroystokyo.paper.profile.PlayerProfile;
 import de.jonas.stuff.ItemBuilderManager;
 import de.jonas.stuff.Stuff;
 import de.jonas.stuff.interfaced.ClickEvent;
+import de.jonas.stuff.interfaced.LeftClickEvent;
 import de.jonas.stuff.interfaced.PlaceEvent;
+import de.jonas.stuff.interfaced.RightClickEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -31,8 +33,8 @@ public class ItemBuilder {
 
     private Material material;
     private Component name;
-    private boolean glint, hasClickedEvent, hasPlaceEvent;
-    private String clickID, placeID;
+    private boolean glint,hasClickedEvent,hasPlaceEvent,hasLeftClickedEvent,hasRightClickedEvent;
+    private String clickID,leftClickID,rightClickID,placeID;
     private List<Component> lore;
     private UUID skullPlayerUUID;
 
@@ -100,6 +102,44 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder whenLeftClicked(String pdv) {
+        if (hasLeftClickedEvent) {
+            throw new IllegalStateException("This item already has an click listener");
+        }
+        leftClickID = pdv;
+        hasLeftClickedEvent = true;
+        return this;
+    }
+
+    public ItemBuilder whenLeftClicked(LeftClickEvent lisstener, String pdv) {
+        if (hasLeftClickedEvent) {
+            throw new IllegalStateException("This item already has an click listener");
+        }
+        stuff.itemBuilderManager.addleftClickEvent(lisstener, pdv);
+        leftClickID = pdv;
+        hasLeftClickedEvent = true;
+        return this;
+    }
+
+    public ItemBuilder whenRightClicked(String pdv) {
+        if (hasRightClickedEvent) {
+            throw new IllegalStateException("This item already has an click listener");
+        }
+        rightClickID = pdv;
+        hasRightClickedEvent = true;
+        return this;
+    }
+
+    public ItemBuilder whenRightClicked(RightClickEvent lisstener, String pdv) {
+        if (hasRightClickedEvent) {
+            throw new IllegalStateException("This item already has an click listener");
+        }
+        stuff.itemBuilderManager.addRightClickEvent(lisstener, pdv);
+        rightClickID = pdv;
+        hasRightClickedEvent = true;
+        return this;
+    }
+
     public ItemBuilder whenPlaced(String pdv) {
         if (hasPlaceEvent) {
             throw new IllegalStateException("This item already has an place listener");
@@ -145,6 +185,8 @@ public class ItemBuilder {
         }
         if (lore != null) meta.lore(lore);
         if (hasClickedEvent) meta.getPersistentDataContainer().set(ItemBuilderManager.inventoryClickEvent, PersistentDataType.STRING, clickID);
+        if (hasLeftClickedEvent) meta.getPersistentDataContainer().set(ItemBuilderManager.inventoryLeftClickEvent, PersistentDataType.STRING, leftClickID);
+        if (hasRightClickedEvent) meta.getPersistentDataContainer().set(ItemBuilderManager.inventoryRightClickEvent, PersistentDataType.STRING, rightClickID);
         if (hasPlaceEvent) meta.getPersistentDataContainer().set(ItemBuilderManager.blockPlaceEvent, PersistentDataType.STRING, placeID);
         item.setItemMeta(meta);
         return item;

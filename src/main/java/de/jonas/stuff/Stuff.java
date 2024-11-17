@@ -156,6 +156,8 @@ public final class Stuff extends JavaPlugin {
 
         if(!getConfig().getBoolean("OnlyUseAPI")) {
 
+            CommandAPI.onEnable();
+
             ConfigurationSection sec = getConfig().getConfigurationSection("Channels");
             for (String a : sec.getKeys(false)) {
                 ConfigurationSection cs = sec.getConfigurationSection(a);
@@ -175,8 +177,6 @@ public final class Stuff extends JavaPlugin {
             }
 
             getLogger().log(Level.INFO, channels+ " channels registered");
-
-            CommandAPI.onEnable();
 
             if (getConfig().getBoolean("Format.PlayerNames.Enabled")) teamDisplaynameSet.onEnable();
 
