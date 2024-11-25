@@ -31,7 +31,7 @@ Config to edit the Language available.
 
 ## API
 1. Chatinput capture
-2. ItemStack creator (mainly for GUI) *Usage Later*
+2. ItemStack creator
    1. Name
    2. Lore
    3. Glint
