@@ -42,7 +42,6 @@ public class Teleportation implements Listener {
         List<String> aliases_TPAC = stuff.getConfig().getStringList("TeleportCommands.TPAACCEPT.Aliases");
         List<String> aliases_TPAD = stuff.getConfig().getStringList("TeleportCommands.TPADECLINE.Aliases");
         List<String> aliases_RTP = stuff.getConfig().getStringList("TeleportCommands.RTP.Aliases");
-        List<String> aliases_TPAHERE = stuff.getConfig().getStringList("TeleportCommands.TPA.TPAHERE.Aliases");
         String suggestion = stuff.getConfig().getString("TeleportCommands.suggestionName.Player");
 
         if (stuff.getConfig().getBoolean("TeleportCommands.Spawn.Enabled")) {

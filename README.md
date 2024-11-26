@@ -6,39 +6,46 @@ Default: German
 Config to edit the Language available.
 
 ## Features:
+*Optionally you can enable to only use the API*
 *Everything can be enabled/disabled in config*
-1. Calculator
-2. Broadcast
-3. Command executing Commands
-4. Fly
-5. Gamemodecommand
-6. InfoComamnds
-7. MSG
-8. Ping
-9. Playtime
-10. Portableinventories
-11. Speed
-12. Chat channel
-13. Use Minimagge(`<green>TEXt</green>`) or Lagasy(`&7Text`) chat formatter (editable in Config, defautl: Minimessage)
-14. First Join Text and Title
-15. TAB Prefix/Suffix (Luckperms)
-16. TAB Sorting (Luckperms Weight)
+1.Debug command (Disabled by default)
+- Some information about blocks and Items
+- give event and recive all listener for that event
+2. Calculator
+3. Broadcast
+4. Command executing Commands
+5. Fly
+6. Gamemodecommand
+7. InfoComamnds
+8. MSG
+9. Ping
+10. Playtime
+11. Portableinventories
+12. Speed
+13. Chat channel
+14. Use Minimagge(`<green>TEXt</green>`) or Lagasy(`&7Text`) chat formatter (editable in Config, defautl: Minimessage)
+15. First Join Text and Title
+16. TAB Prefix/Suffix (Luckperms)
+17. TAB Sorting (Luckperms Weight)
+18.  
 
 ## API
 1. Chatinput capture
-2. ItemStack creator (mainly for GUI) *Usage Later*
+2. ItemStack creator
    1. Name
    2. Lore
    3. Glint
-   4. When Clicked action 
-   5. When Placed action
-4. GUI created out of `List<ItemStack>`
+   4. When(Left/Right/Both)Clicked action 
+   5. WhenPlaced action
+4. GUI created out of `List<ItemStack>` (Pagenation)
 
 ## ITemStack creator usage
 ### Stuff API: ClickEvent
 ```java
 public class ClassName implements InventoryHolder{
 
+	private static final ClickEvent event = ClassName::eventI;
+	private static final LeftClickEvent event = ClassName::eventI;
 	private static final ClickEvent event = ClassName::eventI;
 
 	Inventory inventory;
@@ -55,6 +62,8 @@ public class ClassName implements InventoryHolder{
 			new ItemBuilder()
 				// Weitere Argumente
 				.whenClicked("Plugin:EventName")
+				.whenLeftClicked("Plugin:EventName")
+				.whenRightClicked("Plugin:EventName")
 				.build()
 		);
 
@@ -93,12 +102,16 @@ public class ClassName {
 
 }
 ```
-### Arguments
+### ItemEditor: Arguments
 *Events can be registered in other classes*
 #### Material
 ** Material has to be setted**
 ```java
 .setMaterial(Material.Item_Material)
+```
+or the skull can be setted, this overweites the Material
+```java
+.setSkull(Player_UUID)
 ```
 #### Name
 ```java
@@ -107,7 +120,7 @@ public class ClassName {
 ```java
 .setName(Component)
 ```
-#### Clint
+#### Glint
 ```java
 .setGlint(boolean)
 ```
