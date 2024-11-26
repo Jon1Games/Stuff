@@ -118,4 +118,9 @@ public class PagenationInventory implements InventoryHolder{
         }
 
     }
+
+    public void reFillPage(List<ItemStack> newItems) {
+        items = newItems;
+        fillPage(currentpage);
+    }
 }

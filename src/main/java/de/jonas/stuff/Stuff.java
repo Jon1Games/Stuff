@@ -25,6 +25,7 @@ import de.jonas.stuff.commands.SpeedCommand;
 import de.jonas.stuff.commands.SwitchChannel;
 import de.jonas.stuff.commands.Teleportation;
 import de.jonas.stuff.interfaced.ChatChannel;
+import de.jonas.stuff.listener.BlockBreakEvent;
 import de.jonas.stuff.listener.BlockPlace;
 import de.jonas.stuff.listener.ChatListener;
 import de.jonas.stuff.listener.FirstJoin;
@@ -91,7 +92,8 @@ public final class Stuff extends JavaPlugin {
             new ReloadCommand();
             commands = 1;
             if (getConfig().getBoolean("DebugCommands.Enabled")) {
-                new DebugCommands();
+                DebugCommands debugCommands = new DebugCommands();
+                debugCommands.events();
                 increaseCommandCount();
             }
             if (getConfig().getBoolean("EnableCalculatorCommand.Enabled")) {
@@ -217,6 +219,7 @@ public final class Stuff extends JavaPlugin {
         pm.registerEvents(new InvClickEvent(), this);
         pm.registerEvents(new BlockPlace(), this);
         pm.registerEvents(new FirstJoin(), this);
+        pm.registerEvents(new BlockBreakEvent(), this);
         getLogger().log(Level.INFO, "3 API listener registered");
 
         if(!getConfig().getBoolean("OnlyUseAPI")) {

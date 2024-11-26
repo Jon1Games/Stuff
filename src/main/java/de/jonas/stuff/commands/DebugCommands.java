@@ -12,11 +12,16 @@ import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.RegisteredListener;
 
 import de.jonas.stuff.Stuff;
 import de.jonas.stuff.commands.debugCommands.MaterialInfo;
+import de.jonas.stuff.interfaced.BreakEvent;
+import de.jonas.stuff.interfaced.PlaceEvent;
+import de.jonas.stuff.utility.ItemBuilder;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.BlockStateArgument;
@@ -34,21 +39,15 @@ public class DebugCommands {
     MiniMessage mm = MiniMessage.miniMessage();
     Stuff stuff = Stuff.INSTANCE;
     
-    public DebugCommands() {
+    private static final PlaceEvent testPlace = DebugCommands::testPlaceI;
+    private static final BreakEvent testBreak = DebugCommands::testBreakI;
 
-        /*
-         * List<String> aliases = stuff.getConfig().getStringList("PATH");
-         * -> .withAliases(aliases.toArray(new String[aliases.size()]))
-         */ 
-        
-        // String suggestion = stuff.getConfig().getString("PATH");
-        
-        /*
-         * .withArguments(new PlayerArgument(suggestion))
-         * .withArguments(new GreedyStringArgument(suggestion))
-         * .withOptionalArguments(new PlayerArgument(suggestion))
-         * .withOptionalArguments(new GreedyStringArgument(suggestion))
-         */
+    public void events() {
+        Stuff.INSTANCE.itemBuilderManager.addPlaceEvent(testPlace, "stuff-test:placed");
+        Stuff.INSTANCE.itemBuilderManager.addBreakEvent(testBreak, "stuff-test:broken");
+    }
+
+    public DebugCommands() {
 
         for (String a : stuff.getConfig().getStringList("DebugCommands.unregister")) {
             CommandAPI.unregister(a);
@@ -141,6 +140,19 @@ public class DebugCommands {
                         }
                     })
                 )
+            .withSubcommand(new CommandAPICommand("ItemBuilder")
+                    .withSubcommand(new CommandAPICommand("PlaceBreakBlock")
+                        .executesPlayer((player, args) -> {
+                            player.getInventory().addItem(new ItemBuilder()
+                                .setName("PlaceBreack Test Block")
+                                .setMaterial(Material.GLASS)
+                                .whenPlaced("stuff-test:placed")
+                                .whenBroken("stuff-test:broken")
+                                .build()
+                            );
+                        })
+                    )
+            )
         .register();
     }
     
@@ -233,4 +245,13 @@ public class DebugCommands {
             }
         }
     }
+
+    private static void testPlaceI(BlockPlaceEvent e) {
+        e.getPlayer().sendMessage("Place Event");
+	}
+
+    private static void testBreakI(BlockBreakEvent e) {
+        e.getPlayer().sendMessage("Break Event");
+	}
+
 }

@@ -18,6 +18,7 @@ import com.destroystokyo.paper.profile.PlayerProfile;
 
 import de.jonas.stuff.ItemBuilderManager;
 import de.jonas.stuff.Stuff;
+import de.jonas.stuff.interfaced.BreakEvent;
 import de.jonas.stuff.interfaced.ClickEvent;
 import de.jonas.stuff.interfaced.LeftClickEvent;
 import de.jonas.stuff.interfaced.PlaceEvent;
@@ -33,8 +34,8 @@ public class ItemBuilder {
 
     private Material material;
     private Component name;
-    private boolean glint,hasClickedEvent,hasPlaceEvent,hasLeftClickedEvent,hasRightClickedEvent;
-    private String clickID,leftClickID,rightClickID,placeID;
+    private boolean glint,hasClickedEvent,hasPlaceEvent,hasLeftClickedEvent,hasRightClickedEvent,hasBreakEvent;
+    private String clickID,leftClickID,rightClickID,placeID,breakID;
     private List<Component> lore;
     private UUID skullPlayerUUID;
 
@@ -159,6 +160,25 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder whenBroken(String pdv) {
+        if (hasBreakEvent) {
+            throw new IllegalStateException("This item already has an break listener");
+        }
+        breakID = pdv;
+        hasBreakEvent = true;
+        return this;
+    }
+
+    public ItemBuilder whenBroken(BreakEvent listener, String pdv) {
+        if (hasBreakEvent) {
+            throw new IllegalStateException("This item already has an break listener");
+        }
+        breakID = pdv;
+        stuff.itemBuilderManager.addBreakEvent(listener, pdv);
+        hasBreakEvent = true;
+        return this;
+    }
+
     public ItemStack build() {
         if (skullPlayerUUID != null) {
             material = Material.PLAYER_HEAD;
@@ -188,6 +208,7 @@ public class ItemBuilder {
         if (hasLeftClickedEvent) meta.getPersistentDataContainer().set(ItemBuilderManager.inventoryLeftClickEvent, PersistentDataType.STRING, leftClickID);
         if (hasRightClickedEvent) meta.getPersistentDataContainer().set(ItemBuilderManager.inventoryRightClickEvent, PersistentDataType.STRING, rightClickID);
         if (hasPlaceEvent) meta.getPersistentDataContainer().set(ItemBuilderManager.blockPlaceEvent, PersistentDataType.STRING, placeID);
+        if (hasBreakEvent) meta.getPersistentDataContainer().set(ItemBuilderManager.blockBreakEvent, PersistentDataType.STRING, breakID);
         item.setItemMeta(meta);
         return item;
     } 
