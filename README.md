@@ -88,7 +88,7 @@ public class ClassName {
 	
 	public ClassName() {
 		
-		Stuff.INSTANCE.itemBuilderManager.addPlaceEvent(changeName, "Plugin:EventName");
+		Stuff.INSTANCE.itemBuilderManager.addPlaceEvent(event, "Plugin:EventName");
 		
 		Itemstack item = new ItemBuilder()
 			// Weitere Argumente
@@ -102,6 +102,37 @@ public class ClassName {
 
 }
 ```
+
+### Stuff API: BlockBreakEvent
+```java
+public class ClassName {
+	
+	private static final BreakEvent event = ClassName::eventI;
+	
+	public ClassName() {
+		
+		Stuff.INSTANCE.itemBuilderManager.BreakEvent(event, "Plugin:EventName");
+		
+		Itemstack item = new ItemBuilder()
+			// Weitere Argumente
+			.whenBroken("Plugin:EventName")
+			.build()
+		);
+
+	private static void eventI(BlockBreakEvent e) {
+		// event Code
+	}
+
+}
+```
+
+### Stuff API: GuiPlaceholder
+Uses an existing inventory and fills the given slots with gray_stained_glas_panes
+```java
+int[] = {0,1,2,3,4,5,6,7,8,9,15}
+inv = GuiPlaceholder(inv, int).getInventory();
+```
+
 ### ItemEditor: Arguments
 *Events can be registered in other classes*
 #### Material
