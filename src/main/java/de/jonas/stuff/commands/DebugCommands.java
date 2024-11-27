@@ -19,6 +19,7 @@ import org.bukkit.plugin.RegisteredListener;
 
 import de.jonas.stuff.Stuff;
 import de.jonas.stuff.commands.debugCommands.MaterialInfo;
+import de.jonas.stuff.interfaced.BlockBreakWithItemEvent;
 import de.jonas.stuff.interfaced.BreakEvent;
 import de.jonas.stuff.interfaced.PlaceEvent;
 import de.jonas.stuff.utility.ItemBuilder;
@@ -41,10 +42,12 @@ public class DebugCommands {
     
     private static final PlaceEvent testPlace = DebugCommands::testPlaceI;
     private static final BreakEvent testBreak = DebugCommands::testBreakI;
+    private static final BlockBreakWithItemEvent testBreakWItem = DebugCommands::testBreakWItemI;
 
     public void events() {
         Stuff.INSTANCE.itemBuilderManager.addPlaceEvent(testPlace, "stuff-test:placed");
         Stuff.INSTANCE.itemBuilderManager.addBreakEvent(testBreak, "stuff-test:broken");
+        Stuff.INSTANCE.itemBuilderManager.addItemBreakBlockEvent(testBreakWItem, "stuff-test:broken_w_item");
     }
 
     public DebugCommands() {
@@ -148,6 +151,7 @@ public class DebugCommands {
                                 .setMaterial(Material.GLASS)
                                 .whenPlaced("stuff-test:placed")
                                 .whenBroken("stuff-test:broken")
+                                .whenBrokenWithItem("stuff-test:broken_w_item")
                                 .build()
                             );
                         })
@@ -252,6 +256,10 @@ public class DebugCommands {
 
     private static void testBreakI(BlockBreakEvent e) {
         e.getPlayer().sendMessage("Break Event");
+	}
+
+    private static void testBreakWItemI(BlockBreakEvent e) {
+        e.getPlayer().sendMessage("Block Break With Item Event");
 	}
 
 }

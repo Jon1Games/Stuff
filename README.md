@@ -1,16 +1,21 @@
 # Stuff (Minecraft Plugin)
+
 Plugin adding general minecraft features.
 
 ## Language:
+
 Default: German
 Config to edit the Language available.
 
 ## Features:
-*Optionally you can enable to only use the API*
-*Everything can be enabled/disabled in config*
+
+_Optionally you can enable to only use the API_
+_Everything can be enabled/disabled in config_
 1.Debug command (Disabled by default)
+
 - Some information about blocks and Items
 - give event and recive all listener for that event
+
 2. Calculator
 3. Broadcast
 4. Command executing Commands
@@ -27,20 +32,23 @@ Config to edit the Language available.
 15. First Join Text and Title
 16. TAB Prefix/Suffix (Luckperms)
 17. TAB Sorting (Luckperms Weight)
-18.  
+18.
 
 ## API
+
 1. Chatinput capture
 2. ItemStack creator
    1. Name
    2. Lore
    3. Glint
-   4. When(Left/Right/Both)Clicked action 
+   4. When(Left/Right/Both)Clicked action
    5. WhenPlaced action
-4. GUI created out of `List<ItemStack>` (Pagenation)
+3. GUI created out of `List<ItemStack>` (Pagenation)
 
 ## ITemStack creator usage
+
 ### Stuff API: ClickEvent
+
 ```java
 public class ClassName implements InventoryHolder{
 
@@ -49,14 +57,14 @@ public class ClassName implements InventoryHolder{
 	private static final ClickEvent event = ClassName::eventI;
 
 	Inventory inventory;
-	
+
 	public ClassName() {
-	
+
 		this.inventory = Bukkit.createInventory(this, (row * 9), Component.Text();
 		// row = anzahl der reihen des Inventars (1-6)
-	
+
 		Stuff.INSTANCE.itemBuilderManager.addClickEvent(changeName, "Plugin:EventName");
-			
+
 		telepadGui.setItem(
 			1, // Item index
 			new ItemBuilder()
@@ -72,7 +80,7 @@ public class ClassName implements InventoryHolder{
 	private static void eventI(InventoryClickEvent e) {
 		// event Code
 	}
-	
+
 	@Override
 	public @NotNull Inventory getInventory() {
 		return inventory;
@@ -80,21 +88,22 @@ public class ClassName implements InventoryHolder{
 
 }
 ```
+
 ### Stuff API: PlaceEvent
+
 ```java
 public class ClassName {
-	
+
 	private static final PlaceEvent event = ClassName::eventI;
-	
+
 	public ClassName() {
-		
+
 		Stuff.INSTANCE.itemBuilderManager.addPlaceEvent(changeName, "Plugin:EventName");
-		
+
 		Itemstack item = new ItemBuilder()
 			// Weitere Argumente
 			.whenPlaced("Plugin:EventName")
-			.build()
-		);
+			.build();
 
 	private static void eventI(BlockPlaceEvent e) {
 		// event Code
@@ -102,37 +111,99 @@ public class ClassName {
 
 }
 ```
+
+### Stuff API: BreakEvent
+
+```java
+public class ClassName {
+
+	private static final BreakEvent event = ClassName::eventI;
+
+	public ClassName() {
+
+		Stuff.INSTANCE.itemBuilderManager.addBreakEvent(changeName, "Plugin:EventName");
+
+		Itemstack item = new ItemBuilder()
+			// Weitere Argumente
+			.whenBroken("Plugin:EventName")
+			.build();
+
+	private static void eventI(BlockBreakEvent e) {
+		// event Code
+	}
+
+}
+```
+
+### Stuff API: BrokenWithItem
+
+```java
+public class ClassName {
+
+	private static final BlockBreakWithItemEvent event = ClassName::eventI;
+
+	public ClassName() {
+
+		Stuff.INSTANCE.itemBuilderManager.addItemBreakBlockEvent(changeName, "Plugin:EventName");
+
+		Itemstack item = new ItemBuilder()
+			// Weitere Argumente
+			.whenBrokenWithItem("Plugin:EventName")
+			.build();
+
+	private static void eventI(BlockBreakEvent e) {
+		// event Code
+	}
+
+}
+```
+
 ### ItemEditor: Arguments
-*Events can be registered in other classes*
+
+_Events can be registered in other classes_
+
 #### Material
+
 ** Material has to be setted**
+
 ```java
 .setMaterial(Material.Item_Material)
 ```
+
 or the skull can be setted, this overweites the Material
+
 ```java
 .setSkull(Player_UUID)
 ```
+
 #### Name
+
 ```java
 .setName(String)
 ```
+
 ```java
 .setName(Component)
 ```
+
 #### Glint
+
 ```java
 .setGlint(boolean)
 ```
+
 #### Lore
+
 ```java
 List<Component> lore = new ArrayList<>();
 lore.add(Component);
 .setLore(lore)
 ```
+
 ```java
 .addLore(String)
 ```
+
 ```java
 .addLore(Component)
 ```

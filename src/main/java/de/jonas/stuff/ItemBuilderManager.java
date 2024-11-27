@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.bukkit.NamespacedKey;
 
+import de.jonas.stuff.interfaced.BlockBreakWithItemEvent;
 import de.jonas.stuff.interfaced.BreakEvent;
 import de.jonas.stuff.interfaced.ClickEvent;
 import de.jonas.stuff.interfaced.LeftClickEvent;
@@ -19,11 +20,13 @@ public class ItemBuilderManager {
     public static final NamespacedKey inventoryRightClickEvent = new NamespacedKey("stuff", "inventory_right_click_event");
     public static final NamespacedKey blockPlaceEvent = new NamespacedKey("stuff", "block_place_event");
     public static final NamespacedKey blockBreakEvent = new NamespacedKey("stuff", "block_break_event");
+    public static final NamespacedKey blockBreakWithItemEvent = new NamespacedKey("stuff", "block_break_with_item_event");
     private Map<String, ClickEvent> handlerMap;
     private Map<String, PlaceEvent> handlerMap2;
     private Map<String, LeftClickEvent> handlerMap3;
     private Map<String, RightClickEvent> handlerMap4;
     private Map<String, BreakEvent> handlerMap5;
+    private Map<String, BlockBreakWithItemEvent> handlerMap6;
 
     public ItemBuilderManager() {
         handlerMap = new HashMap<>();
@@ -31,6 +34,7 @@ public class ItemBuilderManager {
         handlerMap3 = new HashMap<>();
         handlerMap4 = new HashMap<>();
         handlerMap5 = new HashMap<>();
+        handlerMap6 = new HashMap<>();
     }
 
     public void addClickEvent(ClickEvent event, String pdv) {
@@ -73,4 +77,11 @@ public class ItemBuilderManager {
         return handlerMap5.get(pdv);
     }
 
+    public void addItemBreakBlockEvent(BlockBreakWithItemEvent event, String pdv) {
+        handlerMap6.put(pdv, event);
+    }
+
+    public BlockBreakWithItemEvent getItemBreakBlockEvent(String pdv) {
+        return handlerMap6.get(pdv);
+    }
 }
