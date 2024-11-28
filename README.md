@@ -32,7 +32,7 @@ _Everything can be enabled/disabled in config_
 15. First Join Text and Title
 16. TAB Prefix/Suffix (Luckperms)
 17. TAB Sorting (Luckperms Weight)
-18.
+18. Sudo command
 
 ## API
 
