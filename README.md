@@ -43,6 +43,7 @@ _Everything can be enabled/disabled in config_
    3. Glint
    4. When(Left/Right/Both)Clicked action
    5. WhenPlaced action
+   6. WhenBroken action
 3. GUI created out of `List<ItemStack>` (Pagenation)
 
 ## ITemStack creator usage
