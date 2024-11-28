@@ -22,6 +22,7 @@ import de.jonas.stuff.commands.PlayTimeCommand;
 import de.jonas.stuff.commands.PortableInventoryCommand;
 import de.jonas.stuff.commands.ReloadCommand;
 import de.jonas.stuff.commands.SpeedCommand;
+import de.jonas.stuff.commands.SudoCommand;
 import de.jonas.stuff.commands.SwitchChannel;
 import de.jonas.stuff.commands.Teleportation;
 import de.jonas.stuff.interfaced.ChatChannel;
@@ -139,6 +140,10 @@ public final class Stuff extends JavaPlugin {
             }
             if (getConfig().getBoolean("SwitchChannel.Enabled") && getConfig().getBoolean("Format.Chat.Enabled")) {
                 new SwitchChannel();
+                increaseCommandCount();
+            }
+            if (getConfig().getBoolean("Sudo.Enabled")) {
+                new SudoCommand();
                 increaseCommandCount();
             }
 

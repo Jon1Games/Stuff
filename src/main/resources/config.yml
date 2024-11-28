@@ -412,6 +412,22 @@ TimedMessages:
       - "Ich bin eine Test MNachricht nr.2"
       - "Ich bin eine Test MNachricht nr.3"
 
+Sudo:
+  Enabled: true
+  Aliases:
+    - "sudo"
+  suggestionName:
+    Player: "spieler"
+    Sudo: "sudo"
+  Permission: "stuff.sudo"
+  # Player with bypass permission wont be able to be sudoed
+  BypassPermission: "stuff.bypass.sudo"
+  Messages:
+    # Placeholder: <player>, <sudo>
+    sudoCommand: "Du hast <player>, <sudo> auszühren lassen"
+    sudoMessage: 'Du hast <player>, "<sudo>" schreiben lassen.'
+    playerHasBypass: "Du kanst <player> nichts befehlen."
+
 # EXPERIMENTAL NOT TESTED
 # This option gives OP permissions what are listened below, this is usefull for plugins who set their permission
 # but don´t assign them to OP´s.
