@@ -3,6 +3,8 @@ version: "${version}"
 main: de.jonas.stuff.Stuff
 api-version: "1.21.1"
 loader: de.jonas.stuff.Stuffloader
+Authors:
+  - "Jon1Games"
 permissions:
   stuff.teleport.tpa.cooldown.bypass:
   stuff.teleport.tpa.notmovefor.bypass:
