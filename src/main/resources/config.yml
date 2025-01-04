@@ -238,9 +238,9 @@ TeleportCommands:
     Permission: "stuff.teleport.spawn"
     # Default: overworld = world, nether = world_nether, end = world_the_end
     World: world
-    Pos_X: 5.5
-    Pos_Y: 80
-    Pos_Z: -42.5
+    Pos_X: 0
+    Pos_Y: 0
+    Pos_Z: 0
     Pos_YAW: 0
     Pos_PITCH: 0
     Aliases:

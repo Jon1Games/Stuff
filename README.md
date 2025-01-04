@@ -11,19 +11,19 @@ Config to edit the Language available.
 
 _Optionally you can enable to only use the API_
 _Everything can be enabled/disabled in config_
-1.Debug command (Disabled by default)
+01.Debug command (Disabled by default)
 
 - Some information about blocks and Items
 - give event and recive all listener for that event
 
-2. Calculator
-3. Broadcast
-4. Command executing Commands
-5. Fly
-6. Gamemodecommand
-7. InfoComamnds
-8. MSG
-9. Ping
+2.  Calculator
+3.  Broadcast
+4.  Command executing Commands
+5.  Fly
+6.  Gamemodecommand
+7.  InfoComamnds
+8.  MSG
+9.  Ping
 10. Playtime
 11. Portableinventories
 12. Speed
