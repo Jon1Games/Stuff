@@ -49,7 +49,7 @@ public class Teleportation implements Listener {
                 .withPermission(stuff.getConfig().getString("TeleportCommands.Spawn.Permission"))
                 .withAliases(aliases_SPAWN.toArray(new String[aliases_SPAWN.size()]))
                 .executesPlayer(((player, commandArguments) -> {
-                        player.teleport(getSpawn());
+                        player.teleport(stuff.getSpawn());
                     }))
                 .register();
                 stuff.increaseCommandCount();
@@ -392,33 +392,6 @@ public class Teleportation implements Listener {
         }
         if(tmp != null) return tmp.toLocation(world).add(0.5, 1, 0.5);
         return null;
-    }
-
-    public Location getSpawn() {
-        Double x = stuff.getConfig().getDouble("TeleportCommands.Spawn.Pos_X");
-        Double y = stuff.getConfig().getDouble("TeleportCommands.Spawn.Pos_Y");
-        Double z = stuff.getConfig().getDouble("TeleportCommands.Spawn.Pos_Z");
-        
-        if (
-            x == 0 || 
-            y == 0 || 
-            z == 0 || 
-            x.isNaN() || 
-            y.isNaN() || 
-            z.isNaN() || 
-            x.isInfinite() || 
-            y.isInfinite() || 
-            z.isInfinite()
-        ) {
-            return Bukkit.getWorlds().get(0).getSpawnLocation();
-        }
-
-        return new Location(
-            Bukkit.getWorld(stuff.getConfig().getString("TeleportCommands.Spawn.World")),
-            x, y, z,
-            (float) stuff.getConfig().getDouble("TeleportCommands.Spawn.Pos_YAW"),
-            (float) stuff.getConfig().getDouble("TeleportCommands.Spawn.Pos_PITCH")
-        );
     }
 
 }

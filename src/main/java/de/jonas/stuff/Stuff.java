@@ -3,6 +3,7 @@ package de.jonas.stuff;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -269,5 +270,33 @@ public final class Stuff extends JavaPlugin {
     public void increaseChannelCount() {
         channels++;
     }
+
+        public Location getSpawn() {
+        Double x = getConfig().getDouble("TeleportCommands.Spawn.Pos_X");
+        Double y = getConfig().getDouble("TeleportCommands.Spawn.Pos_Y");
+        Double z = getConfig().getDouble("TeleportCommands.Spawn.Pos_Z");
+        
+        if (
+            x == 0 || 
+            y == 0 || 
+            z == 0 || 
+            x.isNaN() || 
+            y.isNaN() || 
+            z.isNaN() || 
+            x.isInfinite() || 
+            y.isInfinite() || 
+            z.isInfinite()
+        ) {
+            return Bukkit.getWorlds().get(0).getSpawnLocation();
+        }
+
+        return new Location(
+            Bukkit.getWorld(getConfig().getString("TeleportCommands.Spawn.World")),
+            x, y, z,
+            (float) getConfig().getDouble("TeleportCommands.Spawn.Pos_YAW"),
+            (float) getConfig().getDouble("TeleportCommands.Spawn.Pos_PITCH")
+        );
+    }
+
 }
 
