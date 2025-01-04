@@ -59,10 +59,10 @@ public class Teleportation implements Listener {
             new CommandAPICommand("stuff:setspawn")
                 .withPermission(stuff.getConfig().getString("TeleportCommands.SetSpawn.Permission"))
                 .withAliases(aliases_SPAWN.toArray(new String[aliases_SPAWN.size()]))
-                .executesEntity(((player, commandArguments) -> {
+                .executesPlayer(((player, commandArguments) -> {
                             stuff.getConfig().set("TeleportCommands.Spawn.World", player.getWorld().getName());
                             stuff.getConfig().set("TeleportCommands.Spawn.Pos_X", player.getX());
-                            stuff.getConfig().set("TeleportCommands.Spawn.Pos_Y", player.getZ());
+                            stuff.getConfig().set("TeleportCommands.Spawn.Pos_Y", player.getY());
                             stuff.getConfig().set("TeleportCommands.Spawn.Pos_Z", player.getZ());
                             stuff.getConfig().set("TeleportCommands.Spawn.Pos_YAW", player.getYaw());
                             stuff.getConfig().set("TeleportCommands.Spawn.Pos_PITCH", player.getPitch());
