@@ -29,12 +29,14 @@ import de.jonas.stuff.commands.Teleportation;
 import de.jonas.stuff.interfaced.ChatChannel;
 import de.jonas.stuff.listener.BlockBreakEvent;
 import de.jonas.stuff.listener.BlockPlace;
+import de.jonas.stuff.listener.BossBarTimer;
 import de.jonas.stuff.listener.ChatListener;
 import de.jonas.stuff.listener.FirstJoin;
 import de.jonas.stuff.listener.InvClickEvent;
 import de.jonas.stuff.listener.JoinFlyListener;
 import de.jonas.stuff.listener.JoinQuitMessageListener;
 import de.jonas.stuff.listener.JoinSpeedListener;
+import de.jonas.stuff.listener.JointTpToSpawn;
 import de.jonas.stuff.listener.TeamDisplaynameSet;
 import de.jonas.stuff.utility.PermToOp;
 import de.jonas.stuff.utility.TimedMessages;
@@ -56,6 +58,7 @@ public final class Stuff extends JavaPlugin {
     public ChatCaptureManager captureManager;
     public Events events;
     public MsgCommand msgCommand;
+    public TimerHandler timerHandler;
 
     public void onLoad() {
 
@@ -195,14 +198,19 @@ public final class Stuff extends JavaPlugin {
 
             if (getConfig().getBoolean("TimedMessages.Enabled")) new TimedMessages();
 
-            teleportation.onEnable();
+            if (getConfig().getBoolean("OnlyUseAPI")) {
+                getLogger().log(Level.INFO, "Startup in API only mode Complete");
+            } else {
+                getLogger().log(Level.INFO, "Startup Complete");
+            }
+    
+            if (getConfig().getBoolean("Timings.Enabled")) {
+                timerHandler = new TimerHandler();
+            }
 
-        }
-
-        if (getConfig().getBoolean("OnlyUseAPI")) {
-            getLogger().log(Level.INFO, "Startup in API only mode Complete");
-        } else {
-            getLogger().log(Level.INFO, "Startup Complete");
+            if (getConfig().getBoolean("TeleportCommands.Enabled")) {
+                teleportation.onEnable();
+            }
         }
 
     }
@@ -247,12 +255,25 @@ public final class Stuff extends JavaPlugin {
                 pm.registerEvents(teamDisplaynameSet, this);
                 increaseListenerCount();
             }
-            if (getConfig().getBoolean("TeleportCommands.TPA.Enabled")) {
-                pm.registerEvents(teleportation, this);
-                increaseListenerCount();
+            if (getConfig().getBoolean("TeleportCommands.Enabled")) {
+                if (getConfig().getBoolean("TeleportCommands.TPA.Enabled")) {
+                    pm.registerEvents(teleportation, this);
+                    increaseListenerCount();
+                }
+                if (
+                    getConfig().getBoolean("TeleportCommands.Spawn.Enabled") &&
+                    getConfig().getBoolean("TeleportCommands.Spawn.JoinTpToSpawn")
+                    ) {
+                    pm.registerEvents(new JointTpToSpawn(), this);
+                    increaseListenerCount();
+                }
             }
             if (getConfig().getBoolean("MsgCommand.Enabled")) {
                 pm.registerEvents(msgCommand, this);
+                increaseListenerCount();
+            }
+            if (getConfig().getBoolean("Timings")) {
+                pm.registerEvents(new BossBarTimer(), this);
                 increaseListenerCount();
             }
             getLogger().log(Level.INFO, listeners + " listener registered");

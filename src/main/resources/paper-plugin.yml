@@ -1,7 +1,7 @@
 name: Stuff
 version: "${version}"
 main: de.jonas.stuff.Stuff
-api-version: "1.21.1"
+api-version: "1.21.4"
 loader: de.jonas.stuff.Stuffloader
 permissions:
   stuff.teleport.tpa.cooldown.bypass:

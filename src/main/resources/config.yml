@@ -17,7 +17,7 @@
 OnlyUseAPI: false
 
 DebugCommands:
-  Enabled: true
+  Enabled: false
   unregister:
     - debug
   Aliases:
@@ -27,21 +27,21 @@ ReloadCommand:
   permission: "stuff.reload"
 
 EnableCalculatorCommand:
-  Enabled: True
+  Enabled: false
   suggestionName:
     Number: "Zahl"
   Aliases:
     - calc
 
 CustomJoinQuitMessage:
-  Enabled: true
+  Enabled: false
   Messages:
     # Player placeholder: <player>
     JoinMessage: "<gray>[</gray><green>+</green><gray>]</gray> <player>"
     LeaveMessage: "<gray>[</gray><red>-</red><gray>]</gray> <player>"
 
 MsgCommand:
-  Enabled: true
+  Enabled: false
   Permission: "stuff.msg.send"
   suggestionName:
     Message: "Nachricht"
@@ -73,7 +73,7 @@ MsgCommand:
     NoAnswerPlayer: "<red>Du must erst eine MSG senden oder Erhalten um /r nutzen zu können.</red>"
 
 FlyCommand:
-  Enabled: true
+  Enabled: false
   Permission: "stuff.fly"
   suggestionName:
     Player: "Spieler"
@@ -94,7 +94,7 @@ FlyCommand:
         OtherOtherExitFlyMode: "Du wurdest von <green><player></green> aus dem Flugmodus geholt."
 
 FlySpeedCommand:
-  Enabled: true
+  Enabled: false
   Permission: "stuff.speed"
   suggestionName:
     Speed: "Geschwindigkeit"
@@ -112,7 +112,7 @@ FlySpeedCommand:
       OtherNewSpeed: "Du hast die Fluggeschwindigkeit von <green><player></green> auf <gold><speed></gold>."
 
 WalkSpeedCommand:
-  Enabled: true
+  Enabled: false
   Permission: "stuff.speed"
   suggestionName:
     Speed: "Geschwindigkeit"
@@ -130,7 +130,7 @@ WalkSpeedCommand:
       OtherNewSpeed: "Du hast die Laufgeschwindigkeit von <green><player></green> auf <gold><speed></gold>."
 
 GamemodeCommand:
-  Enabled: true
+  Enabled: false
   suggestionName:
     Player: "Spieler"
   Aliases:
@@ -171,7 +171,7 @@ GamemodeCommand:
         Other: "Du wurdest von <green><player></green> in den Überleben Modus gesetzt."
 
 PortableInventoryCommand:
-  Enabled: true
+  Enabled: false
   WorkbenchPermission: "stuff.portableinventory.workbench"
   AnvilPermission: "stuff.portableinventory.anvil"
   GrindstonePermission: "stuff.portableinventory.grindstone"
@@ -179,18 +179,18 @@ PortableInventoryCommand:
 
 Format:
   PlayerNames:
-    Enabled: true
+    Enabled: false
     Prefix:
-      Enabled: true
+      Enabled: false
       Prefix: "%luckperms_prefix%"
     Suffix:
-      Enabled: true
+      Enabled: false
       Suffix: "%luckperms_suffix%"
     TabSorting:
-      Enabled: true
+      Enabled: false
       MaxWeight: 1000
   Chat:
-    Enabled: true
+    Enabled: false
     # Placeholder: <player>, <message>
     Format: "<player> <gray><message></gray>"
     # options vanilla (&4 text in dark red) and minimessage ( <red> text in red )
@@ -200,7 +200,7 @@ Format:
       ItemInHand: true
 
 PlayTimeCommand:
-  Enabled: true
+  Enabled: false
   suggestionName:
     Player: "Spieler"
   Aliases:
@@ -211,7 +211,7 @@ PlayTimeCommand:
     other: "<green><player> hat <days> Tage, <hours> Stunden, <min> Minuten und <sec> Sekunden Spielzeit"
 
 PingCommand:
-  Enabled: true
+  Enabled: false
   suggestionName:
     Player: "Spieler"
   Aliases:
@@ -222,7 +222,7 @@ PingCommand:
     other: "Der Ping von <green><player><reset> Ping beträgt <gold><ping><reset>."
 
 BroadcastCommand:
-  Enabled: true
+  Enabled: false
   Permission: "stuff.broadcast"
   suggestionName:
     Message: "Nachricht"
@@ -232,9 +232,10 @@ BroadcastCommand:
   Message: "<gray>[<red>Broadcast</red>]</gray> <message>"
 
 TeleportCommands:
-  Enabled: True
+  Enabled: false
   Spawn:
-    Enabled: true
+    Enabled: false
+    JoinTpToSpawn: false
     Permission: "stuff.teleport.spawn"
     # Default: overworld = world, nether = world_nether, end = world_the_end
     World: world
@@ -246,12 +247,12 @@ TeleportCommands:
     Aliases:
       - Spawn
   SetSpawn:
-    Enabled: true
+    Enabled: false
     Permission: "stuff.teleport.setspawn"
     Aliases:
       - setspawn
   TPA:
-    Enabled: True
+    Enabled: false
     Permission: "stuff.teleport.tpa"
     Aliases:
       - tpa
@@ -262,21 +263,21 @@ TeleportCommands:
     NotMoveFor: 3
     NotMoveForBypassPermission: "stuff.teleport.tpa.notmovefor.bypass"
   TPAACCEPT:
-    Enabled: True
+    Enabled: false
     Permission: "stuff.teleport.tpac"
     Aliases:
       - tpac
       - tpaccept
       - tpaaccept
   TPADECLINE:
-    Enabled: True
+    Enabled: false
     Permission: "stuff.teleport.tpad"
     Aliases:
       - tpad
       - tpdecline
       - tpadecline
   RTP:
-    Enabled: True
+    Enabled: false
     Permission: "stuff.teleport.rtp"
     Aliases:
       - rtp
@@ -340,7 +341,7 @@ TeleportCommands:
     moved: "<red>Du hast dich bewegt, der Teleportvorgang wird abgebrochen!</red>"
 
 SwitchChannel:
-  Enabled: true
+  Enabled: false
   Permission: "stuff.switchchannel"
   suggestionName:
     Channel: "Kanal"
@@ -355,19 +356,19 @@ SwitchChannel:
     JoinedChannel: '<green>Du bist erfolgreich dem Kanal "<channel>" begetreten.<br>Alle Weiteren nachrichten werden nun in diesem Kanal gesendet.</green>'
 
 FirstJoinTitle:
-  Enabled: true
+  Enabled: false
   # Placeholder: <player>
   Title: "Wilkommen"
   SubTitle: "<player>"
 
 FirstJoniMessage:
-  Enabled: True
+  Enabled: false
   # Placeholder: <player>
   Message: "Willkommen auf unserem Server <player>."
 
 Channels:
   Admin:
-    Enabled: true
+    Enabled: false
     Permission:
       See: "stuff.adminchannel.see"
       Join: "stuff.adminchannel.join"
@@ -377,7 +378,7 @@ Channels:
     Format: "<gray>[<red>Admin</red>]</gray> <player> <gray><message></gray>"
 
 InfoCommands:
-  Enabled: true
+  Enabled: false
   # Placeholders: <player>
   # You can add as many Commands here as you want
   ExampleCommand:
@@ -387,7 +388,7 @@ InfoCommands:
     Message: "Ein Text Text"
 
 CommandCommand:
-  Enabled: true
+  Enabled: false
   # Placeholders: <player>
   # You can add as many Commands here as you want
   TestMessage:
@@ -399,7 +400,7 @@ CommandCommand:
     Command: "say test"
 
 TimedMessages:
-  Enabled: true
+  Enabled: false
   # You can add as many timed messages here as you want
   ExampleMessage:
     Enabled: false
@@ -413,7 +414,7 @@ TimedMessages:
       - "Ich bin eine Test MNachricht nr.3"
 
 Sudo:
-  Enabled: true
+  Enabled: false
   Aliases:
     - "sudo"
   suggestionName:
@@ -427,6 +428,26 @@ Sudo:
     sudoCommand: "Du hast <player>, <sudo> auszühren lassen"
     sudoMessage: 'Du hast <player>, "<sudo>" schreiben lassen.'
     playerHasBypass: "Du kanst <player> nichts befehlen."
+
+Timings:
+  Enabled: false
+  Server-Start:
+    Enabled: false
+    # unixtimestamp: use calculator like this: https://unixtime.org/
+    Time: 0000000000
+    # Placeholder: <days>, <hours>, <minutes>, <seconds>
+    BossBar: "<days> Tage, <hours> Stunden, <minutes> Minuten und <seconds> Sekunden"
+    TeleportSpawn: False
+    # -1 = disabled, 0 = Survival, 1 = Creative, 2 = Adventure, 3 = Spectator
+    ChangeGamemode: 0
+    FreezeTicks: false
+    UnfreezeTicks: true
+    Commands:
+      - "say Test"
+      - "say Test2"
+    Broadcast:
+      - "Test"
+      - "Test2"
 
 # EXPERIMENTAL NOT TESTED
 # This option gives OP permissions what are listened below, this is usefull for plugins who set their permission
