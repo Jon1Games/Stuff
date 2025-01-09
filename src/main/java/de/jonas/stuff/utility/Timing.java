@@ -40,6 +40,11 @@ public class Timing {
         float tickrate = Bukkit.getServer().getServerTickManager().getTickRate();
         float ticks = ((float) delay.toMillis() / 1_000f) * tickrate;
 
+        if (ticks < 1) {
+            // prevent an infinit Loop in same Tick
+            throw new IllegalStateException("Can't run a Timer With Period of <1 Tick; delay=" + delay.toString() + ", plugin=" + plugin.getName());
+        }
+
         holder.task = Bukkit.getScheduler().runTaskLater(plugin, () -> {
             runTaskTimer(delay, plugin, task, holder);
             task.run();
