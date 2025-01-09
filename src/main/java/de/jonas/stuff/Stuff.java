@@ -31,6 +31,8 @@ import de.jonas.stuff.listener.BlockBreakEvent;
 import de.jonas.stuff.listener.BlockPlace;
 import de.jonas.stuff.listener.BossBarTimer;
 import de.jonas.stuff.listener.ChatListener;
+import de.jonas.stuff.listener.DoAfter;
+import de.jonas.stuff.listener.DoBefore;
 import de.jonas.stuff.listener.FirstJoin;
 import de.jonas.stuff.listener.InvClickEvent;
 import de.jonas.stuff.listener.JoinFlyListener;
@@ -274,6 +276,14 @@ public final class Stuff extends JavaPlugin {
             }
             if (getConfig().getBoolean("Timings.Enabled")) {
                 pm.registerEvents(new BossBarTimer(), this);
+                increaseListenerCount();
+            }
+            if (getConfig().getBoolean("DoBefore.Enabled")) {
+                pm.registerEvents(new DoBefore(), this);
+                increaseListenerCount();
+            }
+            if (getConfig().getBoolean("DoAfter.Enabled")) {
+                pm.registerEvents(new DoAfter(), this);
                 increaseListenerCount();
             }
             getLogger().log(Level.INFO, listeners + " listener registered");
