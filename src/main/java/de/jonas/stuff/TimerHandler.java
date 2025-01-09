@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -31,7 +32,6 @@ public class TimerHandler {
         timers = new ArrayList<>();
         index = 0;
         loadConfig();
-        bossBar();
     }
 
     private void loadConfig() {
@@ -121,17 +121,19 @@ public class TimerHandler {
                 List<String> commands = cmd.getStringList("Commands");
                 commands.forEach(action -> {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), action);
-                });  
+                });
 
                 List<String> broadcast = cmd.getStringList("Broadcast");
                 broadcast.forEach(action -> {
                     Bukkit.getServer().sendMessage(mm.deserialize(action));
-                });   
-            });        
+                });
+            });
         }
+        Stuff.INSTANCE.getLogger().log(Level.CONFIG, "Loaded TimerHandler");
+        bossBar();
     }
 
-    private void bossBar() {    
+    private void bossBar() {  
         barAktive = true;
 
         Timing.TaskHolder a = Timing.runTaskTimer(Duration.ofSeconds(1), Stuff.INSTANCE, () -> {
@@ -169,6 +171,8 @@ public class TimerHandler {
 
             index++;
         }, b);
+
+        Stuff.INSTANCE.getLogger().log(Level.ALL, "Loaded BossBar");   
 
     }
 

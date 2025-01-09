@@ -272,7 +272,7 @@ public final class Stuff extends JavaPlugin {
                 pm.registerEvents(msgCommand, this);
                 increaseListenerCount();
             }
-            if (getConfig().getBoolean("Timings")) {
+            if (getConfig().getBoolean("Timings.Enabled")) {
                 pm.registerEvents(new BossBarTimer(), this);
                 increaseListenerCount();
             }
