@@ -15,8 +15,7 @@ public class BossBarTimer implements Listener {
     }
 
     @EventHandler
-    public void onJoin(PlayerQuitEvent e) {
-        e.getPlayer().hideBossBar(Stuff.INSTANCE.timerHandler.getBar());
+    public void onQuit(PlayerQuitEvent e) {
+        if (Stuff.INSTANCE.timerHandler.barAktive()) e.getPlayer().hideBossBar(Stuff.INSTANCE.timerHandler.getBar());
     }
-    
 }
