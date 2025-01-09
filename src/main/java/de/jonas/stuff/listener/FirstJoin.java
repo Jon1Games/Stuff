@@ -26,6 +26,13 @@ public class FirstJoin implements Listener {
         if (e.getPlayer().getPersistentDataContainer().has(firstJoin)) return;
         e.getPlayer().getPersistentDataContainer().set(firstJoin, PersistentDataType.BOOLEAN, true);
 
+        if (
+            conf.getBoolean("TeleportCommands.Enabled") || 
+            conf.getBoolean("TeleportCommands.Spawn.Enabled")
+            ) {
+            e.getPlayer().teleport(Stuff.INSTANCE.getSpawn());
+        }
+
         if (conf.getBoolean("FirstJoinTitle.Enabled")) {
 
             final Component mainTitle = mm.deserialize(conf.getString("FirstJoinTitle.Title"),
