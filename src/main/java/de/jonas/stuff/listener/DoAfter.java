@@ -16,14 +16,15 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 public class DoAfter implements Listener{
 
     MiniMessage mm;
+    ConfigurationSection sec;
 
     public DoAfter() {
         mm = MiniMessage.miniMessage();
+        reloadConfig();
     }
 
     @EventHandler
     public void doAfter(PlayerJoinEvent e) {
-        ConfigurationSection sec = Stuff.INSTANCE.getConfig().getConfigurationSection("DoAfter");
         for (String a : sec.getKeys(false)) {
             if (a.equalsIgnoreCase("Enabled")) continue;
 
@@ -74,4 +75,9 @@ public class DoAfter implements Listener{
 
         }
     }
+
+    public void reloadConfig() {
+        sec = Stuff.INSTANCE.getConfig().getConfigurationSection("DoAfter");
+    }
+
 }

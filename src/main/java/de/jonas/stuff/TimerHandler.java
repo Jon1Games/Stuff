@@ -26,15 +26,18 @@ public class TimerHandler {
     BossBar bar; 
     int index;
     boolean barAktive;
+    List<TaskHolder> endList;
 
     public TimerHandler() {
         bar = BossBar.bossBar(Component.text(""), 1, Color.BLUE, Overlay.PROGRESS);
         timers = new ArrayList<>();
+        endList = new ArrayList<>();
+        barAktive = false;
         index = 0;
         loadConfig();
     }
 
-    private void loadConfig() {
+    public void loadConfig() {
         MiniMessage mm = MiniMessage.miniMessage();
         ConfigurationSection sec = Stuff.INSTANCE.getConfig().getConfigurationSection("Timings");
         for (String a : sec.getKeys(false)) {
@@ -47,6 +50,7 @@ public class TimerHandler {
             Instant end = Instant.ofEpochSecond(cmd.getLong("Time"));
             String text = cmd.getString("BossBar");
 
+            if (!timers.isEmpty()) timers.removeAll(timers);
             timers.add(new BossbarDisplayTimer(
                 end,
                 (duration, bossBar) -> {
@@ -76,7 +80,8 @@ public class TimerHandler {
                 })
                 );
 
-            Timing.runTaskLater(end, Stuff.INSTANCE, () -> {
+            if (!endList.isEmpty()) endList.removeAll(endList);
+            endList.add(Timing.runTaskLater(end, Stuff.INSTANCE, () -> {
                 boolean teleportSpawn = cmd.getBoolean("TeleportSpawn");
                 if (teleportSpawn) {
                     Bukkit.getOnlinePlayers().forEach(action -> action.teleport(Stuff.INSTANCE.getSpawn()));
@@ -127,23 +132,24 @@ public class TimerHandler {
                 broadcast.forEach(action -> {
                     Bukkit.getServer().sendMessage(mm.deserialize(action));
                 });
-            });
+            }));
         }
         Stuff.INSTANCE.getLogger().log(Level.CONFIG, "Loaded TimerHandler");
-        bossBar();
+        if (!barAktive) bossBar();
     }
 
     private void bossBar() {  
         barAktive = true;
 
-        Timing.TaskHolder a = Timing.runTaskTimer(Duration.ofSeconds(1), Stuff.INSTANCE, () -> {
+        TaskHolder a = new Timing.TaskHolder();
+        Timing.runTaskTimer(Duration.ofSeconds(1), Stuff.INSTANCE, () -> {
             if (timers.isEmpty()) { return; }
             if (index >= timers.size()) index = 0;
             BossbarDisplayTimer b = timers.get(index);
 
             b.format.accept(Duration.between(Instant.now(), b.end), bar);
 
-        });
+        }, a);
 
         TaskHolder b = new Timing.TaskHolder();
         Timing.runTaskTimer(Duration.ofSeconds(5), Stuff.INSTANCE, () -> {

@@ -31,11 +31,16 @@ public class ReloadCommand {
                             }))
                     )
                     .withSubcommand(new CommandAPICommand("config")
-                            .executes(((commandSender, commandArguments) -> {
-                                stuff.reloadConfig();
-                                commandSender.sendMessage(mm.deserialize("[Stuff] Config successfully reloaded"));
-                            }))
-                )
+                        .executes(((commandSender, commandArguments) -> {
+                            stuff.reloadConfig();
+                            commandSender.sendMessage(mm.deserialize("[Stuff] Config successfully reloaded"));
+                        })))
+                    .withSubcommand(new CommandAPICommand("timers")
+                        .executes(((commandSender, commandArguments) -> {
+                            stuff.reloadConfig();
+                            stuff.timerHandler.loadConfig();
+                            commandSender.sendMessage(mm.deserialize("[Stuff] Timers successfully reloaded"));
+                        })))
                 .register();
     }
 

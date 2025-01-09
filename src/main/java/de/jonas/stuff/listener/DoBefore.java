@@ -16,14 +16,15 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 public class DoBefore implements Listener{
 
     MiniMessage mm;
+    ConfigurationSection sec;
 
     public DoBefore() {
         mm = MiniMessage.miniMessage();
+        reloadConfig();
     }
 
     @EventHandler
     public void doBefore(PlayerJoinEvent e) {
-        ConfigurationSection sec = Stuff.INSTANCE.getConfig().getConfigurationSection("DoBefore");
         for (String a : sec.getKeys(false)) {
             if (a.equalsIgnoreCase("Enabled")) continue;
 
@@ -75,4 +76,9 @@ public class DoBefore implements Listener{
 
         }
     }
+
+    public void reloadConfig() {
+        sec = Stuff.INSTANCE.getConfig().getConfigurationSection("DoBefore");
+    }
+
 }
