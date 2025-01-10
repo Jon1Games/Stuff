@@ -38,6 +38,7 @@ public class Teleportation implements Listener {
     public Teleportation() {
         // Create our command
         List<String> aliases_SPAWN = stuff.getConfig().getStringList("TeleportCommands.Spawn.Aliases");
+        List<String> aliases_SETSPAWN = stuff.getConfig().getStringList("TeleportCommands.SetSpawn.Aliases");
         List<String> aliases_TPA = stuff.getConfig().getStringList("TeleportCommands.TPA.Aliases");
         List<String> aliases_TPAC = stuff.getConfig().getStringList("TeleportCommands.TPAACCEPT.Aliases");
         List<String> aliases_TPAD = stuff.getConfig().getStringList("TeleportCommands.TPADECLINE.Aliases");
@@ -58,7 +59,7 @@ public class Teleportation implements Listener {
         if (stuff.getConfig().getBoolean("TeleportCommands.SetSpawn.Enabled")) {
             new CommandAPICommand("stuff:setspawn")
                 .withPermission(stuff.getConfig().getString("TeleportCommands.SetSpawn.Permission"))
-                .withAliases(aliases_SPAWN.toArray(new String[aliases_SPAWN.size()]))
+                .withAliases(aliases_SETSPAWN.toArray(new String[aliases_SETSPAWN.size()]))
                 .executesPlayer(((player, commandArguments) -> {
                             stuff.getConfig().set("TeleportCommands.Spawn.World", player.getWorld().getName());
                             stuff.getConfig().set("TeleportCommands.Spawn.Pos_X", player.getX());
