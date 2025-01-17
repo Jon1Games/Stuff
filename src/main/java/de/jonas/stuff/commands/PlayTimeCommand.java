@@ -3,6 +3,7 @@ package de.jonas.stuff.commands;
 import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.PlayerArgument;
+import me.gaminglounge.configapi.Language;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.Component;
@@ -38,7 +39,6 @@ public class PlayTimeCommand {
 
     public static Component calculateTime(long seconds, Player player, Player executor) {
         MiniMessage mm = MiniMessage.miniMessage();
-        Stuff stuff = Stuff.INSTANCE;
         int day = (int) TimeUnit.SECONDS.toDays(seconds);
         long hours = TimeUnit.SECONDS.toHours(seconds) - (day * 24L);
         long minute = TimeUnit.SECONDS.toMinutes(seconds) - (TimeUnit.SECONDS.toHours(seconds) * 60);
@@ -46,11 +46,11 @@ public class PlayTimeCommand {
 
         String m;
         if (player == executor) {
-            m = stuff.getConfig().getString("PlayTimeCommand.Messages.self");
+            m = Language.getValue(Stuff.INSTANCE, executor, "playtime.self", true);
         } else {
-            m = stuff.getConfig().getString("PlayTimeCommand.Messages.other");
+            m = Language.getValue(Stuff.INSTANCE, executor, "playtime.other", true);
         }
-        if (m == null) return mm.deserialize("<red>Error");
+        if (m == null) return mm.deserialize("<red>Error</red>");
 
         return mm.deserialize(m,
             Placeholder.component("days", Component.text(day)), Placeholder.component("hours", Component.text(hours)),

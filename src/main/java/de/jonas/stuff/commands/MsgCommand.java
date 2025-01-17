@@ -16,6 +16,7 @@ import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
 import dev.jorel.commandapi.arguments.PlayerArgument;
+import me.gaminglounge.configapi.Language;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -23,7 +24,6 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 public class MsgCommand implements Listener{
 
     Map<Player, Player> a = new HashMap<>();
-    //onquit
 
     public MsgCommand() {
         Stuff stuff = Stuff.INSTANCE;
@@ -46,7 +46,7 @@ public class MsgCommand implements Listener{
                     Player target = (Player) args.get(suggestion);
 
                     if (player == target) {
-                        player.sendMessage(mm.deserialize(conf.getString("MsgCommand.Messages.same")));
+                        player.sendMessage(mm.deserialize(Language.getValue(stuff, player, "messageSelf", true)));
                         return;
                     }
 
@@ -54,7 +54,7 @@ public class MsgCommand implements Listener{
                         return;
                     }
                     if (!target.isOnline()) {
-                        player.sendMessage(mm.deserialize(stuff.getConfig().getString("MsgCommand.Messages.PlayerOffline"),
+                        player.sendMessage(mm.deserialize(Language.getValue(stuff, player, "playerOffline"),
                             Placeholder.component("player", mm.deserialize(String.valueOf(target)))
                         ));
                         return;
@@ -63,14 +63,12 @@ public class MsgCommand implements Listener{
                     a.put(player, target);
                     a.put(target, player);
 
-                    Component prefixto = mm.deserialize(Objects.requireNonNull(stuff.getConfig().getString
-                                    ("MsgCommand.Messages.To")),
+                    Component prefixto = mm.deserialize(Objects.requireNonNull(Language.getValue(stuff, target, "msg.to")),
                             Placeholder.component("fromplayer", player.teamDisplayName()), Placeholder.component
                                     ("toplayer", target.teamDisplayName()),
                             Placeholder.component("message", Component.text((String) args.get(stuff.getConfig().
                                     getString("MsgCommand.suggestionName.Message")))));
-                    Component prefixfrom = mm.deserialize(Objects.requireNonNull(stuff.getConfig().getString
-                                    ("MsgCommand.Messages.From")),
+                    Component prefixfrom = mm.deserialize(Objects.requireNonNull(Language.getValue(stuff, player, "msg.from")),
                             Placeholder.component("fromplayer", player.teamDisplayName()), Placeholder.component
                                     ("toplayer", target.teamDisplayName()),
                             Placeholder.component("message", Component.text((String) args.get(stuff.getConfig()
@@ -101,14 +99,12 @@ public class MsgCommand implements Listener{
 
                 a.put(target, player);
 
-                Component prefixto = mm.deserialize(Objects.requireNonNull(stuff.getConfig().getString
-                                ("MsgCommand.Messages.To")),
+                    Component prefixto = mm.deserialize(Objects.requireNonNull(Language.getValue(stuff, target, "msg.to")),
                         Placeholder.component("fromplayer", player.teamDisplayName()), Placeholder.component
                                 ("toplayer", target.teamDisplayName()),
                         Placeholder.component("message", Component.text((String) args.get(stuff.getConfig().
                                 getString("MsgCommand.suggestionName.Message")))));
-                Component prefixfrom = mm.deserialize(Objects.requireNonNull(stuff.getConfig().getString
-                                ("MsgCommand.Messages.From")),
+                    Component prefixfrom = mm.deserialize(Objects.requireNonNull(Language.getValue(stuff, player, "msg.from")),
                         Placeholder.component("fromplayer", player.teamDisplayName()), Placeholder.component
                                 ("toplayer", target.teamDisplayName()),
                         Placeholder.component("message", Component.text((String) args.get(stuff.getConfig()

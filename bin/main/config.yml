@@ -7,91 +7,116 @@
 
 # Required Plugins
 # LuckPerms
-# PlaceHolderApi
+# PlaceHoderApi
+# /papi ecloud download luckperms
 
-EnableCalculatorCommand: true
+# Infos
+# suggestionName is the name that shows up over the chat for you what you know what to type there.
+# aliases are the normally used commands, the default command is "stuff:<command>"
+
+OnlyUseAPI: false
+
+DebugCommands:
+  Enabled: false
+  unregister:
+    - debug
+  Aliases:
+    - debug
+
+ReloadCommand:
+  permission: "stuff.reload"
+
+EnableCalculatorCommand:
+  Enabled: false
+  suggestionName:
+    Number: "Zahl"
+  Aliases:
+    - calc
 
 CustomJoinQuitMessage:
-  Enabled: true
+  Enabled: false
   Messages:
-  # Player placeholder: <player>
+    # Player placeholder: <player>
     JoinMessage: "<gray>[</gray><green>+</green><gray>]</gray> <player>"
     LeaveMessage: "<gray>[</gray><red>-</red><gray>]</gray> <player>"
 
 MsgCommand:
-  Enabled: true
-  ArgumentName: "Nachricht"
-  MessageFormat:
-  # for MSGFormat use: <fromplayer> and <toplayer>
-  # Use <message> as the Message given by the Player
-    # Message for the MSG target
-    To: "<gray>[</gray>Prefix<gray>]</gray> <fromplayer> -> <toplayer> <gold>:</gold> <message>"
-    # Message for the MSG sender
-    From: "<gray>[</gray>Prefix<gray>]</gray> <fromplayer> -> <toplayer> <gold>:</gold> <message>"
+  Enabled: false
+  Permission: "stuff.msg.send"
+  suggestionName:
+    Message: "Nachricht"
+    Player: "Spieler"
+  # Remove Minecraft default Commands
+  unregister:
+    - "msg"
+    - "tell"
+    - "w"
+  Aliases:
+    - "message"
+    - "msg"
+    - "tell"
+    - "wisper"
+  # Quick answer last user who send you an msg
+  AnswerCommand:
+    Permission: "stuff.msg.answer"
+    Aliases:
+      - r
 
 FlyCommand:
-  Enabled: true
+  Enabled: false
   Permission: "stuff.fly"
+  suggestionName:
+    Player: "Spieler"
+  Aliases:
+    - "fly"
   Messages:
     Self:
-      EnterFlyMode: "Du befindest in den Flugmodus gegangen."
-      ExitFlyMode: "Du befindest aus dem Flugmodus gegangen."
       ReturnInEnterFlyMode: "Der Flugmodus ist Aktiviert."
-    Other:
-    # Player placeholder: <player>
-      Self:
-        EnterFlyMode: "Du hast <green><player></green> in den Flugmodus gesetzt."
-        ExitFlyMode: "Du hast <green><player></green> aus dem Flugmodus geholt."
-      Other:
-        EnterFlyMode: "Du wurdest von <green><player></green> in den Flugmodus gesetzt."
-        OtherOtherExitFlyMode: "Du wurdest von <green><player></green> aus dem Flugmodus geholt."
 
-
-
-SpeedCommand:
-  Enabled: true
+FlySpeedCommand:
+  Enabled: false
   Permission: "stuff.speed"
-  Messages:
-  # Speed placeholder: <speed>
-    Self:
-      NewSpeed: "Deine neue Geschwindigkeit ist nun <gold><speed></gold>."
-      ReturnSpeed: "Deine Geschwindigkeit ist <gold><speed></gold>"
-    Other:
-    # Player placeholder: <player>
-      SelfNewSpeed: "Deine neue Geschwindigkeit wurde von <green><player></green> auf <gold><speed></gold> gesetzt."
-      OtherNewSpeed: "Du hast die Geschwindigkeit von <green><player></green> auf <gold><speed></gold>."
+  suggestionName:
+    Speed: "Geschwindigkeit"
+    Player: "Spieler"
+  Aliases:
+    - "flyspeed"
+
+WalkSpeedCommand:
+  Enabled: false
+  Permission: "stuff.speed"
+  suggestionName:
+    Speed: "Geschwindigkeit"
+    Player: "Spieler"
+  Aliases:
+    - "walkspeed"
 
 GamemodeCommand:
-  Enabled: true
-  messages:
-  # Player placeholder: <player> (only for the Other section)
+  Enabled: false
+  suggestionName:
+    Player: "Spieler"
+  Aliases:
+    - "gm"
+  Messages:
     Creative:
+      Aliases:
+        - "1"
       Permission: "stuff.gamemode.creative"
-      Self: "Dein Spielmodus wurde auf Kreativ gesetzt."
-      Other:
-        Self: "Du hast <green><player></green> in den Kreativ Modus gesetzt."
-        Other: "Du wurdest von <green><player></green> in den Kreativ Modus gesetzt."
     Spectator:
+      Aliases:
+        - "3"
       Permission: "stuff.gamemode.spectator"
-      Self : "Dein Spielmodus wurde auf Zuschauer gesetzt."
-      Other:
-        Self : "Du hast <green><player></green> in den Zuschauer Modus gesetzt."
-        Other : "Du wurdest von <green><player></green> in den Zuschauer Modus gesetzt."
     Adventure:
+      Aliases:
+        - "2"
       Permission: "stuff.gamemode.adventure"
-      Self : "Dein Spielmodus wurde auf Abenteuer gesetzt."
-      Other:
-        Self : "Du hast <green><player></green> in den Abenteuer Modus gesetzt."
-        Other : "Du wurdest von <green><player></green> in den Abenteuer Modus gesetzt."
     Survival:
+      Aliases:
+        - "0"
       Permission: "stuff.gamemode.survival"
-      Self : "Dein Spielmodus wurde auf Überleben gesetzt."
-      Other:
-        Self : "Du hast <green><player></green> in den Überleben Modus gesetzt."
-        Other : "Du wurdest von <green><player></green> in den Überleben Modus gesetzt."
 
 PortableInventoryCommand:
-  Enabled: true
+  Enabled: false
   WorkbenchPermission: "stuff.portableinventory.workbench"
   AnvilPermission: "stuff.portableinventory.anvil"
   GrindstonePermission: "stuff.portableinventory.grindstone"
@@ -99,66 +124,269 @@ PortableInventoryCommand:
 
 Format:
   PlayerNames:
-    Enabled: true
+    Enabled: false
     Prefix:
-      Enabled: true
-      Prefix: "%luckperms_prefix% "
+      Enabled: false
+      Prefix: "%luckperms_prefix%"
     Suffix:
-      Enabled: true
-      Suffix: " %luckperms_suffix%"
+      Enabled: false
+      Suffix: "%luckperms_suffix%"
     TabSorting:
-        Enabled: true
-        MaxWeight: 1000
+      Enabled: false
+      MaxWeight: 1000
   Chat:
-    Enabled: true
+    Enabled: false
     # Placeholder: <player>, <message>
     Format: "<player> <gray><message></gray>"
     # options vanilla (&4 text in dark red) and minimessage ( <red> text in red )
     ColorType: minimessage
     InChatPlaceholder:
-      # displaying held item, placeholder: <i> or <I> (only supported by ColorType: minimessage)
+      # displaying held item, placeholder: <i> <I> (only supported by ColorType: minimessage)
       ItemInHand: true
 
-TpaCommand:
-  Enabled: true
-  Delay:
-    Enabled: true
-    Amount: 3
-  Messages:
-  # PLaceholder: <player> <delay>
-    Tpa:
-      Sender: "Du hast <player> eine Teleportanfrage geschickt."
-      Reciver: "Du hast eine Teleportanfrage von <player> bekommen."
-      Self: "Du kannst dir nicht selbst eine Teleportanfrage senden."
-    Tpaccept:
-      Sender: "Der Spieler <player> hat deine Teleportanfrage angenommen."
-      Reciver: "Du hast die Teleportanfrage von <player> angenommen."
-      NoRequest: "Du hast keine Teleportanfrage von <player> bekommen."
-      Timeout: "Diese Teleportanfrage ist abgelaufen."
-    Delay: "Bewege dich nicht, Du wirst in <delay> Sekunden Teleportiert..."
-    Error:
-      Move: "Der Teleport wurde abgebrochen, da du dich bewegt hast."
+PlayTimeCommand:
+  Enabled: false
+  suggestionName:
+    Player: "Spieler"
+  Aliases:
+    - "playtime"
+
+PingCommand:
+  Enabled: false
+  suggestionName:
+    Player: "Spieler"
+  Aliases:
+    - "ping"
+
+BroadcastCommand:
+  Enabled: false
+  Permission: "stuff.broadcast"
+  suggestionName:
+    Message: "Nachricht"
+  Aliases:
+    - "broadcast"
+  # Placeholder: <message>
+  Message: "<gray>[<red>Broadcast</red>]</gray> <message>"
+
+TeleportCommands:
+  Enabled: false
+  Spawn:
+    Enabled: false
+    JoinTpToSpawn: false
+    Permission: "stuff.teleport.spawn"
+    # Default: overworld = world, nether = world_nether, end = world_the_end
+    World: world
+    Pos_X: 0
+    Pos_Y: 0
+    Pos_Z: 0
+    Pos_YAW: 0
+    Pos_PITCH: 0
+    Aliases:
+      - Spawn
+  SetSpawn:
+    Enabled: false
+    Permission: "stuff.teleport.setspawn"
+    Aliases:
+      - setspawn
+  TPA:
+    Enabled: false
+    Permission: "stuff.teleport.tpa"
+    Aliases:
+      - tpa
+    # in seconds
+    RequestDuration: 60
+    Cooldown: 30
+    CooldownBypassPermission: "stuff.teleport.tpa.cooldown.bypass"
+    NotMoveFor: 3
+    NotMoveForBypassPermission: "stuff.teleport.tpa.notmovefor.bypass"
+  TPAACCEPT:
+    Enabled: false
+    Permission: "stuff.teleport.tpac"
+    Aliases:
+      - tpac
+      - tpaccept
+      - tpaaccept
+  TPADECLINE:
+    Enabled: false
+    Permission: "stuff.teleport.tpad"
+    Aliases:
+      - tpad
+      - tpdecline
+      - tpadecline
+  RTP:
+    Enabled: false
+    Permission: "stuff.teleport.rtp"
+    Aliases:
+      - rtp
+    Cooldown: 300
+    CooldownBypassPermission: "stuff.teleport.rtp.cooldown.bypass"
+    NotMoveFor: 3
+    NotMoveForBypassPermission: "stuff.teleport.rtp.notmovefor.bypass"
+    Worlds:
+      # needs to be the worlds name
+      # MinY and MaxY can be disabled by not setting it
+      # For Disabled worlds do this (you can ignore the other settings if the world is disabled):
+      # world:
+      #   Enabled: False
+      world:
+        Enabled: True
+        Permission: "stuff.teleport.rtp.worlds.world"
+        MinDistance: 1000
+        MaxDistance: 5000
+        MinY: 50
+        MaxY:
+      world_nether:
+        Enabled: True
+        Permission: "stuff.teleport.rtp.worlds.world_nether"
+        MinDistance: 500
+        MaxDistance: 2500
+        MinY: 25
+        MaxY: 120
+      world_the_end:
+        Enabled: True
+        Permission: "stuff.teleport.rtp.worlds.world_the_end"
+        MinDistance: 2000
+        MaxDistance: 7000
+        MinY:
+        MaxY:
+  suggestionName:
+    Player: "Spieler"
+
+SwitchChannel:
+  Enabled: false
+  Permission: "stuff.switchchannel"
+  suggestionName:
+    Channel: "Kanal"
+  Aliases:
+    - "kanal"
+    - "channel"
+  DefaultChannelName: "Standart"
+
+FirstJoinTitle:
+  Enabled: false
+  # Placeholder: <player>
+  Title: "Wilkommen"
+  SubTitle: "<player>"
+
+FirstJoniMessage:
+  Enabled: false
+  # Placeholder: <player>
+  Message: "Willkommen auf unserem Server <player>."
+
+Channels:
+  Admin:
+    Enabled: false
+    Permission:
+      See: "stuff.adminchannel.see"
+      Join: "stuff.adminchannel.join"
+    # Only affects if player can write but not see messages
+    CanSeeOwnMessages: true
+    # Placeholder: <player>, <message>
+    Format: "<gray>[<red>Admin</red>]</gray> <player> <gray><message></gray>"
 
 InfoCommands:
-  Enabled: true
-  Links:
+  Enabled: false
+  # Placeholders: <player>
+  # You can add as many Commands here as you want
+  ExampleCommand:
     Enabled: false
-    Messages: "Ein Link Text"
-  Discord:
+    Aliases:
+      - "ExmapleCommand"
+    Message: "Ein Text Text"
+
+CommandCommand:
+  Enabled: false
+  # Placeholders: <player>
+  # You can add as many Commands here as you want
+  TestMessage:
     Enabled: false
-    Message: "Unseren Discord Server findet ihr unterdem folgendem link<br> <click:open_url:'https://discord.gaminglounge.me'>https://discord.gaminglounge.me</click>"
-  TikTok:
+    Aliases:
+      - "testmessage"
+    Permission: "stuff.commandcommand.testmessage"
+    RunAsConsole: false
+    Command: "say test"
+
+TimedMessages:
+  Enabled: false
+  # You can add as many timed messages here as you want
+  ExampleMessage:
     Enabled: false
-    Message: "Unseren TikTok Account findet ihr unterdem folgendem link<br> <click:open_url:'https://tiktok.gaminglounge.me'>https://tiktok.gaminglounge.me</click>"
-  Instagram:
+    # Random: true will send one of the Messages, false will send ALL the messages at once
+    Random: True
+    # in sec
+    Period: 60
+    Messages:
+      - "Ich bin eine Test MNachricht nr.1"
+      - "Ich bin eine Test MNachricht nr.2"
+      - "Ich bin eine Test MNachricht nr.3"
+
+Sudo:
+  Enabled: false
+  Aliases:
+    - "sudo"
+  suggestionName:
+    Player: "spieler"
+    Sudo: "sudo"
+  Permission: "stuff.sudo"
+  # Player with bypass permission wont be able to be sudoed
+  BypassPermission: "stuff.bypass.sudo"
+
+Timings:
+  Enabled: false
+  Server-Start:
     Enabled: false
-    Message: "Unser Instagram Profiel findet ihr unterdem folgendem link<br> <click:open_url:'https://instagram.gaminglounge.me'>https://instagram.gaminglounge.me</click>"
-  Twitter:
-    Enabled: false
-    Message: "Unser Twitter Profiel findet ihr unterdem folgendem link<br> <click:open_url:'https://twitter.exmaple.me'>https://twitter.exmaple.me</click>"
-  X:
-    Enabled: false
-    Message: "Unser X Profiel findet ihr unterdem folgendem link<br> <click:open_url:'https://X.exmaple.me'>https://X.exmaple.me</click>"
-  MinecraftMap:
-    Enabled: false
-    Message: "Unser ingame Minecraft Wellt findet ihr unterdem folgendem link<br> <click:open_url:'https://map.gaminglounge.me/minecraft/freebuild/'>https://map.gaminglounge.me/minecraft/freebuild/</click>"
+    # unixtimestamp: use calculator like this: https://unixtime.org/
+    Time: 0000000000
+    # Placeholder: <days>, <hours>, <minutes>, <seconds>
+    BossBar: "<days> Tage, <hours> Stunden, <minutes> Minuten und <seconds> Sekunden"
+    TeleportSpawn: False
+    # -1 = disabled, 0 = Survival, 1 = Creative, 2 = Adventure, 3 = Spectator
+    ChangeGamemode: 0
+    FreezeTicks: false
+    UnfreezeTicks: true
+    Commands:
+      - "say Test"
+      - "say Test2"
+    Broadcast:
+      - "Test"
+      - "Test2"
+
+# If a players joint before a spezific time the following will aplly to the player
+# The "0000000000" is the timestamp in Unix and you can add more like the example
+DoBefore:
+  Enabled: false
+  # unixtimestamp: use calculator like this: https://unixtime.org/
+  0000000000:
+    # -1 = disabled, 0 = Survival, 1 = Creative, 2 = Adventure, 3 = Spectator
+    ChangeGamemode: 0
+    TeleportSpawn: False
+    Commands:
+      - "say Test"
+      - "say Test2"
+    Broadcast:
+      - "Test"
+      - "Test2"
+
+# If a players joint after a spezific time the following will aplly to the player
+# The "0000000000" is the timestamp in Unix and you can add more like the example
+DoAfter:
+  Enabled: false
+  # unixtimestamp: use calculator like this: https://unixtime.org/
+  0000000000:
+    # -1 = disabled, 0 = Survival, 1 = Creative, 2 = Adventure, 3 = Spectator
+    ChangeGamemode: 0
+    TeleportSpawn: False
+    Commands:
+      - "say Test"
+      - "say Test2"
+    Broadcast:
+      - "Test"
+      - "Test2"
+
+# EXPERIMENTAL NOT TESTED
+# This option gives OP permissions what are listened below, this is usefull for plugins who set their permission
+# but don´t assign them to OP´s.
+GiveOpPermission:
+  Enabled: false
+  Permissions:
+    - ""

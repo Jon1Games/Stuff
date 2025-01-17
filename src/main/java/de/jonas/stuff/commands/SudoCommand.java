@@ -8,6 +8,7 @@ import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
 import dev.jorel.commandapi.arguments.PlayerArgument;
+import me.gaminglounge.configapi.Language;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -29,27 +30,53 @@ public class SudoCommand {
                 Player player = (Player) args.get(conf.getString("Sudo.suggestionName.Player"));
                 String sudo = (String) args.get(conf.getString("Sudo.suggestionName.Sudo"));
 
-                if (player.hasPermission(conf.getString("Sudo.BypassPermission"))) {
-                    sender.sendMessage(mm.deserialize(conf.getString("Sudo.Messages.playerHasBypass"),
-                        Placeholder.component(conf.getString("Sudo.suggestionName.Player"), player.displayName()),
-                        Placeholder.component(conf.getString("Sudo.suggestionName.Sudo"), Component.text(sudo))
-                    ));
-                    return;
+                if (sender instanceof Player p) {
+                    if (player.hasPermission(conf.getString("Sudo.BypassPermission"))) {
+                        sender.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, p, "key", true),
+                            Placeholder.component(conf.getString("Sudo.suggestionName.Player"), player.displayName()),
+                            Placeholder.component(conf.getString("Sudo.suggestionName.Sudo"), Component.text(sudo))
+                        ));
+                        return;
+                    }
+    
+                    if (sudo.startsWith("/")) {
+                        sender.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, p, "key", true),
+                            Placeholder.component(conf.getString("Sudo.suggestionName.Player"), player.displayName()),
+                            Placeholder.component(conf.getString("Sudo.suggestionName.Sudo"), Component.text(sudo))
+                        ));
+                        Bukkit.getServer().dispatchCommand(player, sudo.substring(1));
+                    } else {
+                        sender.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, p, "key", true),
+                            Placeholder.component(conf.getString("Sudo.suggestionName.Player"), player.displayName()),
+                            Placeholder.component(conf.getString("Sudo.suggestionName.Sudo"), Component.text(sudo))
+                        ));
+                        player.chat(sudo);
+                    }                    
+                } else {
+                    if (player.hasPermission(conf.getString("Sudo.BypassPermission"))) {
+                        sender.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, "en_US", "key", true),
+                            Placeholder.component(conf.getString("Sudo.suggestionName.Player"), player.displayName()),
+                            Placeholder.component(conf.getString("Sudo.suggestionName.Sudo"), Component.text(sudo))
+                        ));
+                        return;
+                    }
+    
+                    if (sudo.startsWith("/")) {
+                        sender.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, "en_US", "key", true),
+                            Placeholder.component(conf.getString("Sudo.suggestionName.Player"), player.displayName()),
+                            Placeholder.component(conf.getString("Sudo.suggestionName.Sudo"), Component.text(sudo))
+                        ));
+                        Bukkit.getServer().dispatchCommand(player, sudo.substring(1));
+                    } else {
+                        sender.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, "en_US", "key", true),
+                            Placeholder.component(conf.getString("Sudo.suggestionName.Player"), player.displayName()),
+                            Placeholder.component(conf.getString("Sudo.suggestionName.Sudo"), Component.text(sudo))
+                        ));
+                        player.chat(sudo);
+                    }
                 }
 
-                if (sudo.startsWith("/")) {
-                    sender.sendMessage(mm.deserialize(conf.getString("Sudo.Messages.sudoCommand"),
-                        Placeholder.component(conf.getString("Sudo.suggestionName.Player"), player.displayName()),
-                        Placeholder.component(conf.getString("Sudo.suggestionName.Sudo"), Component.text(sudo))
-                    ));
-                    Bukkit.getServer().dispatchCommand(player, sudo.substring(1));
-                } else {
-                    sender.sendMessage(mm.deserialize(conf.getString("Sudo.Messages.sudoMessage"),
-                        Placeholder.component(conf.getString("Sudo.suggestionName.Player"), player.displayName()),
-                        Placeholder.component(conf.getString("Sudo.suggestionName.Sudo"), Component.text(sudo))
-                    ));
-                    player.chat(sudo);
-                }
+
 
             })
         .register();

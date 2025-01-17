@@ -1,5 +1,8 @@
 package de.jonas.stuff;
 
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -44,6 +47,7 @@ import de.jonas.stuff.utility.PermToOp;
 import de.jonas.stuff.utility.TimedMessages;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import me.gaminglounge.configapi.LoadConfig;
 
 public final class Stuff extends JavaPlugin {
 
@@ -73,6 +77,11 @@ public final class Stuff extends JavaPlugin {
         INSTANCE = this;
 
         this.saveDefaultConfig();
+
+        Map<String, InputStream> lang = new HashMap<>();
+        lang.put("de_DE.json", this.getResource("lang/de_DE.json"));
+        lang.put("en_US.json", this.getResource("lang/en_US.json"));
+        LoadConfig.registerLanguage(this, lang);
 
         chatChannelManager = new ChatChannelManager();
         Default defaultChannel = new Default();

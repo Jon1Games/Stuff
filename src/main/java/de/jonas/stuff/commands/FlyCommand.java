@@ -1,16 +1,18 @@
 package de.jonas.stuff.commands;
 
-import de.jonas.stuff.Stuff;
-import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.arguments.PlayerArgument;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import java.util.List;
+
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.List;
+import de.jonas.stuff.Stuff;
+import dev.jorel.commandapi.CommandAPICommand;
+import dev.jorel.commandapi.arguments.PlayerArgument;
+import me.gaminglounge.configapi.Language;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 
 public class FlyCommand {
     public static final NamespacedKey flyAllowidentifier = new NamespacedKey("stuff", "fly_allow");
@@ -39,20 +41,20 @@ public class FlyCommand {
 
                     if (target == executor || !(executor instanceof Player)) {
                         if (a) {
-                            target.sendMessage(mm.deserialize(conf.getString("FlyCommand.Messages.Self.EnterFlyMode")));
-                        } else target.sendMessage(mm.deserialize(conf.getString("FlyCommand.Messages.Self.ExitFlyMode")));
+                            target.sendMessage(mm.deserialize(Language.getValue(stuff, target, "flycommand.self.enterFlyMode", true)));
+                        } else target.sendMessage(mm.deserialize(Language.getValue(stuff, target, "flycommand.self.exitFlyMode", true)));
                     } else {
                         if (a) {
                             Player executorP = (Player) executor;
-                            target.sendMessage(mm.deserialize(conf.getString("FlyCommand.Messages.Other.Other.EnterFlyMode"),
+                            target.sendMessage(mm.deserialize(Language.getValue(stuff, target, "flycommand.other.otherEnterFlyMode", true), //conf.getString("FlyCommand.Messages.Other.Other.EnterFlyMode"
                                     Placeholder.component("player", executorP.teamDisplayName())));
-                            executor.sendMessage(mm.deserialize(conf.getString("FlyCommand.Messages.Other.Self.EnterFlyMode"),
+                            executor.sendMessage(mm.deserialize(Language.getValue(stuff, target, "flycommand.self.otherEnterFlyMode", true), //conf.getString("FlyCommand.Messages.Other.Self.EnterFlyMode")
                                     Placeholder.component("player", target.teamDisplayName())));
                         } else {
                             Player executorP = (Player) executor;
-                            target.sendMessage(mm.deserialize(conf.getString("FlyCommand.Messages.Other.Other.ExitFlyMode"),
+                            target.sendMessage(mm.deserialize(Language.getValue(stuff, target, "flycommand.other.otherExitFlyMode", true), //conf.getString("FlyCommand.Messages.Other.Other.ExitFlyMode")
                                     Placeholder.component("player", executorP.teamDisplayName())));
-                            executor.sendMessage(mm.deserialize(conf.getString("FlyCommand.Messages.Other.Self.ExitFlyMode"),
+                            executor.sendMessage(mm.deserialize(Language.getValue(stuff, target, "flycommand.self.otherExitFlyMode", true), //conf.getString("FlyCommand.Messages.Other.Self.ExitFlyMode")
                                     Placeholder.component("player", target.teamDisplayName())));
                         }
                     }

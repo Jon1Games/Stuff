@@ -61,16 +61,6 @@ MsgCommand:
     Permission: "stuff.msg.answer"
     Aliases:
       - r
-  # Placeholder: <toplayer> <frompalyer> <message>
-  Messages:
-    # Message for case the sender is the target
-    same: "<red>Du kannst dir selbst keine Nachricht schicken!</red>"
-    # Message for the MSG target
-    To: "<gray>[</gray>Prefix<gray>]</gray> <fromplayer> -> <toplayer><gold>:</gold> <message>"
-    # Message for the MSG sender
-    From: "<gray>[</gray>Prefix<gray>]</gray> <fromplayer> -> <toplayer><gold>:</gold> <message>"
-    PlayerOffline: "<red>Der Spieler <player> ist nicht Online.</red>"
-    NoAnswerPlayer: "<red>Du must erst eine MSG senden oder Erhalten um /r nutzen zu können.</red>"
 
 FlyCommand:
   Enabled: false
@@ -81,17 +71,7 @@ FlyCommand:
     - "fly"
   Messages:
     Self:
-      EnterFlyMode: "Du bist in den Flugmodus gegangen."
-      ExitFlyMode: "Du bist aus dem Flugmodus gegangen."
       ReturnInEnterFlyMode: "Der Flugmodus ist Aktiviert."
-    # Player placeholder: <player>
-    Other:
-      Self:
-        EnterFlyMode: "Du hast <green><player></green> in den Flugmodus gesetzt."
-        ExitFlyMode: "Du hast <green><player></green> aus dem Flugmodus geholt."
-      Other:
-        EnterFlyMode: "Du wurdest von <green><player></green> in den Flugmodus gesetzt."
-        OtherOtherExitFlyMode: "Du wurdest von <green><player></green> aus dem Flugmodus geholt."
 
 FlySpeedCommand:
   Enabled: false
@@ -101,15 +81,6 @@ FlySpeedCommand:
     Player: "Spieler"
   Aliases:
     - "flyspeed"
-  # Speed placeholder: <speed>
-  Messages:
-    Self:
-      NewSpeed: "Deine neue Fluggeschwindigkeit ist nun <gold><speed></gold>."
-      ReturnSpeed: "Deine Fluggeschwindigkeit ist <gold><speed></gold>"
-    # Player placeholder: <player>
-    Other:
-      SelfNewSpeed: "Deine neue Fluggeschwindigkeit wurde von <green><player></green> auf <gold><speed></gold> gesetzt."
-      OtherNewSpeed: "Du hast die Fluggeschwindigkeit von <green><player></green> auf <gold><speed></gold>."
 
 WalkSpeedCommand:
   Enabled: false
@@ -119,15 +90,6 @@ WalkSpeedCommand:
     Player: "Spieler"
   Aliases:
     - "walkspeed"
-  # Speed placeholder: <speed>
-  Messages:
-    Self:
-      NewSpeed: "Deine neue Laufgeschwindigkeit ist nun <gold><speed></gold>."
-      ReturnSpeed: "Deine Laufgeschwindigkeit ist <gold><speed></gold>"
-    # Player placeholder: <player>
-    Other:
-      SelfNewSpeed: "Deine neue Laufgeschwindigkeit wurde von <green><player></green> auf <gold><speed></gold> gesetzt."
-      OtherNewSpeed: "Du hast die Laufgeschwindigkeit von <green><player></green> auf <gold><speed></gold>."
 
 GamemodeCommand:
   Enabled: false
@@ -135,40 +97,23 @@ GamemodeCommand:
     Player: "Spieler"
   Aliases:
     - "gm"
-  # Player placeholder: <player> (only for the Other section)
   Messages:
     Creative:
       Aliases:
         - "1"
       Permission: "stuff.gamemode.creative"
-      Self: "Dein Spielmodus wurde auf Kreativ gesetzt."
-      Other:
-        Self: "Du hast <green><player></green> in den Kreativ Modus gesetzt."
-        Other: "Du wurdest von <green><player></green> in den Kreativ Modus gesetzt."
     Spectator:
       Aliases:
         - "3"
       Permission: "stuff.gamemode.spectator"
-      Self: "Dein Spielmodus wurde auf Zuschauer gesetzt."
-      Other:
-        Self: "Du hast <green><player></green> in den Zuschauer Modus gesetzt."
-        Other: "Du wurdest von <green><player></green> in den Zuschauer Modus gesetzt."
     Adventure:
       Aliases:
         - "2"
       Permission: "stuff.gamemode.adventure"
-      Self: "Dein Spielmodus wurde auf Abenteuer gesetzt."
-      Other:
-        Self: "Du hast <green><player></green> in den Abenteuer Modus gesetzt."
-        Other: "Du wurdest von <green><player></green> in den Abenteuer Modus gesetzt."
     Survival:
       Aliases:
         - "0"
       Permission: "stuff.gamemode.survival"
-      Self: "Dein Spielmodus wurde auf Überleben gesetzt."
-      Other:
-        Self: "Du hast <green><player></green> in den Überleben Modus gesetzt."
-        Other: "Du wurdest von <green><player></green> in den Überleben Modus gesetzt."
 
 PortableInventoryCommand:
   Enabled: false
@@ -205,10 +150,6 @@ PlayTimeCommand:
     Player: "Spieler"
   Aliases:
     - "playtime"
-  # Placeholders: for both: <days> <hours> <min> <sec> , for other: <player>
-  Messages:
-    self: "<green>Du hast <days> Tage, <hours> Stunden, <min> Minuten und <sec> Sekunden Spielzeit"
-    other: "<green><player> hat <days> Tage, <hours> Stunden, <min> Minuten und <sec> Sekunden Spielzeit"
 
 PingCommand:
   Enabled: false
@@ -216,10 +157,6 @@ PingCommand:
     Player: "Spieler"
   Aliases:
     - "ping"
-  # Placeholders: for both: <ping> , for other: <player>
-  Messages:
-    self: "Dein Ping beträgt <gold><ping><reset>."
-    other: "Der Ping von <green><player><reset> Ping beträgt <gold><ping><reset>."
 
 BroadcastCommand:
   Enabled: false
@@ -314,31 +251,6 @@ TeleportCommands:
         MaxY:
   suggestionName:
     Player: "Spieler"
-  Messages:
-    # Placeholder: <player>, <accept>TEXT</accept>, <decline>TEXT</decline>
-    tpaRCP: "<aqua>Der spieler <player> hat dir eine TPA gesenden.</aqua><br><green><bold><accept>Annehmen</accept></bold></green> <gray>|</gray> <dark_red><decline>Ablehnen</decline></dark_red>"
-    # Placeholder: <player>
-    tpaSender: "<aqua>Du hast <player> eine TPA gesendet.</aqua>"
-    tpaAccepted: "<green>Du hast die TPA von <player> angenommen.</green>"
-    # Playceholder: <world>
-    noPerms: "<red>Du darfst in <underlined><world></underlined> RTP nicht benutzen!</red>"
-    worldDisabled: "<red>Für der Wellt <green><world></green> ist RTP deaktiviert.</red>"
-    noWorld: "<red>In der Wellt <green><world></green> existiert keine RTP Konfiguration, melde dich bei einem Admin.</red>"
-    # Placeholder: <time_left>
-    cooldownTPA: "<red>Du kannst TPA erst in <time_left> Sekunden wieder benutzen!</red>"
-    cooldownRTP: "<red>Du kannst RTP erst in <time_left> Sekunden wieder benutzen!</red>"
-    countdown: "<aqua><bold><time_left></bold></aqua>"
-    # Placeholder: None
-    noDestination: "<red>Du musst einen Spieler als TPA-Ziel angeben!</red>"
-    tpaToSelf: "<red>Du kannst dir nicht selber eine TPA senden!</red>"
-    noAcceptor: "<red>Du musst einen Spieler angeben!</red>"
-    acceptSelf: "<red>Du kanst keine TPA von dir selbst annehmen!</red>"
-    declineSelf: "<red>Du kannstt keine TPA von dir selbst Ablehnen!</red>"
-    noTPA: "<red>Du hast keine TPA von diesem Spieler</red>"
-    searchingForPos: "<aqua>Es wird nach einer sicheren position für dich gesucht!</aqua>"
-    saveLocationFound: "<aqua>Es wurde ein sicherer Ort gefunden du wirst nun teleportiert.</aqua>"
-    newSpawn: "<green>Der Spawn wurde aktualisiert.</green>"
-    moved: "<red>Du hast dich bewegt, der Teleportvorgang wird abgebrochen!</red>"
 
 SwitchChannel:
   Enabled: false
@@ -349,11 +261,6 @@ SwitchChannel:
     - "kanal"
     - "channel"
   DefaultChannelName: "Standart"
-  Messages:
-    # Placeholder: <channel>
-    NotExistend: '<red>Der Kanal "<channel>" existiert nicht!</red>'
-    NoPermissionsChannel: '<red>Du hast keine Rechte auf den Kanal "<channel>"!</red>'
-    JoinedChannel: '<green>Du bist erfolgreich dem Kanal "<channel>" begetreten.<br>Alle Weiteren nachrichten werden nun in diesem Kanal gesendet.</green>'
 
 FirstJoinTitle:
   Enabled: false
@@ -423,11 +330,6 @@ Sudo:
   Permission: "stuff.sudo"
   # Player with bypass permission wont be able to be sudoed
   BypassPermission: "stuff.bypass.sudo"
-  Messages:
-    # Placeholder: <player>, <sudo>
-    sudoCommand: "Du hast <player>, <sudo> auszühren lassen"
-    sudoMessage: 'Du hast <player>, "<sudo>" schreiben lassen.'
-    playerHasBypass: "Du kanst <player> nichts befehlen."
 
 Timings:
   Enabled: false
