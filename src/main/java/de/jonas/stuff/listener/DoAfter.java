@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import de.jonas.stuff.Stuff;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
-public class DoAfter implements Listener{
+public class DoAfter implements Listener {
 
     MiniMessage mm;
     ConfigurationSection sec;
@@ -21,12 +21,35 @@ public class DoAfter implements Listener{
     public DoAfter() {
         mm = MiniMessage.miniMessage();
         reloadConfig();
+
+        var a = sec.getKeys(false).stream()
+                .filter((n) -> !n.equalsIgnoreCase("Enabled"))
+                .mapToLong(Long::parseLong)
+                .filter((l) -> Instant.now().isAfter(Instant.ofEpochSecond(l)))
+                .max();
+
+        if (a.isPresent()) {
+            ConfigurationSection cmd = sec.getConfigurationSection(String.valueOf(a.getAsLong()));
+
+            boolean freezeTicks = cmd.getBoolean("FreezeTicks");
+            if (freezeTicks) {
+                Bukkit.getServer().getServerTickManager().setFrozen(true);
+            }
+
+            boolean unfreezeTicks = cmd.getBoolean("UnfreezeTicks");
+            if (unfreezeTicks) {
+                Bukkit.getServer().getServerTickManager().setFrozen(false);
+            }
+
+        }
+
     }
 
     @EventHandler
     public void doAfter(PlayerJoinEvent e) {
         for (String a : sec.getKeys(false)) {
-            if (a.equalsIgnoreCase("Enabled")) continue;
+            if (a.equalsIgnoreCase("Enabled"))
+                continue;
 
             ConfigurationSection cmd = sec.getConfigurationSection(a);
 
@@ -34,7 +57,7 @@ public class DoAfter implements Listener{
                 int changeGamemode = cmd.getInt("ChangeGamemode");
                 if (changeGamemode != -1) {
                     GameMode gamemode;
-                    switch (changeGamemode){
+                    switch (changeGamemode) {
                         case 0:
                             gamemode = GameMode.SURVIVAL;
                             break;
@@ -50,23 +73,23 @@ public class DoAfter implements Listener{
                         default:
                             gamemode = null;
                             break;
-                        }
-        
+                    }
+
                     if (gamemode != null) {
-                        Bukkit.getOnlinePlayers().forEach(action -> action.setGameMode(gamemode));
+                        e.getPlayer().setGameMode(gamemode);
                     }
                 }
-        
+
                 boolean teleportSpawn = cmd.getBoolean("TeleportSpawn");
                 if (teleportSpawn) {
-                    Bukkit.getOnlinePlayers().forEach(action -> action.teleport(Stuff.INSTANCE.getSpawn()));
+                    e.getPlayer().teleport(Stuff.INSTANCE.getSpawn());
                 }
-        
+
                 List<String> commands = cmd.getStringList("Commands");
                 commands.forEach(action -> {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), action);
                 });
-        
+
                 List<String> broadcast = cmd.getStringList("Broadcast");
                 broadcast.forEach(action -> {
                     Bukkit.getServer().sendMessage(mm.deserialize(action));

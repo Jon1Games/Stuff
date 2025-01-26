@@ -343,7 +343,7 @@ Timings:
     # -1 = disabled, 0 = Survival, 1 = Creative, 2 = Adventure, 3 = Spectator
     ChangeGamemode: 0
     FreezeTicks: false
-    UnfreezeTicks: true
+    UnfreezeTicks: false
     Commands:
       - "say Test"
       - "say Test2"
@@ -360,6 +360,9 @@ DoBefore:
     # -1 = disabled, 0 = Survival, 1 = Creative, 2 = Adventure, 3 = Spectator
     ChangeGamemode: 0
     TeleportSpawn: False
+    # tick(un)Freeze will be only done at server start
+    FreezeTicks: false
+    UnfreezeTicks: false
     Commands:
       - "say Test"
       - "say Test2"
