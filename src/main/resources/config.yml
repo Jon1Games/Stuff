@@ -18,6 +18,7 @@ OnlyUseAPI: false
 
 DebugCommands:
   Enabled: false
+  permission: "stuff.debug"
   unregister:
     - debug
   Aliases:
