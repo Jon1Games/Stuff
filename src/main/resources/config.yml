@@ -17,7 +17,7 @@
 OnlyUseAPI: false
 
 DebugCommands:
-  Enabled: true
+  Enabled: false
   unregister:
     - debug
   Aliases:
@@ -27,21 +27,21 @@ ReloadCommand:
   permission: "stuff.reload"
 
 EnableCalculatorCommand:
-  Enabled: True
+  Enabled: false
   suggestionName:
     Number: "Zahl"
   Aliases:
     - calc
 
 CustomJoinQuitMessage:
-  Enabled: true
+  Enabled: false
   Messages:
     # Player placeholder: <player>
     JoinMessage: "<gray>[</gray><green>+</green><gray>]</gray> <player>"
     LeaveMessage: "<gray>[</gray><red>-</red><gray>]</gray> <player>"
 
 MsgCommand:
-  Enabled: true
+  Enabled: false
   Permission: "stuff.msg.send"
   suggestionName:
     Message: "Nachricht"
@@ -61,19 +61,9 @@ MsgCommand:
     Permission: "stuff.msg.answer"
     Aliases:
       - r
-  # Placeholder: <toplayer> <frompalyer> <message>
-  Messages:
-    # Message for case the sender is the target
-    same: "<red>Du kannst dir selbst keine Nachricht schicken!</red>"
-    # Message for the MSG target
-    To: "<gray>[</gray>Prefix<gray>]</gray> <fromplayer> -> <toplayer><gold>:</gold> <message>"
-    # Message for the MSG sender
-    From: "<gray>[</gray>Prefix<gray>]</gray> <fromplayer> -> <toplayer><gold>:</gold> <message>"
-    PlayerOffline: "<red>Der Spieler <player> ist nicht Online.</red>"
-    NoAnswerPlayer: "<red>Du must erst eine MSG senden oder Erhalten um /r nutzen zu können.</red>"
 
 FlyCommand:
-  Enabled: true
+  Enabled: false
   Permission: "stuff.fly"
   suggestionName:
     Player: "Spieler"
@@ -81,97 +71,52 @@ FlyCommand:
     - "fly"
   Messages:
     Self:
-      EnterFlyMode: "Du bist in den Flugmodus gegangen."
-      ExitFlyMode: "Du bist aus dem Flugmodus gegangen."
       ReturnInEnterFlyMode: "Der Flugmodus ist Aktiviert."
-    # Player placeholder: <player>
-    Other:
-      Self:
-        EnterFlyMode: "Du hast <green><player></green> in den Flugmodus gesetzt."
-        ExitFlyMode: "Du hast <green><player></green> aus dem Flugmodus geholt."
-      Other:
-        EnterFlyMode: "Du wurdest von <green><player></green> in den Flugmodus gesetzt."
-        OtherOtherExitFlyMode: "Du wurdest von <green><player></green> aus dem Flugmodus geholt."
 
 FlySpeedCommand:
-  Enabled: true
+  Enabled: false
   Permission: "stuff.speed"
   suggestionName:
     Speed: "Geschwindigkeit"
     Player: "Spieler"
   Aliases:
     - "flyspeed"
-  # Speed placeholder: <speed>
-  Messages:
-    Self:
-      NewSpeed: "Deine neue Fluggeschwindigkeit ist nun <gold><speed></gold>."
-      ReturnSpeed: "Deine Fluggeschwindigkeit ist <gold><speed></gold>"
-    # Player placeholder: <player>
-    Other:
-      SelfNewSpeed: "Deine neue Fluggeschwindigkeit wurde von <green><player></green> auf <gold><speed></gold> gesetzt."
-      OtherNewSpeed: "Du hast die Fluggeschwindigkeit von <green><player></green> auf <gold><speed></gold>."
 
 WalkSpeedCommand:
-  Enabled: true
+  Enabled: false
   Permission: "stuff.speed"
   suggestionName:
     Speed: "Geschwindigkeit"
     Player: "Spieler"
   Aliases:
     - "walkspeed"
-  # Speed placeholder: <speed>
-  Messages:
-    Self:
-      NewSpeed: "Deine neue Laufgeschwindigkeit ist nun <gold><speed></gold>."
-      ReturnSpeed: "Deine Laufgeschwindigkeit ist <gold><speed></gold>"
-    # Player placeholder: <player>
-    Other:
-      SelfNewSpeed: "Deine neue Laufgeschwindigkeit wurde von <green><player></green> auf <gold><speed></gold> gesetzt."
-      OtherNewSpeed: "Du hast die Laufgeschwindigkeit von <green><player></green> auf <gold><speed></gold>."
 
 GamemodeCommand:
-  Enabled: true
+  Enabled: false
   suggestionName:
     Player: "Spieler"
   Aliases:
     - "gm"
-  # Player placeholder: <player> (only for the Other section)
   Messages:
     Creative:
       Aliases:
         - "1"
       Permission: "stuff.gamemode.creative"
-      Self: "Dein Spielmodus wurde auf Kreativ gesetzt."
-      Other:
-        Self: "Du hast <green><player></green> in den Kreativ Modus gesetzt."
-        Other: "Du wurdest von <green><player></green> in den Kreativ Modus gesetzt."
     Spectator:
       Aliases:
         - "3"
       Permission: "stuff.gamemode.spectator"
-      Self: "Dein Spielmodus wurde auf Zuschauer gesetzt."
-      Other:
-        Self: "Du hast <green><player></green> in den Zuschauer Modus gesetzt."
-        Other: "Du wurdest von <green><player></green> in den Zuschauer Modus gesetzt."
     Adventure:
       Aliases:
         - "2"
       Permission: "stuff.gamemode.adventure"
-      Self: "Dein Spielmodus wurde auf Abenteuer gesetzt."
-      Other:
-        Self: "Du hast <green><player></green> in den Abenteuer Modus gesetzt."
-        Other: "Du wurdest von <green><player></green> in den Abenteuer Modus gesetzt."
     Survival:
       Aliases:
         - "0"
       Permission: "stuff.gamemode.survival"
-      Self: "Dein Spielmodus wurde auf Überleben gesetzt."
-      Other:
-        Self: "Du hast <green><player></green> in den Überleben Modus gesetzt."
-        Other: "Du wurdest von <green><player></green> in den Überleben Modus gesetzt."
 
 PortableInventoryCommand:
-  Enabled: true
+  Enabled: false
   WorkbenchPermission: "stuff.portableinventory.workbench"
   AnvilPermission: "stuff.portableinventory.anvil"
   GrindstonePermission: "stuff.portableinventory.grindstone"
@@ -179,18 +124,18 @@ PortableInventoryCommand:
 
 Format:
   PlayerNames:
-    Enabled: true
+    Enabled: false
     Prefix:
-      Enabled: true
+      Enabled: false
       Prefix: "%luckperms_prefix%"
     Suffix:
-      Enabled: true
+      Enabled: false
       Suffix: "%luckperms_suffix%"
     TabSorting:
-      Enabled: true
+      Enabled: false
       MaxWeight: 1000
   Chat:
-    Enabled: true
+    Enabled: false
     # Placeholder: <player>, <message>
     Format: "<player> <gray><message></gray>"
     # options vanilla (&4 text in dark red) and minimessage ( <red> text in red )
@@ -200,29 +145,21 @@ Format:
       ItemInHand: true
 
 PlayTimeCommand:
-  Enabled: true
+  Enabled: false
   suggestionName:
     Player: "Spieler"
   Aliases:
     - "playtime"
-  # Placeholders: for both: <days> <hours> <min> <sec> , for other: <player>
-  Messages:
-    self: "<green>Du hast <days> Tage, <hours> Stunden, <min> Minuten und <sec> Sekunden Spielzeit"
-    other: "<green><player> hat <days> Tage, <hours> Stunden, <min> Minuten und <sec> Sekunden Spielzeit"
 
 PingCommand:
-  Enabled: true
+  Enabled: false
   suggestionName:
     Player: "Spieler"
   Aliases:
     - "ping"
-  # Placeholders: for both: <ping> , for other: <player>
-  Messages:
-    self: "Dein Ping beträgt <gold><ping><reset>."
-    other: "Der Ping von <green><player><reset> Ping beträgt <gold><ping><reset>."
 
 BroadcastCommand:
-  Enabled: true
+  Enabled: false
   Permission: "stuff.broadcast"
   suggestionName:
     Message: "Nachricht"
@@ -232,26 +169,27 @@ BroadcastCommand:
   Message: "<gray>[<red>Broadcast</red>]</gray> <message>"
 
 TeleportCommands:
-  Enabled: True
+  Enabled: false
   Spawn:
-    Enabled: true
+    Enabled: false
+    JoinTpToSpawn: false
     Permission: "stuff.teleport.spawn"
     # Default: overworld = world, nether = world_nether, end = world_the_end
     World: world
-    Pos_X: 5.5
-    Pos_Y: 80
-    Pos_Z: -42.5
+    Pos_X: 0
+    Pos_Y: 0
+    Pos_Z: 0
     Pos_YAW: 0
     Pos_PITCH: 0
     Aliases:
       - Spawn
   SetSpawn:
-    Enabled: true
+    Enabled: false
     Permission: "stuff.teleport.setspawn"
     Aliases:
       - setspawn
   TPA:
-    Enabled: True
+    Enabled: false
     Permission: "stuff.teleport.tpa"
     Aliases:
       - tpa
@@ -262,21 +200,21 @@ TeleportCommands:
     NotMoveFor: 3
     NotMoveForBypassPermission: "stuff.teleport.tpa.notmovefor.bypass"
   TPAACCEPT:
-    Enabled: True
+    Enabled: false
     Permission: "stuff.teleport.tpac"
     Aliases:
       - tpac
       - tpaccept
       - tpaaccept
   TPADECLINE:
-    Enabled: True
+    Enabled: false
     Permission: "stuff.teleport.tpad"
     Aliases:
       - tpad
       - tpdecline
       - tpadecline
   RTP:
-    Enabled: True
+    Enabled: false
     Permission: "stuff.teleport.rtp"
     Aliases:
       - rtp
@@ -313,34 +251,9 @@ TeleportCommands:
         MaxY:
   suggestionName:
     Player: "Spieler"
-  Messages:
-    # Placeholder: <player>, <accept>TEXT</accept>, <decline>TEXT</decline>
-    tpaRCP: "<aqua>Der spieler <player> hat dir eine TPA gesenden.</aqua><br><green><bold><accept>Annehmen</accept></bold></green> <gray>|</gray> <dark_red><decline>Ablehnen</decline></dark_red>"
-    # Placeholder: <player>
-    tpaSender: "<aqua>Du hast <player> eine TPA gesendet.</aqua>"
-    tpaAccepted: "<green>Du hast die TPA von <player> angenommen.</green>"
-    # Playceholder: <world>
-    noPerms: "<red>Du darfst in <underlined><world></underlined> RTP nicht benutzen!</red>"
-    worldDisabled: "<red>Für der Wellt <green><world></green> ist RTP deaktiviert.</red>"
-    noWorld: "<red>In der Wellt <green><world></green> existiert keine RTP Konfiguration, melde dich bei einem Admin.</red>"
-    # Placeholder: <time_left>
-    cooldownTPA: "<red>Du kannst TPA erst in <time_left> Sekunden wieder benutzen!</red>"
-    cooldownRTP: "<red>Du kannst RTP erst in <time_left> Sekunden wieder benutzen!</red>"
-    countdown: "<aqua><bold><time_left></bold></aqua>"
-    # Placeholder: None
-    noDestination: "<red>Du musst einen Spieler als TPA-Ziel angeben!</red>"
-    tpaToSelf: "<red>Du kannst dir nicht selber eine TPA senden!</red>"
-    noAcceptor: "<red>Du musst einen Spieler angeben!</red>"
-    acceptSelf: "<red>Du kanst keine TPA von dir selbst annehmen!</red>"
-    declineSelf: "<red>Du kannstt keine TPA von dir selbst Ablehnen!</red>"
-    noTPA: "<red>Du hast keine TPA von diesem Spieler</red>"
-    searchingForPos: "<aqua>Es wird nach einer sicheren position für dich gesucht!</aqua>"
-    saveLocationFound: "<aqua>Es wurde ein sicherer Ort gefunden du wirst nun teleportiert.</aqua>"
-    newSpawn: "<green>Der Spawn wurde aktualisiert.</green>"
-    moved: "<red>Du hast dich bewegt, der Teleportvorgang wird abgebrochen!</red>"
 
 SwitchChannel:
-  Enabled: true
+  Enabled: false
   Permission: "stuff.switchchannel"
   suggestionName:
     Channel: "Kanal"
@@ -348,26 +261,21 @@ SwitchChannel:
     - "kanal"
     - "channel"
   DefaultChannelName: "Standart"
-  Messages:
-    # Placeholder: <channel>
-    NotExistend: '<red>Der Kanal "<channel>" existiert nicht!</red>'
-    NoPermissionsChannel: '<red>Du hast keine Rechte auf den Kanal "<channel>"!</red>'
-    JoinedChannel: '<green>Du bist erfolgreich dem Kanal "<channel>" begetreten.<br>Alle Weiteren nachrichten werden nun in diesem Kanal gesendet.</green>'
 
 FirstJoinTitle:
-  Enabled: true
+  Enabled: false
   # Placeholder: <player>
   Title: "Wilkommen"
   SubTitle: "<player>"
 
 FirstJoniMessage:
-  Enabled: True
+  Enabled: false
   # Placeholder: <player>
   Message: "Willkommen auf unserem Server <player>."
 
 Channels:
   Admin:
-    Enabled: true
+    Enabled: false
     Permission:
       See: "stuff.adminchannel.see"
       Join: "stuff.adminchannel.join"
@@ -377,7 +285,7 @@ Channels:
     Format: "<gray>[<red>Admin</red>]</gray> <player> <gray><message></gray>"
 
 InfoCommands:
-  Enabled: true
+  Enabled: false
   # Placeholders: <player>
   # You can add as many Commands here as you want
   ExampleCommand:
@@ -387,7 +295,7 @@ InfoCommands:
     Message: "Ein Text Text"
 
 CommandCommand:
-  Enabled: true
+  Enabled: false
   # Placeholders: <player>
   # You can add as many Commands here as you want
   TestMessage:
@@ -399,7 +307,7 @@ CommandCommand:
     Command: "say test"
 
 TimedMessages:
-  Enabled: true
+  Enabled: false
   # You can add as many timed messages here as you want
   ExampleMessage:
     Enabled: false
@@ -413,7 +321,7 @@ TimedMessages:
       - "Ich bin eine Test MNachricht nr.3"
 
 Sudo:
-  Enabled: true
+  Enabled: false
   Aliases:
     - "sudo"
   suggestionName:
@@ -422,11 +330,61 @@ Sudo:
   Permission: "stuff.sudo"
   # Player with bypass permission wont be able to be sudoed
   BypassPermission: "stuff.bypass.sudo"
-  Messages:
-    # Placeholder: <player>, <sudo>
-    sudoCommand: "Du hast <player>, <sudo> auszühren lassen"
-    sudoMessage: 'Du hast <player>, "<sudo>" schreiben lassen.'
-    playerHasBypass: "Du kanst <player> nichts befehlen."
+
+Timings:
+  Enabled: false
+  Server-Start:
+    Enabled: false
+    # unixtimestamp: use calculator like this: https://unixtime.org/
+    Time: 0000000000
+    # Placeholder: <days>, <hours>, <minutes>, <seconds>
+    BossBar: "<days> Tage, <hours> Stunden, <minutes> Minuten und <seconds> Sekunden"
+    TeleportSpawn: False
+    # -1 = disabled, 0 = Survival, 1 = Creative, 2 = Adventure, 3 = Spectator
+    ChangeGamemode: 0
+    FreezeTicks: false
+    UnfreezeTicks: false
+    Commands:
+      - "say Test"
+      - "say Test2"
+    Broadcast:
+      - "Test"
+      - "Test2"
+
+# If a players joint before a spezific time the following will aplly to the player
+# The "0000000000" is the timestamp in Unix and you can add more like the example
+DoBefore:
+  Enabled: false
+  # unixtimestamp: use calculator like this: https://unixtime.org/
+  0000000000:
+    # -1 = disabled, 0 = Survival, 1 = Creative, 2 = Adventure, 3 = Spectator
+    ChangeGamemode: 0
+    TeleportSpawn: False
+    # tick(un)Freeze will be only done at server start
+    FreezeTicks: false
+    UnfreezeTicks: false
+    Commands:
+      - "say Test"
+      - "say Test2"
+    Broadcast:
+      - "Test"
+      - "Test2"
+
+# If a players joint after a spezific time the following will aplly to the player
+# The "0000000000" is the timestamp in Unix and you can add more like the example
+DoAfter:
+  Enabled: false
+  # unixtimestamp: use calculator like this: https://unixtime.org/
+  0000000000:
+    # -1 = disabled, 0 = Survival, 1 = Creative, 2 = Adventure, 3 = Spectator
+    ChangeGamemode: 0
+    TeleportSpawn: False
+    Commands:
+      - "say Test"
+      - "say Test2"
+    Broadcast:
+      - "Test"
+      - "Test2"
 
 # EXPERIMENTAL NOT TESTED
 # This option gives OP permissions what are listened below, this is usefull for plugins who set their permission

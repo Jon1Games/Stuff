@@ -4,6 +4,7 @@ import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.IntegerArgument;
 import dev.jorel.commandapi.arguments.PlayerArgument;
+import me.gaminglounge.configapi.Language;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -46,16 +47,22 @@ public class SpeedCommand {
                         int fullspeed = (int) (speed * 10);
 
                         if (target == executor || !(executor instanceof Player)) {
-                            target.sendMessage(mm.deserialize(conf.getString("FlySpeedCommand.Messages.Self.NewSpeed"),
+                            target.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, target, "flyspeed.self.newSpeed", true),
                                     Placeholder.component("speed", Component.text(fullspeed))));
                         } else {
                             Player executorP = (Player) executor;
-                            target.sendMessage(mm.deserialize(conf.getString("FlySpeedCommand.Messages.Other.Other.NewSpeed"),
+                            target.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, target, "flyspeed.other.SelfNewSpeed", true),
                                     Placeholder.component("player", executorP.teamDisplayName()), Placeholder.component("speed",
                                             Component.text(fullspeed))));
-                            executor.sendMessage(mm.deserialize(conf.getString("FlySpeedCommand.Messages.Other.Self.NewSpeed"),
-                                    Placeholder.component("player", target.teamDisplayName()), Placeholder.component("speed",
-                                            Component.text(fullspeed))));
+                            if (executor instanceof Player p) {
+                                executor.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, p, "flyspeed.other.OtherNewSpeed", true),
+                                Placeholder.component("player", target.teamDisplayName()), Placeholder.component("speed",
+                                        Component.text(fullspeed))));
+                            } else {
+                                executor.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, "en_US", "flyspeed.other.OtherNewSpeed", true),
+                                Placeholder.component("player", target.teamDisplayName()), Placeholder.component("speed",
+                                        Component.text(fullspeed))));
+                            }
                         }
                     })
                     .register();
@@ -81,16 +88,22 @@ public class SpeedCommand {
                             int fullspeed = (int) (speed * 10);
 
                             if (target == executor || !(executor instanceof Player)) {
-                                target.sendMessage(mm.deserialize(conf.getString("SpeedCommand.Messages.Self.NewSpeed"),
+                                target.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, target, "walkspeed.self.newSpeed", true),
                                         Placeholder.component("speed", Component.text(fullspeed))));
                             } else {
                                 Player executorP = (Player) executor;
-                                target.sendMessage(mm.deserialize(conf.getString("SpeedCommand.Messages.Other.Other.NewSpeed"),
+                                target.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, target, "walkspeed.other.SelfNewSpeed", true),
                                         Placeholder.component("player", executorP.teamDisplayName()), Placeholder.component("speed",
                                                 Component.text(fullspeed))));
-                                executor.sendMessage(mm.deserialize(conf.getString("SpeedCommand.Messages.Other.Self.NewSpeed"),
-                                        Placeholder.component("player", target.teamDisplayName()), Placeholder.component("speed",
-                                                Component.text(fullspeed))));
+                                if (executor instanceof Player p) {
+                                    executor.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, p, "walkspeed.other.OtherNewSpeed", true),
+                                    Placeholder.component("player", target.teamDisplayName()), Placeholder.component("speed",
+                                            Component.text(fullspeed))));
+                                } else {
+                                    executor.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, "en_US", "walkspeed.other.OtherNewSpeed", true),
+                                    Placeholder.component("player", target.teamDisplayName()), Placeholder.component("speed",
+                                            Component.text(fullspeed))));
+                                }
                             }
                         })
                         .register();

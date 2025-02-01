@@ -20,6 +20,7 @@ import de.jonas.stuff.Stuff;
 import de.jonas.stuff.utility.ScheudulerRunLaterForX;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.PlayerArgument;
+import me.gaminglounge.configapi.Language;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -38,6 +39,7 @@ public class Teleportation implements Listener {
     public Teleportation() {
         // Create our command
         List<String> aliases_SPAWN = stuff.getConfig().getStringList("TeleportCommands.Spawn.Aliases");
+        List<String> aliases_SETSPAWN = stuff.getConfig().getStringList("TeleportCommands.SetSpawn.Aliases");
         List<String> aliases_TPA = stuff.getConfig().getStringList("TeleportCommands.TPA.Aliases");
         List<String> aliases_TPAC = stuff.getConfig().getStringList("TeleportCommands.TPAACCEPT.Aliases");
         List<String> aliases_TPAD = stuff.getConfig().getStringList("TeleportCommands.TPADECLINE.Aliases");
@@ -49,14 +51,7 @@ public class Teleportation implements Listener {
                 .withPermission(stuff.getConfig().getString("TeleportCommands.Spawn.Permission"))
                 .withAliases(aliases_SPAWN.toArray(new String[aliases_SPAWN.size()]))
                 .executesPlayer(((player, commandArguments) -> {
-                        player.teleport(new Location(
-                            Bukkit.getWorld(stuff.getConfig().getString("TeleportCommands.Spawn.World")),
-                            stuff.getConfig().getDouble("TeleportCommands.Spawn.Pos_X"),
-                            stuff.getConfig().getDouble("TeleportCommands.Spawn.Pos_Y"),
-                            stuff.getConfig().getDouble("TeleportCommands.Spawn.Pos_Z"),
-                            (float) stuff.getConfig().getDouble("TeleportCommands.Spawn.Pos_YAW"),
-                            (float) stuff.getConfig().getDouble("TeleportCommands.Spawn.Pos_PITCH")
-                        ));
+                        player.teleport(stuff.getSpawn());
                     }))
                 .register();
                 stuff.increaseCommandCount();
@@ -65,16 +60,16 @@ public class Teleportation implements Listener {
         if (stuff.getConfig().getBoolean("TeleportCommands.SetSpawn.Enabled")) {
             new CommandAPICommand("stuff:setspawn")
                 .withPermission(stuff.getConfig().getString("TeleportCommands.SetSpawn.Permission"))
-                .withAliases(aliases_SPAWN.toArray(new String[aliases_SPAWN.size()]))
-                .executesEntity(((player, commandArguments) -> {
+                .withAliases(aliases_SETSPAWN.toArray(new String[aliases_SETSPAWN.size()]))
+                .executesPlayer(((player, commandArguments) -> {
                             stuff.getConfig().set("TeleportCommands.Spawn.World", player.getWorld().getName());
                             stuff.getConfig().set("TeleportCommands.Spawn.Pos_X", player.getX());
-                            stuff.getConfig().set("TeleportCommands.Spawn.Pos_Y", player.getZ());
+                            stuff.getConfig().set("TeleportCommands.Spawn.Pos_Y", player.getY());
                             stuff.getConfig().set("TeleportCommands.Spawn.Pos_Z", player.getZ());
                             stuff.getConfig().set("TeleportCommands.Spawn.Pos_YAW", player.getYaw());
                             stuff.getConfig().set("TeleportCommands.Spawn.Pos_PITCH", player.getPitch());
                             stuff.saveConfig();
-                            player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.newSpawn")));
+                            player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.setSpawn", true)));
                     }))
                 .register();
                 stuff.increaseCommandCount();
@@ -95,7 +90,7 @@ public class Teleportation implements Listener {
                         if(gp <= sc) {
                             d.remove(player);
                         } else {
-                            player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.cooldownTPA"),
+                            player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.tpa.cooldown", true),
                                 Placeholder.component("time_left", Component.text((sc - gp) / 1_000))
                             ));
                             return;
@@ -103,15 +98,15 @@ public class Teleportation implements Listener {
                     }
                     Player target = (Player) commandArguments.get(suggestion);
                     if (target == null) {
-                        player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.noDestination")));
+                        player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.tpa.noDestination", true)));
                     } else if (target == player) {
-                        player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.tpaToSelf")));
+                        player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.tpa.toSelf", true)));
                     } else {
                         tpa(player, target, System.currentTimeMillis() + stuff.getConfig().getInt("TeleportCommands.TPA.RequestDuration") * 1_000);
-                        player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.tpaSender"),
+                        player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.tpa.send", true),
                             Placeholder.component("player", target.displayName())
                         ));
-                        target.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.tpaRCP"),
+                        target.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, target, "teleportation.tpa.recived", true),
                             Placeholder.styling("accept", ClickEvent.runCommand("/stuff:tpaaccept " + player.getName())),
                             Placeholder.styling("decline", ClickEvent.runCommand("/stuff:tpadecline " + player.getName())),
                             Placeholder.component("player", player.displayName())
@@ -129,12 +124,12 @@ public class Teleportation implements Listener {
             .executesPlayer(((player, commandArguments) -> {
                 Player target = (Player) commandArguments.get(suggestion);
                 if (target == null) {
-                    player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.noAcceptor")));
+                    player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "noPlayerGiven", true)));
                 } else if (target == player) {
-                    player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.acceptSelf")));
+                    player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.tpaccept.self", true)));
                 } else {
                     if (!tpac(player, target)) {
-                        player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.noTPA")));
+                        player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.noTpa", true)));
                     }
                 }}))
             .register();
@@ -149,12 +144,12 @@ public class Teleportation implements Listener {
                 .executesPlayer(((player, commandArguments) -> {
                     Player target = (Player) commandArguments.get(suggestion);
                     if (target == null) {
-                        player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.noAcceptor")));
+                        player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "noPlayerGiven", true)));
                     } else if (target == player) {
-                        player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.acceptSelf")));
+                        player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.tpadecline.self", true)));
                     } else {
                         if (!tpad(player, target)) {
-                            player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.noTPA")));
+                            player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.noTpa", true)));
                         }
                     }}))
                 .register();
@@ -175,7 +170,7 @@ public class Teleportation implements Listener {
                         if(gp <= sc) {
                             d.remove(player);
                         } else {
-                            player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.cooldownRTP"),
+                            player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.rtp.cooldown", true),
                                 Placeholder.component("time_left", Component.text((gp - sc) / 1_000))
                             ));
                             return;
@@ -185,19 +180,19 @@ public class Teleportation implements Listener {
                     World pw = player.getWorld();
                     
                     if (stuff.getConfig().get("TeleportCommands.RTP.Worlds." + pw.getName()) == null) {
-                        player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.noWorld"),
+                        player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.rtp.noConfig", true),
                             Placeholder.component("world", mm.deserialize(pw.getName()))
                         ));
                         return;
                     }
                     if (!stuff.getConfig().getBoolean("TeleportCommands.RTP.Worlds." + pw.getName() + ".Enabled")) {
-                        player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.worldDisabled"),
+                        player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.rtp.worldDisabled", true),
                             Placeholder.component("world", mm.deserialize(pw.getName()))
                         ));
                         return;
                     }
                     if (!player.hasPermission(stuff.getConfig().getString("TeleportCommands.RTP.Worlds." + pw.getName() + ".Permission"))) {
-                        player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.noPerms"),
+                        player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.rtp.noPerms", true),
                             Placeholder.component("world", mm.deserialize(pw.getName()))
                         ));
                         return;
@@ -220,7 +215,7 @@ public class Teleportation implements Listener {
                         stuff.getConfig().getInt("TeleportCommands.RTP.Worlds." + pw.getName() + ".MaxY") :
                         Integer.MAX_VALUE;
                     
-                    player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.searchingForPos")));
+                    player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.rtp.searching", true)));
                     Bukkit.getServer().getScheduler().runTaskAsynchronously(stuff, () -> {
                         do { 
                             double phi = Math.random() * 2 * Math.PI;
@@ -229,15 +224,15 @@ public class Teleportation implements Listener {
                             double z = Math.sin(phi) * r + center.blockZ();
                             Location target = safeLocation(new Location(pw, x, player.getLocation().getY(), z), minY, maxY);
                             if (target != null) {
-                                player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.saveLocationFound")));
+                                player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.rtp.found", true)));
                                 Location loc = player.getLocation();
                                 ScheudulerRunLaterForX.runTaskForX(stuff, cycles -> {
                                     if (!loc.equals(player.getLocation())) {
-                                        player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.moved")));
+                                        player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.cancel.moved", true)));
                                         return false;
                                     }
                                     if (cycles > 0) {
-                                        player.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.countdown"),
+                                        player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "teleportation.countdown", true),
                                             Placeholder.component("time_left", Component.text(cycles))
                                         ));
                                     } else {
@@ -275,17 +270,17 @@ public class Teleportation implements Listener {
         if(!a.containsKey(acceptor)) return false;
         if(!a.get(acceptor).containsKey(sender)) return false;
         if(a.get(acceptor).get(sender) < System.currentTimeMillis()) return false;
-        acceptor.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.tpaAccepted"),
+        acceptor.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, acceptor, "teleportation.tpa.accepted", true),
             Placeholder.component("player", sender.name())
         ));
         Location loc = sender.getLocation();
         ScheudulerRunLaterForX.runTaskForX(stuff, cycles -> {
             if (!loc.equals(sender.getLocation())) {
-                sender.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.moved")));
+                sender.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, sender, "teleportation.cancel.moved", true)));
                 return false;
             }
             if (cycles > 0) {
-                sender.sendMessage(mm.deserialize(stuff.getConfig().getString("TeleportCommands.Messages.countdown"),
+                sender.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, sender, "teleportation.countdown", true),
                     Placeholder.component("time_left", Component.text(cycles))
                 ));
             } else {
@@ -400,4 +395,6 @@ public class Teleportation implements Listener {
         if(tmp != null) return tmp.toLocation(world).add(0.5, 1, 0.5);
         return null;
     }
+
 }
+

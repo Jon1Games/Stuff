@@ -2,6 +2,7 @@ package de.jonas.stuff.listener;
 
 import de.jonas.stuff.Stuff;
 import de.jonas.stuff.commands.FlyCommand;
+import me.gaminglounge.configapi.Language;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -17,7 +18,6 @@ public class JoinFlyListener implements Listener {
     public void onJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
         var mm = MiniMessage.miniMessage();
-        Stuff stuff = Stuff.INSTANCE;
 
         if (player.getGameMode() == GameMode.CREATIVE) {
             player.setFlying(true);
@@ -34,7 +34,7 @@ public class JoinFlyListener implements Listener {
         } else player.getPersistentDataContainer().set(FlyCommand.flyAllowidentifier, PersistentDataType.BOOLEAN, player.getAllowFlight());
 
         if (player.getAllowFlight()) {
-            e.getPlayer().sendMessage(mm.deserialize(stuff.getConfig().getString("FlyCommand.Messages.Self.ReturnInEnterFlyMode")));
+            e.getPlayer().sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, e.getPlayer(), "flycommand.self.returnFlyMode", true)));
         }
     }
 }

@@ -6,6 +6,7 @@ import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.StringArgument;
+import me.gaminglounge.configapi.Language;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -35,7 +36,7 @@ public class SwitchChannel {
                             conf.getString("SwitchChannel.suggestionName.Channel"));
                     if (channel == null) {
                         chatChannelManager.unsetPlayerChannel(sender);
-                        sender.sendMessage(mm.deserialize(conf.getString("SwitchChannel.Messages.JoinedChannel"),
+                        sender.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, sender, "switchchannel.joinedChannel", true),
                                 Placeholder.component("channel", Component.text(
                                         conf.getString("SwitchChannel.DefaultChannelName")
                                 ))));
@@ -45,18 +46,18 @@ public class SwitchChannel {
 
                     if (!chatChannelManager.getChannelNames().contains(channel)) {
                         sender.sendMessage(mm.deserialize(
-                                conf.getString("SwitchChannel.Messages.NotExistend"),
+                            Language.getValue(Stuff.INSTANCE, sender, "switchchannel.notExistend", true),
                                 Placeholder.component("channel", Component.text(channel))));
                         return;
                     }
 
                     if (chatChannelManager.setPlayerChannel(sender, channel)) {
                         sender.sendMessage(mm.deserialize(
-                                conf.getString("SwitchChannel.Messages.JoinedChannel"),
+                            Language.getValue(Stuff.INSTANCE, sender, "switchchannel.joinedChannel", true),
                                 Placeholder.component("channel", Component.text(channel))));
                     } else {
                         sender.sendMessage(mm.deserialize(
-                                conf.getString("SwitchChannel.Messages.NoPermissionsChannel"),
+                            Language.getValue(Stuff.INSTANCE, sender, "switchchannel.noPermissionsChannel", true),
                                 Placeholder.component("channel", Component.text(channel))));
                     }
 

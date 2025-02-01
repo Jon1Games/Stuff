@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.PlayerArgument;
+import me.gaminglounge.configapi.Language;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -33,15 +34,15 @@ public class PingCommand {
 
                     String message;
                     if (target == player) {
-                        message = conf.getString("PingCommand.Messages.self");
+                        message = Language.getValue(Stuff.INSTANCE, target, "ping.self", true);
                     } else {
-                        message = conf.getString("PingCommand.Messages.other");
+                        message = Language.getValue(Stuff.INSTANCE, target, "ping.other", true);
                     }
 
                     player.sendMessage(mm.deserialize(message,
-                            Placeholder.component("ping", Component.text(ping)),
-                            Placeholder.component("player", target.teamDisplayName())
-                            ));
+                        Placeholder.component("ping", Component.text(ping)),
+                        Placeholder.component("player", target.teamDisplayName())
+                        ));
                 })
                 .register();
 

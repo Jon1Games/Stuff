@@ -19,7 +19,7 @@ public class Stuffloader implements PluginLoader{
             "https://repo1.maven.org/maven2/")
             .build());
         resolver.addDependency(new Dependency(
-            new DefaultArtifact("dev.jorel:commandapi-bukkit-shade-mojang-mapped:9.6.0"),
+            new DefaultArtifact("dev.jorel:commandapi-bukkit-shade-mojang-mapped:9.7.0"),
             null));
         classpathBuilder.addLibrary(resolver);
     }

@@ -1,17 +1,19 @@
 package de.jonas.stuff.commands;
 
-import de.jonas.stuff.Stuff;
-import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.arguments.PlayerArgument;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import java.util.List;
+
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.List;
+import de.jonas.stuff.Stuff;
+import dev.jorel.commandapi.CommandAPI;
+import dev.jorel.commandapi.CommandAPICommand;
+import dev.jorel.commandapi.arguments.PlayerArgument;
+import me.gaminglounge.configapi.Language;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 
 public class GamemodeCommand {
     public GamemodeCommand() {
@@ -44,13 +46,19 @@ public class GamemodeCommand {
                             target.setAllowFlight(true);
 
                             if (executor == target || !(executor instanceof Player)) {
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.Messages.Creative.Self")));
+                                target.sendMessage(mm.deserialize(Language.getValue(stuff, target, "gamemodecommand.creative.self", true)));
                             } else {
                                 Player executorP = (Player) executor;
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.Messages.Creative.Other.Other"),
+                                target.sendMessage(mm.deserialize(Language.getValue(stuff, target, "gamemodecommand.creative.other.other", true),
                                         Placeholder.component("player", executorP.teamDisplayName())));
-                                executor.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.Messages.Creative.Other.Self"),
+                                if (executor instanceof Player p) {
+                                    executor.sendMessage(mm.deserialize(Language.getValue(stuff, p, "gamemodecommand.creative.other.self", true),
                                         Placeholder.component("player", target.teamDisplayName())));
+                                } else {
+                                    executor.sendMessage(mm.deserialize(Language.getValue(stuff, "en_US", "gamemodecommand.creative.other.self", true),
+                                        Placeholder.component("player", target.teamDisplayName())));
+                                }
+
                             }
                         })
                 ).withSubcommand(new CommandAPICommand("spectator")
@@ -68,13 +76,18 @@ public class GamemodeCommand {
 
 
                             if (executor == target || !(executor instanceof Player)) {
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.Messages.Spectator.Self")));
+                                target.sendMessage(mm.deserialize(Language.getValue(stuff, target, "gamemodecommand.spectator.self", true)));
                             } else {
                                 Player executorP = (Player) executor;
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.Messages.Spectator.Other.Other"),
+                                target.sendMessage(mm.deserialize(Language.getValue(stuff, target, "gamemodecommand.spectator.other.other", true),
                                         Placeholder.component("player", executorP.teamDisplayName())));
-                                executor.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.Messages.Spectator.Other.Self"),
+                                if (executor instanceof Player p) {
+                                    executor.sendMessage(mm.deserialize(Language.getValue(stuff, p, "gamemodecommand.spectator.other.self", true),
                                         Placeholder.component("player", target.teamDisplayName())));
+                                } else {
+                                    executor.sendMessage(mm.deserialize(Language.getValue(stuff, "en_US", "gamemodecommand.spectator.other.self", true),
+                                        Placeholder.component("player", target.teamDisplayName())));                                    
+                                }
                             }
                         })
                 ).withSubcommand(new CommandAPICommand("adventure")
@@ -94,13 +107,18 @@ public class GamemodeCommand {
                             }
 
                             if (executor == target || !(executor instanceof Player)) {
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.Messages.Adventure.Self")));
+                                target.sendMessage(mm.deserialize(Language.getValue(stuff, target, "gamemodecommand.adventure.self", true)));
                             } else {
                                 Player executorP = (Player) executor;
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.Messages.Adventure.Other.Other"),
+                                target.sendMessage(mm.deserialize(Language.getValue(stuff, target, "gamemodecommand.adventure.other.other", true),
                                         Placeholder.component("player", executorP.teamDisplayName())));
-                                executor.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.Messages.Adventure.Other.Self"),
-                                        Placeholder.component("player", target.teamDisplayName())));
+                                if (executor instanceof Player p) {
+                                    executor.sendMessage(mm.deserialize(Language.getValue(stuff, p, "gamemodecommand.adventure.other.self", true),
+                                            Placeholder.component("player", target.teamDisplayName())));
+                                } else {
+                                    executor.sendMessage(mm.deserialize(Language.getValue(stuff, "en_US", "gamemodecommand.adventure.other.self", true),
+                                            Placeholder.component("player", target.teamDisplayName())));                                    
+                                }
                             }
                         })
                 ).withSubcommand(new CommandAPICommand("survival")
@@ -120,13 +138,18 @@ public class GamemodeCommand {
                             }
 
                             if (executor == target || !(executor instanceof Player)) {
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.Messages.Survival.Self")));
+                                target.sendMessage(mm.deserialize(Language.getValue(stuff, target, "gamemodecommand.survival.self", true)));
                             } else {
                                 Player executorP = (Player) executor;
-                                target.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.Messages.Survival.Other.Other"),
+                                target.sendMessage(mm.deserialize(Language.getValue(stuff, target, "gamemodecommand.survival.other.other", true),
                                         Placeholder.component("player", executorP.teamDisplayName())));
-                                executor.sendMessage(mm.deserialize(stuff.getConfig().getString("GamemodeCommand.Messages.Survival.Other.Self"),
+                                if (executor instanceof Player p) {
+                                    executor.sendMessage(mm.deserialize(Language.getValue(stuff, p, "gamemodecommand.survival.other.self", true),
+                                            Placeholder.component("player", target.teamDisplayName())));
+                                } else {
+                                    executor.sendMessage(mm.deserialize(Language.getValue(stuff, "en_US", "gamemodecommand.survival.other.self", true),
                                         Placeholder.component("player", target.teamDisplayName())));
+                                }
                             }
                         })
                 )

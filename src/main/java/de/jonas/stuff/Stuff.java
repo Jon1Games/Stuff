@@ -1,8 +1,12 @@
 package de.jonas.stuff;
 
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,17 +32,22 @@ import de.jonas.stuff.commands.Teleportation;
 import de.jonas.stuff.interfaced.ChatChannel;
 import de.jonas.stuff.listener.BlockBreakEvent;
 import de.jonas.stuff.listener.BlockPlace;
+import de.jonas.stuff.listener.BossBarTimer;
 import de.jonas.stuff.listener.ChatListener;
+import de.jonas.stuff.listener.DoAfter;
+import de.jonas.stuff.listener.DoBefore;
 import de.jonas.stuff.listener.FirstJoin;
 import de.jonas.stuff.listener.InvClickEvent;
 import de.jonas.stuff.listener.JoinFlyListener;
 import de.jonas.stuff.listener.JoinQuitMessageListener;
 import de.jonas.stuff.listener.JoinSpeedListener;
+import de.jonas.stuff.listener.JointTpToSpawn;
 import de.jonas.stuff.listener.TeamDisplaynameSet;
 import de.jonas.stuff.utility.PermToOp;
 import de.jonas.stuff.utility.TimedMessages;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import me.gaminglounge.configapi.LoadConfig;
 
 public final class Stuff extends JavaPlugin {
 
@@ -55,6 +64,7 @@ public final class Stuff extends JavaPlugin {
     public ChatCaptureManager captureManager;
     public Events events;
     public MsgCommand msgCommand;
+    public TimerHandler timerHandler;
 
     public void onLoad() {
 
@@ -67,6 +77,11 @@ public final class Stuff extends JavaPlugin {
         INSTANCE = this;
 
         this.saveDefaultConfig();
+
+        Map<String, InputStream> lang = new HashMap<>();
+        lang.put("de_DE.json", this.getResource("lang/de_DE.json"));
+        lang.put("en_US.json", this.getResource("lang/en_US.json"));
+        LoadConfig.registerLanguage(this, lang);
 
         chatChannelManager = new ChatChannelManager();
         Default defaultChannel = new Default();
@@ -194,14 +209,19 @@ public final class Stuff extends JavaPlugin {
 
             if (getConfig().getBoolean("TimedMessages.Enabled")) new TimedMessages();
 
-            teleportation.onEnable();
+            if (getConfig().getBoolean("OnlyUseAPI")) {
+                getLogger().log(Level.INFO, "Startup in API only mode Complete");
+            } else {
+                getLogger().log(Level.INFO, "Startup Complete");
+            }
+    
+            if (getConfig().getBoolean("Timings.Enabled")) {
+                timerHandler = new TimerHandler();
+            }
 
-        }
-
-        if (getConfig().getBoolean("OnlyUseAPI")) {
-            getLogger().log(Level.INFO, "Startup in API only mode Complete");
-        } else {
-            getLogger().log(Level.INFO, "Startup Complete");
+            if (getConfig().getBoolean("TeleportCommands.Enabled")) {
+                teleportation.onEnable();
+            }
         }
 
     }
@@ -246,12 +266,33 @@ public final class Stuff extends JavaPlugin {
                 pm.registerEvents(teamDisplaynameSet, this);
                 increaseListenerCount();
             }
-            if (getConfig().getBoolean("TeleportCommands.TPA.Enabled")) {
-                pm.registerEvents(teleportation, this);
-                increaseListenerCount();
+            if (getConfig().getBoolean("TeleportCommands.Enabled")) {
+                if (getConfig().getBoolean("TeleportCommands.TPA.Enabled")) {
+                    pm.registerEvents(teleportation, this);
+                    increaseListenerCount();
+                }
+                if (
+                    getConfig().getBoolean("TeleportCommands.Spawn.Enabled") &&
+                    getConfig().getBoolean("TeleportCommands.Spawn.JoinTpToSpawn")
+                    ) {
+                    pm.registerEvents(new JointTpToSpawn(), this);
+                    increaseListenerCount();
+                }
             }
             if (getConfig().getBoolean("MsgCommand.Enabled")) {
                 pm.registerEvents(msgCommand, this);
+                increaseListenerCount();
+            }
+            if (getConfig().getBoolean("Timings.Enabled")) {
+                pm.registerEvents(new BossBarTimer(), this);
+                increaseListenerCount();
+            }
+            if (getConfig().getBoolean("DoBefore.Enabled")) {
+                pm.registerEvents(new DoBefore(), this);
+                increaseListenerCount();
+            }
+            if (getConfig().getBoolean("DoAfter.Enabled")) {
+                pm.registerEvents(new DoAfter(), this);
                 increaseListenerCount();
             }
             getLogger().log(Level.INFO, listeners + " listener registered");
@@ -269,5 +310,33 @@ public final class Stuff extends JavaPlugin {
     public void increaseChannelCount() {
         channels++;
     }
+
+        public Location getSpawn() {
+        Double x = getConfig().getDouble("TeleportCommands.Spawn.Pos_X");
+        Double y = getConfig().getDouble("TeleportCommands.Spawn.Pos_Y");
+        Double z = getConfig().getDouble("TeleportCommands.Spawn.Pos_Z");
+        
+        if (
+            x == 0 || 
+            y == 0 || 
+            z == 0 || 
+            x.isNaN() || 
+            y.isNaN() || 
+            z.isNaN() || 
+            x.isInfinite() || 
+            y.isInfinite() || 
+            z.isInfinite()
+        ) {
+            return Bukkit.getWorlds().get(0).getSpawnLocation();
+        }
+
+        return new Location(
+            Bukkit.getWorld(getConfig().getString("TeleportCommands.Spawn.World")),
+            x, y, z,
+            (float) getConfig().getDouble("TeleportCommands.Spawn.Pos_YAW"),
+            (float) getConfig().getDouble("TeleportCommands.Spawn.Pos_PITCH")
+        );
+    }
+
 }
 
