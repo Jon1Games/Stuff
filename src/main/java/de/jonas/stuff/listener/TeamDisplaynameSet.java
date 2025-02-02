@@ -23,7 +23,6 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -60,40 +59,44 @@ public class TeamDisplaynameSet implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuit(PlayerQuitEvent e) {
-            Player p = e.getPlayer();
-            teams.remove(p);
+        Player p = e.getPlayer();
+        teams.remove(p);
 
-            removeTeam(scoreboard, p);
-            Bukkit.getOnlinePlayers().forEach(pl -> removeTeam(pl.getScoreboard(), p));
+        removeTeam(scoreboard, p);
+        Bukkit.getOnlinePlayers().forEach(pl -> removeTeam(pl.getScoreboard(), p));
     }
 
     private void addTeam(Scoreboard sb, PlayerTeam pti, OfflinePlayer p) {
         Team pt = sb.getPlayerTeam(p);
-        if(pt != null) {
+        if (pt != null) {
             pt.removePlayer(p);
-            if(pt.getSize() == 0) pt.unregister();
+            if (pt.getSize() == 0)
+                pt.unregister();
         }
         try {
             pt = sb.registerNewTeam(pti.id);
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             pt = sb.getTeam(pti.id);
         }
         if (stuff.getConfig().getBoolean("Format.PlayerNames.Prefix.Enabled")) {
             String prefix = stuff.getConfig().getString("Format.PlayerNames.Prefix.Prefix");
-            if (prefix != null) pt.prefix(pti.prefix);
+            if (prefix != null)
+                pt.prefix(pti.prefix);
         }
         if (stuff.getConfig().getBoolean("Format.PlayerNames.Suffix.Enabled")) {
             String suffix = stuff.getConfig().getString("Format.PlayerNames.Suffix.Suffix");
-            if (suffix != null) pt.suffix(pti.suffix);
+            if (suffix != null)
+                pt.suffix(pti.suffix);
         }
         pt.addPlayer(p);
     }
 
     public void removeTeam(Scoreboard sb, Player p) {
         Team pt = sb.getPlayerTeam(p);
-        if(pt != null) {
+        if (pt != null) {
             pt.removePlayer(p);
-            if(pt.getSize() == 0) pt.unregister();
+            if (pt.getSize() == 0)
+                pt.unregister();
         }
     }
 
@@ -105,10 +108,11 @@ public class TeamDisplaynameSet implements Listener {
 
     private int getWeight(Player p) {
         LuckPerms lp = LuckPermsProvider.get();
-        String weight = lp.getUserManager().getUser(p.getUniqueId()).getCachedData().getMetaData().getMetaValue("weight");
+        String weight = lp.getUserManager().getUser(p.getUniqueId()).getCachedData().getMetaData()
+                .getMetaValue("weight");
         try {
             return Integer.parseInt(weight);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return 0;
         }
     }
@@ -140,7 +144,7 @@ public class TeamDisplaynameSet implements Listener {
                 if (!prefix.endsWith(" ") && prefix.length() != 0) {
                     prefix += " ";
                 }
-                prefixcom = LegacyComponentSerializer.legacy('&').deserialize(prefix);
+                prefixcom = mm.deserialize(prefix);
                 pti.prefix = prefixcom;
             } else {
                 stuff.getLogger().log(Level.WARNING, "Prefix is not defined!");
@@ -155,7 +159,7 @@ public class TeamDisplaynameSet implements Listener {
                 if (!suffix.startsWith(" ") && suffix.length() != 0) {
                     suffix = " " + suffix;
                 }
-                suffixcom = LegacyComponentSerializer.legacy('&').deserialize(suffix);
+                suffixcom = mm.deserialize(suffix);
                 pti.suffix = suffixcom;
             } else {
                 stuff.getLogger().log(Level.WARNING, "Suffix is not defined!");
@@ -169,7 +173,8 @@ public class TeamDisplaynameSet implements Listener {
 
             Scoreboard lscore = player.getScoreboard();
             teams.forEach((pl, opti) -> {
-                if (pl != player) addTeam(lscore, opti, pl);
+                if (pl != player)
+                    addTeam(lscore, opti, pl);
             });
         }, 1);
         Bukkit.getScheduler().runTaskLater(stuff,

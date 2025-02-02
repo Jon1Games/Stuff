@@ -36,6 +36,7 @@ import de.jonas.stuff.listener.BossBarTimer;
 import de.jonas.stuff.listener.ChatListener;
 import de.jonas.stuff.listener.DoAfter;
 import de.jonas.stuff.listener.DoBefore;
+import de.jonas.stuff.listener.FarmworldRTP;
 import de.jonas.stuff.listener.FirstJoin;
 import de.jonas.stuff.listener.InvClickEvent;
 import de.jonas.stuff.listener.JoinFlyListener;
@@ -92,10 +93,11 @@ public final class Stuff extends JavaPlugin {
         captureManager = new ChatCaptureManager();
 
         events = new Events();
-        
-        if(!getConfig().getBoolean("OnlyUseAPI")) {
 
-            if (!CommandAPI.isLoaded()) CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
+        if (!getConfig().getBoolean("OnlyUseAPI")) {
+
+            if (!CommandAPI.isLoaded())
+                CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
 
             if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
                 getLogger().log(Level.INFO, "Enabling playername formatting");
@@ -133,7 +135,8 @@ public final class Stuff extends JavaPlugin {
                 new PortableInventoryCommand();
                 increaseCommandCount();
             }
-            if (getConfig().getBoolean("InfoCommands.Enabled")) new InfoCommands();
+            if (getConfig().getBoolean("InfoCommands.Enabled"))
+                new InfoCommands();
             if (getConfig().getBoolean("PlayTimeCommand.Enabled")) {
                 new PlayTimeCommand();
                 increaseCommandCount();
@@ -165,7 +168,7 @@ public final class Stuff extends JavaPlugin {
             getLogger().log(Level.INFO, commands + " commands registered");
 
         }
-        
+
     }
 
     @Override
@@ -176,7 +179,7 @@ public final class Stuff extends JavaPlugin {
 
         chatChannelManager.onEnable();
 
-        if(!getConfig().getBoolean("OnlyUseAPI")) {
+        if (!getConfig().getBoolean("OnlyUseAPI")) {
 
             CommandAPI.onEnable();
 
@@ -184,37 +187,39 @@ public final class Stuff extends JavaPlugin {
             for (String a : sec.getKeys(false)) {
                 ConfigurationSection cs = sec.getConfigurationSection(a);
 
-                if (!cs.getBoolean("Enabled")) continue;
+                if (!cs.getBoolean("Enabled"))
+                    continue;
 
                 AbstractChannel abstractChannel = new AbstractChannel(
                         cs.getString("Permission.See"),
                         cs.getString("Permission.Join"),
                         cs.getString("Format"),
-                        cs.getBoolean("CanSeeOwnMessages")
-                );
+                        cs.getBoolean("CanSeeOwnMessages"));
 
                 chatChannelManager.registerChannel(a.toLowerCase(), abstractChannel);
 
                 increaseChannelCount();
             }
 
-            getLogger().log(Level.INFO, channels+ " channels registered");
+            getLogger().log(Level.INFO, channels + " channels registered");
 
-            if (getConfig().getBoolean("Format.PlayerNames.Enabled")) teamDisplaynameSet.onEnable();
+            if (getConfig().getBoolean("Format.PlayerNames.Enabled"))
+                teamDisplaynameSet.onEnable();
 
             if (getConfig().getBoolean("GiveOpPermission.Enabled")) {
                 PermToOp permToOp = new PermToOp();
                 permToOp.onEnable();
             }
 
-            if (getConfig().getBoolean("TimedMessages.Enabled")) new TimedMessages();
+            if (getConfig().getBoolean("TimedMessages.Enabled"))
+                new TimedMessages();
 
             if (getConfig().getBoolean("OnlyUseAPI")) {
                 getLogger().log(Level.INFO, "Startup in API only mode Complete");
             } else {
                 getLogger().log(Level.INFO, "Startup Complete");
             }
-    
+
             if (getConfig().getBoolean("Timings.Enabled")) {
                 timerHandler = new TimerHandler();
             }
@@ -230,12 +235,12 @@ public final class Stuff extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
 
-        getLogger().log(Level.INFO,"Disabling Plugin");
+        getLogger().log(Level.INFO, "Disabling Plugin");
 
         CommandAPI.onDisable();
         getLogger().log(Level.INFO, "CommandAPI disabled");
 
-        getLogger().log(Level.INFO,"Disabling complete");
+        getLogger().log(Level.INFO, "Disabling complete");
     }
 
     public void listener() {
@@ -247,7 +252,7 @@ public final class Stuff extends JavaPlugin {
         pm.registerEvents(new BlockBreakEvent(), this);
         getLogger().log(Level.INFO, "3 API listener registered");
 
-        if(!getConfig().getBoolean("OnlyUseAPI")) {
+        if (!getConfig().getBoolean("OnlyUseAPI")) {
             if (getConfig().getBoolean("CustomJoinQuitMessage.Enabled")) {
                 pm.registerEvents(new JoinQuitMessageListener(), this);
                 increaseListenerCount();
@@ -271,10 +276,8 @@ public final class Stuff extends JavaPlugin {
                     pm.registerEvents(teleportation, this);
                     increaseListenerCount();
                 }
-                if (
-                    getConfig().getBoolean("TeleportCommands.Spawn.Enabled") &&
-                    getConfig().getBoolean("TeleportCommands.Spawn.JoinTpToSpawn")
-                    ) {
+                if (getConfig().getBoolean("TeleportCommands.Spawn.Enabled") &&
+                        getConfig().getBoolean("TeleportCommands.Spawn.JoinTpToSpawn")) {
                     pm.registerEvents(new JointTpToSpawn(), this);
                     increaseListenerCount();
                 }
@@ -295,14 +298,17 @@ public final class Stuff extends JavaPlugin {
                 pm.registerEvents(new DoAfter(), this);
                 increaseListenerCount();
             }
+
+            pm.registerEvents(new FarmworldRTP(), this);
+
             getLogger().log(Level.INFO, listeners + " listener registered");
         }
     }
-    
+
     public void increaseCommandCount() {
         commands++;
     }
-    
+
     public void increaseListenerCount() {
         listeners++;
     }
@@ -311,32 +317,28 @@ public final class Stuff extends JavaPlugin {
         channels++;
     }
 
-        public Location getSpawn() {
+    public Location getSpawn() {
         Double x = getConfig().getDouble("TeleportCommands.Spawn.Pos_X");
         Double y = getConfig().getDouble("TeleportCommands.Spawn.Pos_Y");
         Double z = getConfig().getDouble("TeleportCommands.Spawn.Pos_Z");
-        
-        if (
-            x == 0 || 
-            y == 0 || 
-            z == 0 || 
-            x.isNaN() || 
-            y.isNaN() || 
-            z.isNaN() || 
-            x.isInfinite() || 
-            y.isInfinite() || 
-            z.isInfinite()
-        ) {
+
+        if (x == 0 ||
+                y == 0 ||
+                z == 0 ||
+                x.isNaN() ||
+                y.isNaN() ||
+                z.isNaN() ||
+                x.isInfinite() ||
+                y.isInfinite() ||
+                z.isInfinite()) {
             return Bukkit.getWorlds().get(0).getSpawnLocation();
         }
 
         return new Location(
-            Bukkit.getWorld(getConfig().getString("TeleportCommands.Spawn.World")),
-            x, y, z,
-            (float) getConfig().getDouble("TeleportCommands.Spawn.Pos_YAW"),
-            (float) getConfig().getDouble("TeleportCommands.Spawn.Pos_PITCH")
-        );
+                Bukkit.getWorld(getConfig().getString("TeleportCommands.Spawn.World")),
+                x, y, z,
+                (float) getConfig().getDouble("TeleportCommands.Spawn.Pos_YAW"),
+                (float) getConfig().getDouble("TeleportCommands.Spawn.Pos_PITCH"));
     }
 
 }
-
