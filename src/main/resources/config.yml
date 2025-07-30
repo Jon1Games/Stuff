@@ -8,24 +8,11 @@
 # Required Plugins
 # LuckPerms
 # PlaceHoderApi
-# /papi ecloud download luckperms
+# - /papi ecloud download luckperms
 
 # Infos
 # suggestionName is the name that shows up over the chat for you what you know what to type there.
 # aliases are the normally used commands, the default command is "stuff:<command>"
-
-OnlyUseAPI: false
-
-DebugCommands:
-  Enabled: false
-  permission: "stuff.debug"
-  unregister:
-    - debug
-  Aliases:
-    - debug
-
-ReloadCommand:
-  permission: "stuff.reload"
 
 EnableCalculatorCommand:
   Enabled: false
@@ -115,13 +102,6 @@ GamemodeCommand:
       Aliases:
         - "0"
       Permission: "stuff.gamemode.survival"
-
-PortableInventoryCommand:
-  Enabled: false
-  WorkbenchPermission: "stuff.portableinventory.workbench"
-  AnvilPermission: "stuff.portableinventory.anvil"
-  GrindstonePermission: "stuff.portableinventory.grindstone"
-  SmithingtablePermission: "stuff.portableinventory.smithingtable"
 
 Format:
   PlayerNames:
@@ -307,20 +287,6 @@ CommandCommand:
     RunAsConsole: false
     Command: "say test"
 
-TimedMessages:
-  Enabled: false
-  # You can add as many timed messages here as you want
-  ExampleMessage:
-    Enabled: false
-    # Random: true will send one of the Messages, false will send ALL the messages at once
-    Random: True
-    # in sec
-    Period: 60
-    Messages:
-      - "Ich bin eine Test MNachricht nr.1"
-      - "Ich bin eine Test MNachricht nr.2"
-      - "Ich bin eine Test MNachricht nr.3"
-
 Sudo:
   Enabled: false
   Aliases:
@@ -331,66 +297,3 @@ Sudo:
   Permission: "stuff.sudo"
   # Player with bypass permission wont be able to be sudoed
   BypassPermission: "stuff.bypass.sudo"
-
-Timings:
-  Enabled: false
-  Server-Start:
-    Enabled: false
-    # unixtimestamp: use calculator like this: https://unixtime.org/
-    Time: 0000000000
-    # Placeholder: <days>, <hours>, <minutes>, <seconds>
-    BossBar: "<days> Tage, <hours> Stunden, <minutes> Minuten und <seconds> Sekunden"
-    TeleportSpawn: False
-    # -1 = disabled, 0 = Survival, 1 = Creative, 2 = Adventure, 3 = Spectator
-    ChangeGamemode: 0
-    FreezeTicks: false
-    UnfreezeTicks: false
-    Commands:
-      - "say Test"
-      - "say Test2"
-    Broadcast:
-      - "Test"
-      - "Test2"
-
-# If a players joint before a spezific time the following will aplly to the player
-# The "0000000000" is the timestamp in Unix and you can add more like the example
-DoBefore:
-  Enabled: false
-  # unixtimestamp: use calculator like this: https://unixtime.org/
-  0000000000:
-    # -1 = disabled, 0 = Survival, 1 = Creative, 2 = Adventure, 3 = Spectator
-    ChangeGamemode: 0
-    TeleportSpawn: False
-    # tick(un)Freeze will be only done at server start
-    FreezeTicks: false
-    UnfreezeTicks: false
-    Commands:
-      - "say Test"
-      - "say Test2"
-    Broadcast:
-      - "Test"
-      - "Test2"
-
-# If a players joint after a spezific time the following will aplly to the player
-# The "0000000000" is the timestamp in Unix and you can add more like the example
-DoAfter:
-  Enabled: false
-  # unixtimestamp: use calculator like this: https://unixtime.org/
-  0000000000:
-    # -1 = disabled, 0 = Survival, 1 = Creative, 2 = Adventure, 3 = Spectator
-    ChangeGamemode: 0
-    TeleportSpawn: False
-    Commands:
-      - "say Test"
-      - "say Test2"
-    Broadcast:
-      - "Test"
-      - "Test2"
-
-# EXPERIMENTAL NOT TESTED
-# This option gives OP permissions what are listened below, this is usefull for plugins who set their permission
-# but don´t assign them to OP´s.
-GiveOpPermission:
-  Enabled: false
-  Permissions:
-    - ""

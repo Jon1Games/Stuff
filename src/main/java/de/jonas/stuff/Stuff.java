@@ -16,36 +16,26 @@ import de.jonas.stuff.chatchannels.Default;
 import de.jonas.stuff.commands.BroadcastCommand;
 import de.jonas.stuff.commands.CalculatorCommand;
 import de.jonas.stuff.commands.CommandCommand;
-import de.jonas.stuff.commands.DebugCommands;
 import de.jonas.stuff.commands.FlyCommand;
 import de.jonas.stuff.commands.GamemodeCommand;
 import de.jonas.stuff.commands.InfoCommands;
 import de.jonas.stuff.commands.MsgCommand;
 import de.jonas.stuff.commands.PingCommand;
 import de.jonas.stuff.commands.PlayTimeCommand;
-import de.jonas.stuff.commands.PortableInventoryCommand;
-import de.jonas.stuff.commands.ReloadCommand;
 import de.jonas.stuff.commands.SpeedCommand;
 import de.jonas.stuff.commands.SudoCommand;
 import de.jonas.stuff.commands.SwitchChannel;
 import de.jonas.stuff.commands.Teleportation;
 import de.jonas.stuff.interfaced.ChatChannel;
-import de.jonas.stuff.listener.BlockBreakEvent;
-import de.jonas.stuff.listener.BlockPlace;
-import de.jonas.stuff.listener.BossBarTimer;
 import de.jonas.stuff.listener.ChatListener;
 import de.jonas.stuff.listener.DoAfter;
 import de.jonas.stuff.listener.DoBefore;
-import de.jonas.stuff.listener.FarmworldRTP;
 import de.jonas.stuff.listener.FirstJoin;
-import de.jonas.stuff.listener.InvClickEvent;
 import de.jonas.stuff.listener.JoinFlyListener;
 import de.jonas.stuff.listener.JoinQuitMessageListener;
 import de.jonas.stuff.listener.JoinSpeedListener;
 import de.jonas.stuff.listener.JointTpToSpawn;
 import de.jonas.stuff.listener.TeamDisplaynameSet;
-import de.jonas.stuff.utility.PermToOp;
-import de.jonas.stuff.utility.TimedMessages;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
 import me.gaminglounge.configapi.LoadConfig;
@@ -59,13 +49,10 @@ public final class Stuff extends JavaPlugin {
     public int listeners;
     public ChatChannelManager chatChannelManager;
     public int channels;
-    public ItemBuilderManager itemBuilderManager;
     public int itemBuilds;
     public ChatChannel inputChatChannel;
     public ChatCaptureManager captureManager;
-    public Events events;
     public MsgCommand msgCommand;
-    public TimerHandler timerHandler;
 
     public void onLoad() {
 
@@ -88,86 +75,68 @@ public final class Stuff extends JavaPlugin {
         Default defaultChannel = new Default();
         chatChannelManager.setDefaultChannel(defaultChannel);
 
-        itemBuilderManager = new ItemBuilderManager();
-
         captureManager = new ChatCaptureManager();
 
-        events = new Events();
+        if (!CommandAPI.isLoaded())
+            CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
 
-        if (!getConfig().getBoolean("OnlyUseAPI")) {
-
-            if (!CommandAPI.isLoaded())
-                CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
-
-            if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
-                getLogger().log(Level.INFO, "Enabling playername formatting");
-                teamDisplaynameSet = new TeamDisplaynameSet();
-                teamDisplaynameSet.onLoad();
-            } else {
-                getLogger().log(Level.INFO, "Playername formatting is disabled");
-            }
-
-            new ReloadCommand();
-            commands = 1;
-            if (getConfig().getBoolean("DebugCommands.Enabled")) {
-                DebugCommands debugCommands = new DebugCommands();
-                debugCommands.events();
-                increaseCommandCount();
-            }
-            if (getConfig().getBoolean("EnableCalculatorCommand.Enabled")) {
-                new CalculatorCommand();
-                increaseCommandCount();
-            }
-            if (getConfig().getBoolean("MsgCommand.Enabled")) {
-                msgCommand = new MsgCommand();
-                increaseCommandCount();
-            }
-            if (getConfig().getBoolean("FlyCommand.Enabled")) {
-                new FlyCommand();
-                increaseCommandCount();
-            }
-            new SpeedCommand();
-            if (getConfig().getBoolean("GamemodeCommand.Enabled")) {
-                new GamemodeCommand();
-                increaseCommandCount();
-            }
-            if (getConfig().getBoolean("PortableInventoryCommand.Enabled")) {
-                new PortableInventoryCommand();
-                increaseCommandCount();
-            }
-            if (getConfig().getBoolean("InfoCommands.Enabled"))
-                new InfoCommands();
-            if (getConfig().getBoolean("PlayTimeCommand.Enabled")) {
-                new PlayTimeCommand();
-                increaseCommandCount();
-            }
-            if (getConfig().getBoolean("PingCommand.Enabled")) {
-                new PingCommand();
-                increaseCommandCount();
-            }
-            if (getConfig().getBoolean("CommandCommand.Enabled")) {
-                new CommandCommand();
-                increaseCommandCount();
-            }
-            if (getConfig().getBoolean("BroadcastCommand.Enabled")) {
-                new BroadcastCommand();
-                increaseCommandCount();
-            }
-            if (getConfig().getBoolean("TeleportCommands.Enabled")) {
-                teleportation = new Teleportation();
-            }
-            if (getConfig().getBoolean("SwitchChannel.Enabled") && getConfig().getBoolean("Format.Chat.Enabled")) {
-                new SwitchChannel();
-                increaseCommandCount();
-            }
-            if (getConfig().getBoolean("Sudo.Enabled")) {
-                new SudoCommand();
-                increaseCommandCount();
-            }
-
-            getLogger().log(Level.INFO, commands + " commands registered");
-
+        if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
+            getLogger().log(Level.INFO, "Enabling playername formatting");
+            teamDisplaynameSet = new TeamDisplaynameSet();
+            teamDisplaynameSet.onLoad();
+        } else {
+            getLogger().log(Level.INFO, "Playername formatting is disabled");
         }
+
+        commands = 0;
+        if (getConfig().getBoolean("EnableCalculatorCommand.Enabled")) {
+            new CalculatorCommand();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("MsgCommand.Enabled")) {
+            msgCommand = new MsgCommand();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("FlyCommand.Enabled")) {
+            new FlyCommand();
+            increaseCommandCount();
+        }
+        new SpeedCommand();
+        if (getConfig().getBoolean("GamemodeCommand.Enabled")) {
+            new GamemodeCommand();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("InfoCommands.Enabled"))
+            new InfoCommands();
+        if (getConfig().getBoolean("PlayTimeCommand.Enabled")) {
+            new PlayTimeCommand();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("PingCommand.Enabled")) {
+            new PingCommand();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("CommandCommand.Enabled")) {
+            new CommandCommand();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("BroadcastCommand.Enabled")) {
+            new BroadcastCommand();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("TeleportCommands.Enabled")) {
+            teleportation = new Teleportation();
+        }
+        if (getConfig().getBoolean("SwitchChannel.Enabled") && getConfig().getBoolean("Format.Chat.Enabled")) {
+            new SwitchChannel();
+            increaseCommandCount();
+        }
+        if (getConfig().getBoolean("Sudo.Enabled")) {
+            new SudoCommand();
+            increaseCommandCount();
+        }
+
+        getLogger().log(Level.INFO, commands + " commands registered");
 
     }
 
@@ -206,24 +175,6 @@ public final class Stuff extends JavaPlugin {
             if (getConfig().getBoolean("Format.PlayerNames.Enabled"))
                 teamDisplaynameSet.onEnable();
 
-            if (getConfig().getBoolean("GiveOpPermission.Enabled")) {
-                PermToOp permToOp = new PermToOp();
-                permToOp.onEnable();
-            }
-
-            if (getConfig().getBoolean("TimedMessages.Enabled"))
-                new TimedMessages();
-
-            if (getConfig().getBoolean("OnlyUseAPI")) {
-                getLogger().log(Level.INFO, "Startup in API only mode Complete");
-            } else {
-                getLogger().log(Level.INFO, "Startup Complete");
-            }
-
-            if (getConfig().getBoolean("Timings.Enabled")) {
-                timerHandler = new TimerHandler();
-            }
-
             if (getConfig().getBoolean("TeleportCommands.Enabled")) {
                 teleportation.onEnable();
             }
@@ -246,12 +197,7 @@ public final class Stuff extends JavaPlugin {
     public void listener() {
         PluginManager pm = Bukkit.getPluginManager();
 
-        pm.registerEvents(new InvClickEvent(), this);
-        pm.registerEvents(new BlockPlace(), this);
         pm.registerEvents(new FirstJoin(), this);
-        pm.registerEvents(new BlockBreakEvent(), this);
-        getLogger().log(Level.INFO, "3 API listener registered");
-
         if (!getConfig().getBoolean("OnlyUseAPI")) {
             if (getConfig().getBoolean("CustomJoinQuitMessage.Enabled")) {
                 pm.registerEvents(new JoinQuitMessageListener(), this);
@@ -286,10 +232,6 @@ public final class Stuff extends JavaPlugin {
                 pm.registerEvents(msgCommand, this);
                 increaseListenerCount();
             }
-            if (getConfig().getBoolean("Timings.Enabled")) {
-                pm.registerEvents(new BossBarTimer(), this);
-                increaseListenerCount();
-            }
             if (getConfig().getBoolean("DoBefore.Enabled")) {
                 pm.registerEvents(new DoBefore(), this);
                 increaseListenerCount();
@@ -298,8 +240,6 @@ public final class Stuff extends JavaPlugin {
                 pm.registerEvents(new DoAfter(), this);
                 increaseListenerCount();
             }
-
-            pm.registerEvents(new FarmworldRTP(), this);
 
             getLogger().log(Level.INFO, listeners + " listener registered");
         }

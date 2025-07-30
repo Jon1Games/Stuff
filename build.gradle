@@ -28,12 +28,12 @@ repositories {
 }
 
 dependencies {
-    compileOnly "io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT"
-    implementation "dev.jorel:commandapi-bukkit-shade-mojang-mapped:9.7.0"
+    compileOnly "io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT"
+    implementation "dev.jorel:commandapi-bukkit-shade-mojang-mapped:10.1.2"
     compileOnly 'com.mojang:authlib:1.5.25'
     compileOnly 'net.luckperms:api:5.4'
     compileOnly 'me.clip:placeholderapi:2.11.5'
-    compileOnly files("build/libs/ConfigAPI-0.0.jar")
+    compileOnly files("build/libs/config-api-1.1.0.jar")
 }
 
 def targetJavaVersion = 21
