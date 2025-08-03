@@ -163,7 +163,7 @@ TeleportCommands:
     Pos_YAW: 0
     Pos_PITCH: 0
     Aliases:
-      - Spawn
+      - spawn
   SetSpawn:
     Enabled: false
     Permission: "stuff.teleport.setspawn"
