@@ -37,7 +37,6 @@ public class Teleportation implements Listener {
     Map<Player, Long> d = new HashMap<>(); // cooldown RTP
 
     public Teleportation() {
-        // Create our command
         List<String> aliases_SPAWN = stuff.getConfig().getStringList("TeleportCommands.Spawn.Aliases");
         List<String> aliases_SETSPAWN = stuff.getConfig().getStringList("TeleportCommands.SetSpawn.Aliases");
         List<String> aliases_TPA = stuff.getConfig().getStringList("TeleportCommands.TPA.Aliases");
@@ -297,17 +296,21 @@ public class Teleportation implements Listener {
                         Placeholder.component("player", sender.name())));
         Location loc = sender.getLocation();
         ScheudulerRunLaterForX.runTaskForX(stuff, cycles -> {
-            if (!loc.equals(sender.getLocation())) {
+            Location currentLoc = sender.getLocation();
+            if (loc.distanceSquared(currentLoc) > 0.25) {
+                sender.playSound(sender.getLocation(), org.bukkit.Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 0.4f);
                 sender.sendMessage(
                         mm.deserialize(Language.getValue(Stuff.INSTANCE, sender, "teleportation.cancel.moved", true)));
                 return false;
             }
             if (cycles > 0) {
-                sender.sendMessage(
-                        mm.deserialize(Language.getValue(Stuff.INSTANCE, sender, "teleportation.countdown", true),
+                sender.sendActionBar(
+                        mm.deserialize(Language.getValue(Stuff.INSTANCE, sender, "teleportation.countdown"),
                                 Placeholder.component("time_left", Component.text(cycles))));
+                sender.playSound(sender.getLocation(), org.bukkit.Sound.BLOCK_NOTE_BLOCK_PLING, 1.0f, 1.0f);
             } else {
                 sender.teleport(acceptor.getLocation());
+                sender.playSound(acceptor.getLocation(), org.bukkit.Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
             }
             return true;
         }, 20, stuff.getConfig().getInt("TeleportCommands.TPA.NotMoveFor"));
