@@ -4,8 +4,8 @@ Plugin adding general minecraft features.
 
 ## Language:
 
-Default: German
-Config to edit the Language available.
+The plugin uses [ConfigAPI](https://github.com/GamingLounge-me/ConfigAPI) for per player language, by default Englisch and German is supportet.
+Pull Requests for new Languages are always welcome.
 
 ## Features:
 
