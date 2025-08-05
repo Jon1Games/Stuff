@@ -25,7 +25,7 @@ public class SwitchChannel {
         new CommandAPICommand("stuff:channel")
                 .withPermission(conf.getString("SwitchChannel.Permission"))
                 .withAliases(conf.getStringList("SwitchChannel.Aliases").toArray(num -> new String[num]))
-                .withOptionalArguments(new StringArgument(conf.getString("SwitchChannel.suggestionName.Channel"))
+                .withOptionalArguments(new StringArgument("channel")
                         .replaceSuggestions(ArgumentSuggestions.strings(info -> {
                             if (info.sender() instanceof Player p) {
                                 return chatChannelManager.getChannelNamesForPlayer(p).toArray(num -> new String[num]);
@@ -33,7 +33,7 @@ public class SwitchChannel {
                         })))
                 .executesPlayer(((sender, args) -> {
                     String channel = (String) args.get(
-                            conf.getString("SwitchChannel.suggestionName.Channel"));
+                            "channel");
                     if (channel == null) {
                         chatChannelManager.unsetPlayerChannel(sender);
                         sender.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, sender, "switchchannel.joinedChannel", true),

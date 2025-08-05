@@ -43,7 +43,6 @@ public class Teleportation implements Listener {
         List<String> aliases_TPAC = stuff.getConfig().getStringList("TeleportCommands.TPAACCEPT.Aliases");
         List<String> aliases_TPAD = stuff.getConfig().getStringList("TeleportCommands.TPADECLINE.Aliases");
         List<String> aliases_RTP = stuff.getConfig().getStringList("TeleportCommands.RTP.Aliases");
-        String suggestion = stuff.getConfig().getString("TeleportCommands.suggestionName.Player");
 
         if (stuff.getConfig().getBoolean("TeleportCommands.Spawn.Enabled")) {
             new CommandAPICommand("stuff:spawn")
@@ -79,7 +78,7 @@ public class Teleportation implements Listener {
             new CommandAPICommand("stuff:tpa")
                     .withPermission(stuff.getConfig().getString("TeleportCommands.TPA.Permission"))
                     .withAliases(aliases_TPA.toArray(new String[aliases_TPA.size()]))
-                    .withOptionalArguments(new PlayerArgument(suggestion))
+                    .withOptionalArguments(new PlayerArgument("player"))
                     .executesPlayer(((player, commandArguments) -> {
                         if (!player.hasPermission(
                                 stuff.getConfig().getString("TeleportCommands.TPA.CooldownBypassPermission")) &&
@@ -95,7 +94,7 @@ public class Teleportation implements Listener {
                                 return;
                             }
                         }
-                        Player target = (Player) commandArguments.get(suggestion);
+                        Player target = (Player) commandArguments.get("player");
                         if (target == null) {
                             player.sendMessage(mm.deserialize(Language.getValue(Stuff.INSTANCE, player,
                                     "teleportation.tpa.noDestination", true)));
@@ -125,9 +124,9 @@ public class Teleportation implements Listener {
             new CommandAPICommand("stuff:tpaaccept")
                     .withPermission(stuff.getConfig().getString("TeleportCommands.TPAACCEPT.Permission"))
                     .withAliases(aliases_TPAC.toArray(new String[aliases_TPAC.size()]))
-                    .withOptionalArguments(new PlayerArgument(suggestion))
+                    .withOptionalArguments(new PlayerArgument("player"))
                     .executesPlayer(((player, commandArguments) -> {
-                        Player target = (Player) commandArguments.get(suggestion);
+                        Player target = (Player) commandArguments.get("player");
                         if (target == null) {
                             player.sendMessage(
                                     mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "noPlayerGiven", true)));
@@ -149,9 +148,9 @@ public class Teleportation implements Listener {
             new CommandAPICommand("stuff:tpadecline")
                     .withPermission(stuff.getConfig().getString("TeleportCommands.TPADECLINE.Permission"))
                     .withAliases(aliases_TPAD.toArray(new String[aliases_TPAD.size()]))
-                    .withOptionalArguments(new PlayerArgument(suggestion))
+                    .withOptionalArguments(new PlayerArgument("player"))
                     .executesPlayer(((player, commandArguments) -> {
-                        Player target = (Player) commandArguments.get(suggestion);
+                        Player target = (Player) commandArguments.get("player");
                         if (target == null) {
                             player.sendMessage(
                                     mm.deserialize(Language.getValue(Stuff.INSTANCE, player, "noPlayerGiven", true)));

@@ -15,7 +15,7 @@ public class CalculatorCommand {
     public CalculatorCommand() {
         // Create our command
         List<String> aliases = stuff.getConfig().getStringList("EnableCalculatorCommand.Aliases");
-        String suggestion = stuff.getConfig().getString("EnableCalculatorCommand.suggestionName.Number");
+        String suggestion = "number";
         new CommandAPICommand("stuff:calculator")
                 .withAliases(aliases.toArray(new String[aliases.size()]))
                 .withSubcommand(new CommandAPICommand("+")

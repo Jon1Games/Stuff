@@ -19,17 +19,16 @@ public class FlyCommand {
     public FlyCommand() {
         Stuff stuff = Stuff.INSTANCE;
         FileConfiguration conf = stuff.getConfig();
-        String suggestion = conf.getString("FlyCommand.suggestionName.Player");
         List<String> aliases = conf.getStringList("FlyCommand.Aliases");
         var mm = MiniMessage.miniMessage();
 
         // Create our command
         new CommandAPICommand("stuff:fly")
                 .withAliases(aliases.toArray(new String[aliases.size()]))
-                .withOptionalArguments(new PlayerArgument(suggestion))
+                .withOptionalArguments(new PlayerArgument("player"))
                 .withPermission(conf.getString("FlyCommand.Permission"))
                 .executes((executor, args) -> {
-                    Player target = (Player) args.get(suggestion);
+                    Player target = (Player) args.get("player");
 
                     if (executor instanceof Player && target == null) target = (Player) executor;
 

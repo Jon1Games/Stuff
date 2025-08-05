@@ -28,7 +28,7 @@ public class MsgCommand implements Listener{
     public MsgCommand() {
         Stuff stuff = Stuff.INSTANCE;
         FileConfiguration conf = stuff.getConfig();
-        String suggestion = conf.getString("MsgCommand.suggestionName.Player");
+        String suggestion = "player";
         List<String> aliases_MSG = conf.getStringList("MsgCommand.Aliases");
         List<String> aliases_ANSWER = conf.getStringList("MsgCommand.AnswerCommand.Aliases");
         var mm = MiniMessage.miniMessage();
@@ -41,7 +41,7 @@ public class MsgCommand implements Listener{
             .withPermission(stuff.getConfig().getString("MsgCommand.Permission"))
                 .withAliases(aliases_MSG.toArray(new String[aliases_MSG.size()]))
                 .withArguments(new PlayerArgument(suggestion))
-                .withArguments(new GreedyStringArgument(conf.getString("MsgCommand.suggestionName.Message")))
+                .withArguments(new GreedyStringArgument("message"))
                 .executesPlayer((player, args) -> {
                     Player target = (Player) args.get(suggestion);
 
@@ -66,13 +66,11 @@ public class MsgCommand implements Listener{
                     Component prefixto = mm.deserialize(Objects.requireNonNull(Language.getValue(stuff, target, "msg.to")),
                             Placeholder.component("fromplayer", player.teamDisplayName()), Placeholder.component
                                     ("toplayer", target.teamDisplayName()),
-                            Placeholder.component("message", Component.text((String) args.get(stuff.getConfig().
-                                    getString("MsgCommand.suggestionName.Message")))));
+                            Placeholder.component("message", Component.text((String) args.get("message"))));
                     Component prefixfrom = mm.deserialize(Objects.requireNonNull(Language.getValue(stuff, player, "msg.from")),
                             Placeholder.component("fromplayer", player.teamDisplayName()), Placeholder.component
                                     ("toplayer", target.teamDisplayName()),
-                            Placeholder.component("message", Component.text((String) args.get(stuff.getConfig()
-                                    .getString("MsgCommand.suggestionName.Message")))));
+                            Placeholder.component("message", Component.text((String) args.get("message"))));
 
                     target.sendMessage(prefixto);
                     player.sendMessage(prefixfrom);
@@ -82,7 +80,7 @@ public class MsgCommand implements Listener{
         new CommandAPICommand("stuff:msganswer")
             .withPermission(stuff.getConfig().getString("MsgCommand.AnswerCommand.Permission"))
             .withAliases(aliases_ANSWER.toArray(new String[aliases_ANSWER.size()]))
-            .withArguments(new GreedyStringArgument(conf.getString("MsgCommand.suggestionName.Message")))
+            .withArguments(new GreedyStringArgument("message"))
             .executesPlayer((player, args) -> {
 
                 Player target = a.get(player);
@@ -102,13 +100,11 @@ public class MsgCommand implements Listener{
                     Component prefixto = mm.deserialize(Objects.requireNonNull(Language.getValue(stuff, target, "msg.to")),
                         Placeholder.component("fromplayer", player.teamDisplayName()), Placeholder.component
                                 ("toplayer", target.teamDisplayName()),
-                        Placeholder.component("message", Component.text((String) args.get(stuff.getConfig().
-                                getString("MsgCommand.suggestionName.Message")))));
+                        Placeholder.component("message", Component.text((String) args.get("message"))));
                     Component prefixfrom = mm.deserialize(Objects.requireNonNull(Language.getValue(stuff, player, "msg.from")),
                         Placeholder.component("fromplayer", player.teamDisplayName()), Placeholder.component
                                 ("toplayer", target.teamDisplayName()),
-                        Placeholder.component("message", Component.text((String) args.get(stuff.getConfig()
-                                .getString("MsgCommand.suggestionName.Message")))));
+                        Placeholder.component("message", Component.text((String) args.get("message"))));
 
                 target.sendMessage(prefixto);
                 player.sendMessage(prefixfrom);

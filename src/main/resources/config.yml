@@ -6,18 +6,13 @@
 # Minimessage (https://docs.advntr.dev/minimessage/format.html)
 
 # Required Plugins
+# Config API
 # LuckPerms
 # PlaceHoderApi
 # - /papi ecloud download luckperms
 
-# Infos
-# suggestionName is the name that shows up over the chat for you what you know what to type there.
-# aliases are the normally used commands, the default command is "stuff:<command>"
-
 EnableCalculatorCommand:
   Enabled: false
-  suggestionName:
-    Number: "Zahl"
   Aliases:
     - calc
 
@@ -31,9 +26,6 @@ CustomJoinQuitMessage:
 MsgCommand:
   Enabled: false
   Permission: "stuff.msg.send"
-  suggestionName:
-    Message: "Nachricht"
-    Player: "Spieler"
   # Remove Minecraft default Commands
   unregister:
     - "msg"
@@ -53,8 +45,6 @@ MsgCommand:
 FlyCommand:
   Enabled: false
   Permission: "stuff.fly"
-  suggestionName:
-    Player: "Spieler"
   Aliases:
     - "fly"
   Messages:
@@ -64,9 +54,6 @@ FlyCommand:
 FlySpeedCommand:
   Enabled: false
   Permission: "stuff.speed"
-  suggestionName:
-    Speed: "Geschwindigkeit"
-    Player: "Spieler"
   Aliases:
     - "flyspeed"
 
@@ -81,8 +68,6 @@ WalkSpeedCommand:
 
 GamemodeCommand:
   Enabled: false
-  suggestionName:
-    Player: "Spieler"
   Aliases:
     - "gm"
   Messages:
@@ -127,8 +112,6 @@ Format:
 
 PlayTimeCommand:
   Enabled: false
-  suggestionName:
-    Player: "Spieler"
   Aliases:
     - "playtime"
 
@@ -142,8 +125,6 @@ PingCommand:
 BroadcastCommand:
   Enabled: false
   Permission: "stuff.broadcast"
-  suggestionName:
-    Message: "Nachricht"
   Aliases:
     - "broadcast"
   # Placeholder: <message>
@@ -230,14 +211,10 @@ TeleportCommands:
         MaxDistance: 7000
         MinY:
         MaxY:
-  suggestionName:
-    Player: "Spieler"
 
 SwitchChannel:
   Enabled: false
   Permission: "stuff.switchchannel"
-  suggestionName:
-    Channel: "Kanal"
   Aliases:
     - "kanal"
     - "channel"
@@ -291,9 +268,6 @@ Sudo:
   Enabled: false
   Aliases:
     - "sudo"
-  suggestionName:
-    Player: "spieler"
-    Sudo: "sudo"
   Permission: "stuff.sudo"
   # Player with bypass permission wont be able to be sudoed
   BypassPermission: "stuff.bypass.sudo"

@@ -17,16 +17,15 @@ import java.util.concurrent.TimeUnit;
 public class PlayTimeCommand {
     Stuff stuff = Stuff.INSTANCE;
     FileConfiguration conf = stuff.getConfig();
-    String suggestion = conf.getString("PlayTimeCommand.suggestionName.Player");
     List<String> aliases = conf.getStringList("PlayTimeCommand.Aliases");
 
     public PlayTimeCommand() {
 
         new CommandAPICommand("stuff:playtime")
                 .withAliases(aliases.toArray(new String[aliases.size()]))
-                .withOptionalArguments(new PlayerArgument(suggestion))
+                .withOptionalArguments(new PlayerArgument("player"))
                 .executesPlayer(((player, commandArguments) -> {
-                    Player target = (Player) commandArguments.get(suggestion);
+                    Player target = (Player) commandArguments.get("player");
                     if (target == null) target = player;
 
                     target.sendMessage(calculateTime(target.getStatistic(Statistic.PLAY_ONE_MINUTE) / 20,
