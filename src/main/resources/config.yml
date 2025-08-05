@@ -7,6 +7,8 @@
 
 # Required Plugins
 # Config API
+
+# Suggested Plugins 
 # LuckPerms
 # PlaceHoderApi
 # - /papi ecloud download luckperms
@@ -17,14 +19,14 @@ EnableCalculatorCommand:
     - calc
 
 CustomJoinQuitMessage:
-  Enabled: false
+  Enabled: true
   Messages:
     # Player placeholder: <player>
     JoinMessage: "<gray>[</gray><green>+</green><gray>]</gray> <player>"
     LeaveMessage: "<gray>[</gray><red>-</red><gray>]</gray> <player>"
 
 MsgCommand:
-  Enabled: false
+  Enabled: true
   Permission: "stuff.msg.send"
   # Remove Minecraft default Commands
   unregister:
@@ -67,7 +69,7 @@ WalkSpeedCommand:
     - "walkspeed"
 
 GamemodeCommand:
-  Enabled: false
+  Enabled: true
   Aliases:
     - "gm"
   Messages:
@@ -98,10 +100,11 @@ Format:
       Enabled: false
       Suffix: "%luckperms_suffix%"
     TabSorting:
+      # Needs placeholderapi
       Enabled: false
       MaxWeight: 1000
   Chat:
-    Enabled: false
+    Enabled: true
     # Placeholder: <player>, <message>
     Format: "<player> <gray><message></gray>"
     # options vanilla (&4 text in dark red) and minimessage ( <red> text in red )
@@ -111,7 +114,7 @@ Format:
       ItemInHand: true
 
 PlayTimeCommand:
-  Enabled: false
+  Enabled: true
   Aliases:
     - "playtime"
 
