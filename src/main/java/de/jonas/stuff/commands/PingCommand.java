@@ -18,16 +18,15 @@ public class PingCommand {
     MiniMessage mm = MiniMessage.miniMessage();
     Stuff stuff = Stuff.INSTANCE;
     FileConfiguration conf = stuff.getConfig();
-    String suggestion = conf.getString("MsgCommand.suggestionName.Player");
     List<String> aliases = conf.getStringList("PingCommand.Aliases");
 
     public PingCommand() {
 
         new CommandAPICommand("stuff:ping")
                 .withAliases(aliases.toArray(new String[aliases.size()]))
-                .withOptionalArguments(new PlayerArgument(suggestion))
+                .withOptionalArguments(new PlayerArgument("player"))
                 .executesPlayer((player, args) -> {
-                    Player target = (Player) args.get(suggestion);
+                    Player target = (Player) args.get("player");
 
                     if (target == null) target = player;
                     int ping = target.getPing();

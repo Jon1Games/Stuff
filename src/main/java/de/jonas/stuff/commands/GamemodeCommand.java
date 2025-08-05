@@ -20,7 +20,7 @@ public class GamemodeCommand {
 
         Stuff stuff = Stuff.INSTANCE;
         FileConfiguration conf = stuff.getConfig();
-        String suggestion = conf.getString("GamemodeCommand.suggestionName.Player");
+        String suggestion = "player";
         List<String> aliases = conf.getStringList("GamemodeCommand.Aliases");
         List<String> aliasesC = conf.getStringList("GamemodeCommand.Messages.Creative.Aliases");
         List<String> aliasesS = conf.getStringList("GamemodeCommand.Messages.Spectator.Aliases");

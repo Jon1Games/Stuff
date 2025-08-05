@@ -6,34 +6,31 @@
 # Minimessage (https://docs.advntr.dev/minimessage/format.html)
 
 # Required Plugins
+# Config API
+
+# Suggested Plugins 
 # LuckPerms
 # PlaceHoderApi
 # - /papi ecloud download luckperms
 
-# Infos
-# suggestionName is the name that shows up over the chat for you what you know what to type there.
-# aliases are the normally used commands, the default command is "stuff:<command>"
+# Do not change the version.
+config: "1"
 
 EnableCalculatorCommand:
   Enabled: false
-  suggestionName:
-    Number: "Zahl"
   Aliases:
     - calc
 
 CustomJoinQuitMessage:
-  Enabled: false
+  Enabled: true
   Messages:
     # Player placeholder: <player>
     JoinMessage: "<gray>[</gray><green>+</green><gray>]</gray> <player>"
     LeaveMessage: "<gray>[</gray><red>-</red><gray>]</gray> <player>"
 
 MsgCommand:
-  Enabled: false
+  Enabled: true
   Permission: "stuff.msg.send"
-  suggestionName:
-    Message: "Nachricht"
-    Player: "Spieler"
   # Remove Minecraft default Commands
   unregister:
     - "msg"
@@ -53,8 +50,6 @@ MsgCommand:
 FlyCommand:
   Enabled: false
   Permission: "stuff.fly"
-  suggestionName:
-    Player: "Spieler"
   Aliases:
     - "fly"
   Messages:
@@ -64,9 +59,6 @@ FlyCommand:
 FlySpeedCommand:
   Enabled: false
   Permission: "stuff.speed"
-  suggestionName:
-    Speed: "Geschwindigkeit"
-    Player: "Spieler"
   Aliases:
     - "flyspeed"
 
@@ -80,9 +72,7 @@ WalkSpeedCommand:
     - "walkspeed"
 
 GamemodeCommand:
-  Enabled: false
-  suggestionName:
-    Player: "Spieler"
+  Enabled: true
   Aliases:
     - "gm"
   Messages:
@@ -113,10 +103,11 @@ Format:
       Enabled: false
       Suffix: "%luckperms_suffix%"
     TabSorting:
+      # Needs placeholderapi
       Enabled: false
       MaxWeight: 1000
   Chat:
-    Enabled: false
+    Enabled: true
     # Placeholder: <player>, <message>
     Format: "<player> <gray><message></gray>"
     # options vanilla (&4 text in dark red) and minimessage ( <red> text in red )
@@ -126,9 +117,7 @@ Format:
       ItemInHand: true
 
 PlayTimeCommand:
-  Enabled: false
-  suggestionName:
-    Player: "Spieler"
+  Enabled: true
   Aliases:
     - "playtime"
 
@@ -142,8 +131,6 @@ PingCommand:
 BroadcastCommand:
   Enabled: false
   Permission: "stuff.broadcast"
-  suggestionName:
-    Message: "Nachricht"
   Aliases:
     - "broadcast"
   # Placeholder: <message>
@@ -163,7 +150,7 @@ TeleportCommands:
     Pos_YAW: 0
     Pos_PITCH: 0
     Aliases:
-      - Spawn
+      - spawn
   SetSpawn:
     Enabled: false
     Permission: "stuff.teleport.setspawn"
@@ -230,14 +217,10 @@ TeleportCommands:
         MaxDistance: 7000
         MinY:
         MaxY:
-  suggestionName:
-    Player: "Spieler"
 
 SwitchChannel:
   Enabled: false
   Permission: "stuff.switchchannel"
-  suggestionName:
-    Channel: "Kanal"
   Aliases:
     - "kanal"
     - "channel"
@@ -291,9 +274,6 @@ Sudo:
   Enabled: false
   Aliases:
     - "sudo"
-  suggestionName:
-    Player: "spieler"
-    Sudo: "sudo"
   Permission: "stuff.sudo"
   # Player with bypass permission wont be able to be sudoed
   BypassPermission: "stuff.bypass.sudo"

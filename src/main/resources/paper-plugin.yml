@@ -14,10 +14,10 @@ dependencies:
   server:
     PlaceholderAPI:
       load: BEFORE
-      required: true
+      required: false
     LuckPerms:
       load: BEFORE
-      required: true
+      required: false
       join-classpath: true
     ConfigAPI:
       load: BEFORE

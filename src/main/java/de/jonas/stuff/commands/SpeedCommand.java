@@ -21,10 +21,6 @@ public class SpeedCommand {
     public SpeedCommand() {
         Stuff stuff = Stuff.INSTANCE;
         FileConfiguration conf = stuff.getConfig();
-        String suggestionSF = conf.getString("FlySpeedCommand.suggestionName.Speed");
-        String suggestionSW = conf.getString("WalkSpeedCommand.suggestionName.Speed");
-        String suggestionPF = conf.getString("FlySpeedCommand.suggestionName.Player");
-        String suggestionPW = conf.getString("WalkSpeedCommand.suggestionName.Player");
         List<String> aliasesF = conf.getStringList("FlySpeedCommand.Aliases");
         List<String> aliasesW = conf.getStringList("WalkSpeedCommand.Aliases");
         var mm = MiniMessage.miniMessage();
@@ -33,11 +29,11 @@ public class SpeedCommand {
             new CommandAPICommand("stuff:flyspeed")
                     .withPermission(conf.getString("FlySpeedCommand.Permission"))
                     .withAliases(aliasesF.toArray(new String[aliasesF.size()]))
-                    .withArguments(new IntegerArgument(suggestionSF, -10, 10))
-                    .withOptionalArguments(new PlayerArgument(suggestionPF))
+                    .withArguments(new IntegerArgument("speed", -10, 10))
+                    .withOptionalArguments(new PlayerArgument("player"))
                     .executes((executor, args) -> {
-                        Player target = (Player) args.get(suggestionPF);
-                        float speed = (int) args.get(suggestionSF) / 10.0f;
+                        Player target = (Player) args.get("player");
+                        float speed = (int) args.get("speed") / 10.0f;
 
                         if (executor instanceof Player && target == null) target = (Player) executor;
 
@@ -73,11 +69,11 @@ public class SpeedCommand {
                 new CommandAPICommand("stuff:walkSpeed")
                         .withPermission(conf.getString("WalkSpeedCommand.Permission"))
                         .withAliases(aliasesW.toArray(new String[aliasesW.size()]))
-                        .withArguments(new IntegerArgument(suggestionSW, -10, 10))
-                        .withOptionalArguments(new PlayerArgument(suggestionPW))
+                        .withArguments(new IntegerArgument("speed", -10, 10))
+                        .withOptionalArguments(new PlayerArgument("player"))
                         .executes((executor, args) -> {
-                            Player target = (Player) args.get(suggestionPW);
-                            float speed = (int) args.get(suggestionSW) / 10.0f;
+                            Player target = (Player) args.get("player");
+                            float speed = (int) args.get("speed") / 10.0f;
 
                             if (executor instanceof Player && target == null) target = (Player) executor;
 

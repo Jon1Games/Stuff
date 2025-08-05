@@ -20,11 +20,11 @@ public class BroadcastCommand {
         new CommandAPICommand("stuff:broadcast")
                 .withPermission(conf.getString("BroadcastCommand.Permission"))
                 .withAliases(conf.getStringList("BroadcastCommand.Aliases").toArray(num -> new String[num]))
-                .withArguments(new GreedyStringArgument(conf.getString("BroadcastCommand.suggestionName.Message")))
+                .withArguments(new GreedyStringArgument("message"))
                 .executes(((sender, args) -> {
                     Component message = mm.deserialize(conf.getString("BroadcastCommand.Message"),
                             Placeholder.component("message", mm.deserialize((String) args.get(
-                                conf.getString("BroadcastCommand.suggestionName.Message"))
+                                "message")
                                 )));
                     stuff.getServer().getOnlinePlayers().forEach(player -> player.sendMessage(message));
                 }))
