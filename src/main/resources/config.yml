@@ -13,6 +13,9 @@
 # PlaceHoderApi
 # - /papi ecloud download luckperms
 
+# Do not change the version.
+config: "1"
+
 EnableCalculatorCommand:
   Enabled: false
   Aliases:
