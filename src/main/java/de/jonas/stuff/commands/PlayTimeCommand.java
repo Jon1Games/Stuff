@@ -26,9 +26,14 @@ public class PlayTimeCommand {
                 .withOptionalArguments(new PlayerArgument("player"))
                 .executesPlayer(((player, commandArguments) -> {
                     Player target = (Player) commandArguments.get("player");
-                    if (target == null) target = player;
+                    if (target == null) {
+                        target = player;
+                    } else if (!player.hasPermission("stuff.playtime.other")) {
+                        player.sendMessage(Language.getValue(Stuff.INSTANCE, player, "playtime.no-permission", true));
+                        return;
+                    }
 
-                    target.sendMessage(calculateTime(target.getStatistic(Statistic.PLAY_ONE_MINUTE) / 20,
+                    player.sendMessage(calculateTime(target.getStatistic(Statistic.PLAY_ONE_MINUTE) / 20,
                             target, player));
 
                 }))
