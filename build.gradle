@@ -33,7 +33,7 @@ dependencies {
     compileOnly 'com.mojang:authlib:1.5.25'
     compileOnly 'net.luckperms:api:5.4'
     compileOnly 'me.clip:placeholderapi:2.11.5'
-    compileOnly files("build/libs/config-api-1.1.0.jar")
+    compileOnly files("build/libs/config-api-1.1.2.jar")
 }
 
 def targetJavaVersion = 21
