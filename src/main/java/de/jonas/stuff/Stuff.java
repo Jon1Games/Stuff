@@ -53,18 +53,13 @@ public final class Stuff extends JavaPlugin {
     public ChatChannel inputChatChannel;
     public ChatCaptureManager captureManager;
     public MsgCommand msgCommand;
+    private Recepies recipes;
 
     public void onLoad() {
 
-        if (getConfig().getBoolean("OnlyUseAPI")) {
-            getLogger().log(Level.INFO, "Starting Plugin in APi only mode");
-        } else {
-            getLogger().log(Level.INFO, "Starting Plugin");
-        }
-
         INSTANCE = this;
-
         this.saveDefaultConfig();
+        new Update_Config();
 
         Map<String, InputStream> lang = new HashMap<>();
         lang.put("de_DE.json", this.getResource("lang/de_DE.json"));
@@ -148,37 +143,36 @@ public final class Stuff extends JavaPlugin {
 
         chatChannelManager.onEnable();
 
-        if (!getConfig().getBoolean("OnlyUseAPI")) {
+        CommandAPI.onEnable();
 
-            CommandAPI.onEnable();
+        ConfigurationSection sec = getConfig().getConfigurationSection("Channels");
+        for (String a : sec.getKeys(false)) {
+            ConfigurationSection cs = sec.getConfigurationSection(a);
 
-            ConfigurationSection sec = getConfig().getConfigurationSection("Channels");
-            for (String a : sec.getKeys(false)) {
-                ConfigurationSection cs = sec.getConfigurationSection(a);
+            if (!cs.getBoolean("Enabled"))
+                continue;
 
-                if (!cs.getBoolean("Enabled"))
-                    continue;
+            AbstractChannel abstractChannel = new AbstractChannel(
+                    cs.getString("Permission.See"),
+                    cs.getString("Permission.Join"),
+                    cs.getString("Format"),
+                    cs.getBoolean("CanSeeOwnMessages"));
 
-                AbstractChannel abstractChannel = new AbstractChannel(
-                        cs.getString("Permission.See"),
-                        cs.getString("Permission.Join"),
-                        cs.getString("Format"),
-                        cs.getBoolean("CanSeeOwnMessages"));
+            chatChannelManager.registerChannel(a.toLowerCase(), abstractChannel);
 
-                chatChannelManager.registerChannel(a.toLowerCase(), abstractChannel);
-
-                increaseChannelCount();
-            }
-
-            getLogger().log(Level.INFO, channels + " channels registered");
-
-            if (getConfig().getBoolean("Format.PlayerNames.Enabled"))
-                teamDisplaynameSet.onEnable();
-
-            if (getConfig().getBoolean("TeleportCommands.Enabled")) {
-                teleportation.onEnable();
-            }
+            increaseChannelCount();
         }
+
+        getLogger().log(Level.INFO, channels + " channels registered");
+
+        if (getConfig().getBoolean("Format.PlayerNames.Enabled"))
+            teamDisplaynameSet.onEnable();
+
+        if (getConfig().getBoolean("TeleportCommands.Enabled")) {
+            teleportation.onEnable();
+        }
+
+        recipes = new Recepies();
 
     }
 
@@ -197,52 +191,59 @@ public final class Stuff extends JavaPlugin {
     public void listener() {
         PluginManager pm = Bukkit.getPluginManager();
 
-        pm.registerEvents(new FirstJoin(), this);
-        if (!getConfig().getBoolean("OnlyUseAPI")) {
-            if (getConfig().getBoolean("CustomJoinQuitMessage.Enabled")) {
-                pm.registerEvents(new JoinQuitMessageListener(), this);
-                increaseListenerCount();
-            }
-            if (getConfig().getBoolean("FlyCommand.Enabled")) {
-                pm.registerEvents(new JoinFlyListener(), this);
-                increaseListenerCount();
-            }
-            if (getConfig().getBoolean("SpeedCommand.Enabled")) {
-                pm.registerEvents(new JoinSpeedListener(), this);
-                increaseListenerCount();
-            }
-            pm.registerEvents(new ChatListener(), this);
+        {
+            pm.registerEvents(new FirstJoin(), this);
             increaseListenerCount();
-            if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
-                pm.registerEvents(teamDisplaynameSet, this);
-                increaseListenerCount();
-            }
-            if (getConfig().getBoolean("TeleportCommands.Enabled")) {
-                if (getConfig().getBoolean("TeleportCommands.TPA.Enabled")) {
-                    pm.registerEvents(teleportation, this);
-                    increaseListenerCount();
-                }
-                if (getConfig().getBoolean("TeleportCommands.Spawn.Enabled") &&
-                        getConfig().getBoolean("TeleportCommands.Spawn.JoinTpToSpawn")) {
-                    pm.registerEvents(new JointTpToSpawn(), this);
-                    increaseListenerCount();
-                }
-            }
-            if (getConfig().getBoolean("MsgCommand.Enabled")) {
-                pm.registerEvents(msgCommand, this);
-                increaseListenerCount();
-            }
-            if (getConfig().getBoolean("DoBefore.Enabled")) {
-                pm.registerEvents(new DoBefore(), this);
-                increaseListenerCount();
-            }
-            if (getConfig().getBoolean("DoAfter.Enabled")) {
-                pm.registerEvents(new DoAfter(), this);
-                increaseListenerCount();
-            }
-
-            getLogger().log(Level.INFO, listeners + " listener registered");
         }
+
+        {
+            pm.registerEvents(recipes, this);
+            increaseListenerCount();
+        }
+
+        if (getConfig().getBoolean("CustomJoinQuitMessage.Enabled")) {
+            pm.registerEvents(new JoinQuitMessageListener(), this);
+            increaseListenerCount();
+        }
+        if (getConfig().getBoolean("FlyCommand.Enabled")) {
+            pm.registerEvents(new JoinFlyListener(), this);
+            increaseListenerCount();
+        }
+        if (getConfig().getBoolean("SpeedCommand.Enabled")) {
+            pm.registerEvents(new JoinSpeedListener(), this);
+            increaseListenerCount();
+        }
+        pm.registerEvents(new ChatListener(), this);
+        increaseListenerCount();
+        if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
+            pm.registerEvents(teamDisplaynameSet, this);
+            increaseListenerCount();
+        }
+        if (getConfig().getBoolean("TeleportCommands.Enabled")) {
+            if (getConfig().getBoolean("TeleportCommands.TPA.Enabled")) {
+                pm.registerEvents(teleportation, this);
+                increaseListenerCount();
+            }
+            if (getConfig().getBoolean("TeleportCommands.Spawn.Enabled") &&
+                    getConfig().getBoolean("TeleportCommands.Spawn.JoinTpToSpawn")) {
+                pm.registerEvents(new JointTpToSpawn(), this);
+                increaseListenerCount();
+            }
+        }
+        if (getConfig().getBoolean("MsgCommand.Enabled")) {
+            pm.registerEvents(msgCommand, this);
+            increaseListenerCount();
+        }
+        if (getConfig().getBoolean("DoBefore.Enabled")) {
+            pm.registerEvents(new DoBefore(), this);
+            increaseListenerCount();
+        }
+        if (getConfig().getBoolean("DoAfter.Enabled")) {
+            pm.registerEvents(new DoAfter(), this);
+            increaseListenerCount();
+        }
+
+        getLogger().log(Level.INFO, listeners + " listener registered");
     }
 
     public void increaseCommandCount() {

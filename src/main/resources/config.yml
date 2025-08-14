@@ -277,3 +277,25 @@ Sudo:
   Permission: "stuff.sudo"
   # Player with bypass permission wont be able to be sudoed
   BypassPermission: "stuff.bypass.sudo"
+
+CraftingRecipes:
+  Enabled: true
+  light: # The result item
+    Enabled: true
+    shaped: true # if shaped or shapeless
+    count: 2 # The amount of items produced
+    publish: true # Whether to publish the recipe to all players
+    shape:
+      - "XAX"
+      - "XBX"
+      - "XXX"
+    ingredients:
+      A: "glass"
+      B: "torch"
+  stone:
+    Enabled: false
+    shaped: false
+    publish: false
+    count: 1
+    ingredients:
+      - "stone"
