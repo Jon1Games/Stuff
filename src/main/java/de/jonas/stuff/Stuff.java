@@ -168,10 +168,6 @@ public final class Stuff extends JavaPlugin {
         if (getConfig().getBoolean("Format.PlayerNames.Enabled"))
             teamDisplaynameSet.onEnable();
 
-        if (getConfig().getBoolean("TeleportCommands.Enabled")) {
-            teleportation.onEnable();
-        }
-
         recipes = new Recepies();
 
     }

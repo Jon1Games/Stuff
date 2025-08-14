@@ -267,15 +267,6 @@ public class Teleportation implements Listener {
         }
     }
 
-    public void onEnable() {
-        // setup tpa cleaner for memory saving
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(stuff, () -> {
-            long now = System.currentTimeMillis();
-            a.entrySet().forEach(ent -> ent.getValue().entrySet().removeIf(ent2 -> ent2.getValue() >= now));
-            a.entrySet().removeIf(ent -> ent.getValue().isEmpty());
-        }, 0, 6000);
-    }
-
     void tpa(Player sender, Player reciver, Long timeout) {
         if (!a.containsKey(reciver))
             a.put(reciver, new ArrayList<>());
