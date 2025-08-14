@@ -30,7 +30,7 @@ public class Recepies implements Listener{
     public void loadConfig() {
         ConfigurationSection section = config.getConfigurationSection("CraftingRecipes");
         for (String key : section.getKeys(false)) {
-             if (key.equalsIgnoreCase("Enabled")) continue;
+            if (key.equalsIgnoreCase("Enabled")) continue;
 
             ConfigurationSection cmd = section.getConfigurationSection(key);
             if (cmd == null) continue;
@@ -41,15 +41,15 @@ public class Recepies implements Listener{
                 ShapedRecipe r = new ShapedRecipe(namespacedKey, new ItemStack(Material.getMaterial(key), cmd.getInt("count")));
                 r.shape(cmd.getStringList("shape").toArray(new String[0]));
 
-                for (String ingredient : cmd.getStringList("ingredients")) {
-                    r.setIngredient(ingredient.charAt(0), Material.getMaterial(cmd.getString(ingredient)));
+                for (String ingredient : cmd.getConfigurationSection("ingredients").getKeys(false)) {
+                    r.setIngredient(ingredient.charAt(0), Material.getMaterial(cmd.getString("ingredients." + ingredient)));
                 }
 
                 addRecipe(r, namespacedKey, cmd.getBoolean("publish", true));
             } else {
                 ShapelessRecipe r = new ShapelessRecipe(namespacedKey, new ItemStack(Material.getMaterial(key), cmd.getInt("count")));
                 for (String ingredient : cmd.getStringList("ingredients")) {
-                    r.addIngredient(Material.getMaterial(cmd.getString(ingredient)));
+                    r.addIngredient(1, Material.getMaterial(ingredient));
                 }
 
                 addRecipe(r, namespacedKey, cmd.getBoolean("publish", true));

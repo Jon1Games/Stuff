@@ -139,8 +139,6 @@ public final class Stuff extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
 
-        this.listener();
-
         chatChannelManager.onEnable();
 
         CommandAPI.onEnable();
@@ -170,6 +168,9 @@ public final class Stuff extends JavaPlugin {
 
         recipes = new Recepies();
 
+
+        // last thing to happen in onEnable
+        this.listener();
     }
 
     @Override

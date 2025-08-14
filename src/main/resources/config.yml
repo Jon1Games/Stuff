@@ -280,22 +280,22 @@ Sudo:
 
 CraftingRecipes:
   Enabled: true
-  light: # The result item
+  LIGHT: # The result item
     Enabled: true
     shaped: true # if shaped or shapeless
     count: 2 # The amount of items produced
     publish: true # Whether to publish the recipe to all players
     shape:
-      - "XAX"
-      - "XBX"
-      - "XXX"
+    - "A"
+    - "B"
     ingredients:
-      A: "glass"
-      B: "torch"
-  stone:
+      X: "AIR"
+      A: "GLASS"
+      B: "TORCH"
+  STONE:
     Enabled: false
     shaped: false
     publish: false
     count: 1
     ingredients:
-      - "stone"
+      - "STONE"
