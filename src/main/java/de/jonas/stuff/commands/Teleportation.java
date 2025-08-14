@@ -1,5 +1,6 @@
 package de.jonas.stuff.commands;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class Teleportation implements Listener {
     MiniMessage mm = MiniMessage.miniMessage();
     Stuff stuff = Stuff.INSTANCE;
 
-    Map<Player, Map<Player, Long>> a = new HashMap<>(); // TPA list
+    Map<Player, List<Player>> a = new HashMap<>(); // TPA list
     Map<Player, Long> b = new HashMap<>(); // move while in tpa
     Map<Player, Long> c = new HashMap<>(); // cooldown TPA
     Map<Player, Long> d = new HashMap<>(); // cooldown RTP
@@ -277,8 +278,12 @@ public class Teleportation implements Listener {
 
     void tpa(Player sender, Player reciver, Long timeout) {
         if (!a.containsKey(reciver))
-            a.put(reciver, new HashMap<>());
-        a.get(reciver).put(sender, timeout);
+            a.put(reciver, new ArrayList<>());
+        a.get(reciver).add(sender);
+        Bukkit.getScheduler().runTaskLater(stuff, () -> {
+            if (a.containsKey(reciver))
+                a.get(reciver).remove(sender);
+        }, timeout);
         c.put(sender,
                 System.currentTimeMillis() + (stuff.getConfig().getLong("TeleportCommands.TPA.Cooldown") * 1_000));
     }
@@ -286,10 +291,9 @@ public class Teleportation implements Listener {
     boolean tpac(Player acceptor, Player sender) {
         if (!a.containsKey(acceptor))
             return false;
-        if (!a.get(acceptor).containsKey(sender))
+        if (!a.get(acceptor).contains(sender))
             return false;
-        if (a.get(acceptor).get(sender) < System.currentTimeMillis())
-            return false;
+
         acceptor.sendMessage(
                 mm.deserialize(Language.getValue(Stuff.INSTANCE, acceptor, "teleportation.tpa.accepted", true),
                         Placeholder.component("player", sender.name())));
@@ -320,7 +324,7 @@ public class Teleportation implements Listener {
     boolean tpad(Player deliner, Player sender) {
         if (!a.containsKey(deliner))
             return false;
-        if (!a.get(deliner).containsKey(sender))
+        if (!a.get(deliner).contains(sender))
             return false;
         a.get(deliner).remove(sender);
         return true;
@@ -330,8 +334,8 @@ public class Teleportation implements Listener {
     public void onQuit(PlayerQuitEvent e) {
         if (a.containsKey(e.getPlayer()))
             a.remove(e.getPlayer());
-        for (Entry<Player, Map<Player, Long>> ent : a.entrySet())
-            if (ent.getValue().containsKey(e.getPlayer()))
+        for (Entry<Player, List<Player>> ent : a.entrySet())
+            if (ent.getValue().contains(e.getPlayer()))
                 ent.getValue().remove(e.getPlayer());
     }
 
