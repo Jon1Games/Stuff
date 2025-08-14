@@ -86,11 +86,11 @@ public class Teleportation implements Listener {
                     .executesPlayer(((player, commandArguments) -> {
                         if (!player.hasPermission(
                                 stuff.getConfig().getString("TeleportCommands.TPA.CooldownBypassPermission")) &&
-                                d.containsKey(player)) {
+                                c.containsKey(player)) {
                             Long gp = c.get(player);
                             Long sc = System.currentTimeMillis();
                             if (gp <= sc) {
-                                d.remove(player);
+                                c.remove(player);
                             } else {
                                 player.sendMessage(mm.deserialize(
                                         Language.getValue(Stuff.INSTANCE, player, "teleportation.tpa.cooldown", true),
