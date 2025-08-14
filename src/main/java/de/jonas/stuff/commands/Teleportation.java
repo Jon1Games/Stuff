@@ -84,8 +84,7 @@ public class Teleportation implements Listener {
                             SafeSuggestions.suggest(info -> Bukkit.getOnlinePlayers()
                                     .toArray(new Player[0]))))
                     .executesPlayer(((player, commandArguments) -> {
-                        if (!player.hasPermission(
-                                stuff.getConfig().getString("TeleportCommands.TPA.CooldownBypassPermission")) &&
+                        if (!player.hasPermission(stuff.getConfig().getString("TeleportCommands.TPA.CooldownBypassPermission")) &&
                                 c.containsKey(player)) {
                             Long gp = c.get(player);
                             Long sc = System.currentTimeMillis();
@@ -94,7 +93,7 @@ public class Teleportation implements Listener {
                             } else {
                                 player.sendMessage(mm.deserialize(
                                         Language.getValue(Stuff.INSTANCE, player, "teleportation.tpa.cooldown", true),
-                                        Placeholder.component("time_left", Component.text((sc - gp) / 1_000))));
+                                        Placeholder.component("time_left", Component.text((gp - sc) / 1_000))));
                                 return;
                             }
                         }
