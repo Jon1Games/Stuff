@@ -104,6 +104,9 @@ public class Teleportation implements Listener {
                         } else if (target == player) {
                             player.sendMessage(mm.deserialize(
                                     Language.getValue(Stuff.INSTANCE, player, "teleportation.tpa.toSelf", true)));
+                        } else if (a.containsKey(target) && a.get(target).contains(player)) {
+                            player.sendMessage(mm.deserialize(
+                                    Language.getValue(Stuff.INSTANCE, player, "teleportation.tpa.alreadySent", true)));
                         } else {
                             tpa(player, target, System.currentTimeMillis()
                                     + stuff.getConfig().getInt("TeleportCommands.TPA.RequestDuration") * 1_000);
