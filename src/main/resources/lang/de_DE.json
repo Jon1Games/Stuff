@@ -54,6 +54,7 @@
     "teleportation.tpa.cooldown": "<red>Du kannst TPA erst in <time_left> Sekunden wieder benutzen!</red>",
     "teleportation.tpa.noDestination": "<red>Du musst einen Spieler als TPA-Ziel angeben!</red>",
     "teleportation.tpa.toSelf": "<red>Du kannst dir nicht selber eine TPA senden!</red>",
+    "teleportation.tpa.alreadySent": "<red>Du hast bereits eine TPA an diesen Spieler gesendet!</red>",
     "teleportation.tpaccept.self": "<red>Du kanst keine TPA von dir selbst annehmen!</red>",
     "teleportation.tpadecline.self": "<red>Du kannst keine TPA von dir selbst Ablehnen!</red>",
     "teleportation.rtp.found": "<aqua>Es wurde ein sicherer Ort gefunden du wirst nun teleportiert.</aqua>",
