@@ -34,7 +34,6 @@ public class Teleportation implements Listener {
     Stuff stuff = Stuff.INSTANCE;
 
     Map<Player, List<Player>> a = new HashMap<>(); // TPA list
-    Map<Player, Long> b = new HashMap<>(); // move while in tpa
     Map<Player, Long> c = new HashMap<>(); // cooldown TPA
     Map<Player, Long> d = new HashMap<>(); // cooldown RTP
 
