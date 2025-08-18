@@ -283,15 +283,16 @@ CraftingRecipes:
   LIGHT: # The result item
     Enabled: true
     shaped: true # if shaped or shapeless
-    count: 2 # The amount of items produced
+    count: 1 # The amount of items produced
     publish: true # Whether to publish the recipe to all players
     shape:
     - "A"
-    - "B"
+    - "ABA"
+    - "C"
     ingredients:
-      X: "AIR"
-      A: "GLASS"
-      B: "TORCH"
+      A: "GLASS_PANE"
+      B: "COAL"
+      C: "COPPER_INGOT"
   STONE:
     Enabled: false
     shaped: false
