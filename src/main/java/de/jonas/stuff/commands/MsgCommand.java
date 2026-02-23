@@ -15,7 +15,7 @@ import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
-import dev.jorel.commandapi.arguments.PlayerArgument;
+import dev.jorel.commandapi.arguments.EntitySelectorArgument;
 import me.gaminglounge.configapi.Language;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -40,7 +40,7 @@ public class MsgCommand implements Listener{
         new CommandAPICommand("stuff:msg")
             .withPermission(stuff.getConfig().getString("MsgCommand.Permission"))
                 .withAliases(aliases_MSG.toArray(new String[aliases_MSG.size()]))
-                .withArguments(new PlayerArgument(suggestion))
+                .withArguments(new EntitySelectorArgument.OnePlayer(suggestion))
                 .withArguments(new GreedyStringArgument("message"))
                 .executesPlayer((player, args) -> {
                     Player target = (Player) args.get(suggestion);

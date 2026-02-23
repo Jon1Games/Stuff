@@ -20,8 +20,7 @@ import org.bukkit.util.Vector;
 import de.jonas.stuff.Stuff;
 import de.jonas.stuff.utility.ScheudulerRunLaterForX;
 import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.arguments.PlayerArgument;
-import dev.jorel.commandapi.arguments.SafeSuggestions;
+import dev.jorel.commandapi.arguments.EntitySelectorArgument;
 import me.gaminglounge.configapi.Language;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -79,9 +78,7 @@ public class Teleportation implements Listener {
             new CommandAPICommand("stuff:tpa")
                     .withPermission(stuff.getConfig().getString("TeleportCommands.TPA.Permission"))
                     .withAliases(aliases_TPA.toArray(new String[aliases_TPA.size()]))
-                    .withArguments(new PlayerArgument("player").replaceSafeSuggestions(
-                            SafeSuggestions.suggest(info -> Bukkit.getOnlinePlayers()
-                                    .toArray(new Player[0]))))
+                    .withArguments(new EntitySelectorArgument.OnePlayer("player"))
                     .executesPlayer(((player, commandArguments) -> {
                         if (!player.hasPermission(stuff.getConfig().getString("TeleportCommands.TPA.CooldownBypassPermission")) &&
                                 c.containsKey(player)) {
@@ -129,9 +126,7 @@ public class Teleportation implements Listener {
             new CommandAPICommand("stuff:tpaaccept")
                     .withPermission(stuff.getConfig().getString("TeleportCommands.TPAACCEPT.Permission"))
                     .withAliases(aliases_TPAC.toArray(new String[aliases_TPAC.size()]))
-                    .withArguments(new PlayerArgument("player").replaceSafeSuggestions(
-                            SafeSuggestions.suggest(info -> Bukkit.getOnlinePlayers()
-                                    .toArray(new Player[0]))))
+                    .withArguments(new EntitySelectorArgument.OnePlayer("player"))
                     .executesPlayer(((player, commandArguments) -> {
                         Player target = (Player) commandArguments.get("player");
                         if (target == null) {
@@ -155,9 +150,7 @@ public class Teleportation implements Listener {
             new CommandAPICommand("stuff:tpadecline")
                     .withPermission(stuff.getConfig().getString("TeleportCommands.TPADECLINE.Permission"))
                     .withAliases(aliases_TPAD.toArray(new String[aliases_TPAD.size()]))
-                    .withArguments(new PlayerArgument("player").replaceSafeSuggestions(
-                            SafeSuggestions.suggest(info -> Bukkit.getOnlinePlayers()
-                                    .toArray(new Player[0]))))
+                    .withArguments(new EntitySelectorArgument.OnePlayer("player"))
                     .executesPlayer(((player, commandArguments) -> {
                         Player target = (Player) commandArguments.get("player");
                         if (target == null) {

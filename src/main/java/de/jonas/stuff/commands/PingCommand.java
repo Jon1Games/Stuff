@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.arguments.PlayerArgument;
+import dev.jorel.commandapi.arguments.EntitySelectorArgument;
 import me.gaminglounge.configapi.Language;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -24,7 +24,7 @@ public class PingCommand {
 
         new CommandAPICommand("stuff:ping")
                 .withAliases(aliases.toArray(new String[aliases.size()]))
-                .withOptionalArguments(new PlayerArgument("player"))
+                .withOptionalArguments(new EntitySelectorArgument.OnePlayer("player"))
                 .executesPlayer((player, args) -> {
                     Player target = (Player) args.get("player");
 

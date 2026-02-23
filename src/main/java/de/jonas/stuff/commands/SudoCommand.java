@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.GreedyStringArgument;
-import dev.jorel.commandapi.arguments.PlayerArgument;
+import dev.jorel.commandapi.arguments.EntitySelectorArgument;
 import me.gaminglounge.configapi.Language;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -28,7 +28,7 @@ public class SudoCommand {
         new CommandAPICommand("stuff:sudo")
             .withPermission(conf.getString("Sudo.Permission"))
             .withAliases(conf.getStringList("Sudo.Aliases").toArray(num -> new String[num]))
-            .withArguments(new PlayerArgument("player"))
+            .withArguments(new EntitySelectorArgument.OnePlayer("player"))
             .withArguments(new GreedyStringArgument("sudo"))
             .executes((sender, args) -> {
                 Player player = (Player) args.get("player");

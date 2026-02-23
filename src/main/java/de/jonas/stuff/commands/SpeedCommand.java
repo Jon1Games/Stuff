@@ -3,7 +3,7 @@ package de.jonas.stuff.commands;
 import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.IntegerArgument;
-import dev.jorel.commandapi.arguments.PlayerArgument;
+import dev.jorel.commandapi.arguments.EntitySelectorArgument;
 import me.gaminglounge.configapi.Language;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -30,7 +30,7 @@ public class SpeedCommand {
                     .withPermission(conf.getString("FlySpeedCommand.Permission"))
                     .withAliases(aliasesF.toArray(new String[aliasesF.size()]))
                     .withArguments(new IntegerArgument("speed", -10, 10))
-                    .withOptionalArguments(new PlayerArgument("player"))
+                    .withOptionalArguments(new EntitySelectorArgument.OnePlayer("player"))
                     .executes((executor, args) -> {
                         Player target = (Player) args.get("player");
                         float speed = (int) args.get("speed") / 10.0f;
@@ -70,7 +70,7 @@ public class SpeedCommand {
                         .withPermission(conf.getString("WalkSpeedCommand.Permission"))
                         .withAliases(aliasesW.toArray(new String[aliasesW.size()]))
                         .withArguments(new IntegerArgument("speed", -10, 10))
-                        .withOptionalArguments(new PlayerArgument("player"))
+                        .withOptionalArguments(new EntitySelectorArgument.OnePlayer("player"))
                         .executes((executor, args) -> {
                             Player target = (Player) args.get("player");
                             float speed = (int) args.get("speed") / 10.0f;

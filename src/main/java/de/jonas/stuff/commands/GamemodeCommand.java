@@ -10,7 +10,7 @@ import org.bukkit.persistence.PersistentDataType;
 import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.arguments.PlayerArgument;
+import dev.jorel.commandapi.arguments.EntitySelectorArgument;
 import me.gaminglounge.configapi.Language;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -35,7 +35,7 @@ public class GamemodeCommand {
                 .withSubcommand(new CommandAPICommand("creative")
                         .withAliases(aliasesC.toArray(new String[aliasesC.size()]))
                         .withPermission(conf.getString("GamemodeCommand.Messages.Creative.Permission"))
-                        .withOptionalArguments(new PlayerArgument(suggestion))
+                        .withOptionalArguments(new EntitySelectorArgument.OnePlayer(suggestion))
                         .executes((executor, args) -> {
                             Player target = (Player) args.get(suggestion);
 
@@ -64,7 +64,7 @@ public class GamemodeCommand {
                 ).withSubcommand(new CommandAPICommand("spectator")
                         .withAliases(aliasesS.toArray(new String[aliasesS.size()]))
                         .withPermission(conf.getString("GamemodeCommand.Messages.Spectator.Permission"))
-                        .withOptionalArguments(new PlayerArgument(suggestion))
+                        .withOptionalArguments(new EntitySelectorArgument.OnePlayer(suggestion))
                         .executes((executor, args) -> {
                             Player target = (Player) args.get(suggestion);
 
@@ -93,7 +93,7 @@ public class GamemodeCommand {
                 ).withSubcommand(new CommandAPICommand("adventure")
                         .withAliases(aliasesA.toArray(new String[aliasesA.size()]))
                         .withPermission(conf.getString("GamemodeCommand.Messages.Adventure.Permission"))
-                        .withOptionalArguments(new PlayerArgument(suggestion))
+                        .withOptionalArguments(new EntitySelectorArgument.OnePlayer(suggestion))
                         .executes((executor, args) -> {
                             Player target = (Player) args.get(suggestion);
 
@@ -124,7 +124,7 @@ public class GamemodeCommand {
                 ).withSubcommand(new CommandAPICommand("survival")
                         .withAliases(aliasesSu.toArray(new String[aliasesSu.size()]))
                         .withPermission(conf.getString("GamemodeCommand.Messages.Survival.Permission"))
-                        .withOptionalArguments(new PlayerArgument(suggestion))
+                        .withOptionalArguments(new EntitySelectorArgument.OnePlayer(suggestion))
                         .executes((executor, args) -> {
                             Player target = (Player) args.get(suggestion);
 

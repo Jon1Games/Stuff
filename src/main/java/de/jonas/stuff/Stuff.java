@@ -37,7 +37,7 @@ import de.jonas.stuff.listener.JoinSpeedListener;
 import de.jonas.stuff.listener.JointTpToSpawn;
 import de.jonas.stuff.listener.TeamDisplaynameSet;
 import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import dev.jorel.commandapi.CommandAPIPaperConfig;
 import me.gaminglounge.configapi.LoadConfig;
 
 public final class Stuff extends JavaPlugin {
@@ -73,7 +73,7 @@ public final class Stuff extends JavaPlugin {
         captureManager = new ChatCaptureManager();
 
         if (!CommandAPI.isLoaded())
-            CommandAPI.onLoad(new CommandAPIBukkitConfig(this));
+            CommandAPI.onLoad(new CommandAPIPaperConfig(this));
 
         if (getConfig().getBoolean("Format.PlayerNames.Enabled")) {
             getLogger().log(Level.INFO, "Enabling playername formatting");

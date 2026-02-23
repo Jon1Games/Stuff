@@ -2,7 +2,7 @@ package de.jonas.stuff.commands;
 
 import de.jonas.stuff.Stuff;
 import dev.jorel.commandapi.CommandAPICommand;
-import dev.jorel.commandapi.arguments.PlayerArgument;
+import dev.jorel.commandapi.arguments.EntitySelectorArgument;
 import me.gaminglounge.configapi.Language;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -23,7 +23,7 @@ public class PlayTimeCommand {
 
         new CommandAPICommand("stuff:playtime")
                 .withAliases(aliases.toArray(new String[aliases.size()]))
-                .withOptionalArguments(new PlayerArgument("player"))
+                .withOptionalArguments(new EntitySelectorArgument.OnePlayer("player"))
                 .executesPlayer(((player, commandArguments) -> {
                     Player target = (Player) commandArguments.get("player");
                     if (target == null) {
