@@ -39,7 +39,12 @@ public class Recepies implements Listener{
 
             if (cmd.getBoolean("shaped")) {
                 ShapedRecipe r = new ShapedRecipe(namespacedKey, new ItemStack(Material.getMaterial(key), cmd.getInt("count")));
-                r.shape(cmd.getStringList("shape").toArray(new String[0]));
+                try {
+                    r.shape(cmd.getStringList("shape").toArray(new String[0]));
+                } catch (Exception e) {
+                    stuff.getLogger().warning("Failed to load shaped recipe for " + key + ": " + e.getMessage());
+                    continue;
+                }
 
                 for (String ingredient : cmd.getConfigurationSection("ingredients").getKeys(false)) {
                     r.setIngredient(ingredient.charAt(0), Material.getMaterial(cmd.getString("ingredients." + ingredient)));
