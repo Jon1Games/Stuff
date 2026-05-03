@@ -40,12 +40,12 @@ repositories {
         url = "https://repo.codemc.org/repository/maven-public/"
     }
     maven {
-        name "Minecraft"
-        url 'https://libraries.minecraft.net'
+        name = "Minecraft"
+        url = 'https://libraries.minecraft.net'
     }
     maven {
-        name "gamingloungeMeGaminglounge"
-        url "https://maven.gaminglounge.me/gaminglounge"
+        name = "gamingloungeMeGaminglounge"
+        url = "https://maven.gaminglounge.me/gaminglounge"
     }
 }
 
