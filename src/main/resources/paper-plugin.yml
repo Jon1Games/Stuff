@@ -1,7 +1,7 @@
 name: Stuff
 version: "${version}"
 main: de.jonas.stuff.Stuff
-api-version: "1.21.8"
+api-version: "26.1.2"
 loader: de.jonas.stuff.Stuffloader
 Authors:
   - "Jon1Games"
