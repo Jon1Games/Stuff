@@ -11,7 +11,7 @@ public class Update_Config {
         switch (config.getString("config")) {
             case "1":
                 // Add CraftingRecipes section
-                config.set("CraftingRecipes.Enabled", true);
+                config.set("CraftingRecipes.Enabled", false);
                 
                 // Add light recipe
                 config.set("CraftingRecipes.LIGHT.Enabled", true);

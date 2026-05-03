@@ -10,11 +10,11 @@
 
 # Suggested Plugins 
 # LuckPerms
-# PlaceHoderApi
+# PlaceholderApi
 # - /papi ecloud download luckperms
 
 # Do not change the version.
-config: "1"
+config: "2"
 
 EnableCalculatorCommand:
   Enabled: false
@@ -279,16 +279,16 @@ Sudo:
   BypassPermission: "stuff.bypass.sudo"
 
 CraftingRecipes:
-  Enabled: true
+  Enabled: false
   LIGHT: # The result item
     Enabled: true
     shaped: true # if shaped or shapeless
     count: 1 # The amount of items produced
     publish: true # Whether to publish the recipe to all players
     shape:
-    - "A"
+    - " A "
     - "ABA"
-    - "C"
+    - " C "
     ingredients:
       A: "GLASS_PANE"
       B: "COAL"
