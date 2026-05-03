@@ -1,3 +1,5 @@
+[![](https://maven.gaminglounge.me/api/badge/latest/jon1games/de/jonas/Stuff?color=40c14a&name=Config%20API&prefix=v&filter=none:SNAPSHOT)](https://maven.gaminglounge.me/#/jon1games/de/jonas/Stuff)
+
 # Stuff (Minecraft Plugin)
 
 Plugin adding general minecraft features.
