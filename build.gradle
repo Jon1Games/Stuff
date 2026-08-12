@@ -55,7 +55,7 @@ dependencies {
     compileOnly 'com.mojang:authlib:3.13.56'
     compileOnly 'net.luckperms:api:5.5'
     compileOnly 'me.clip:placeholderapi:2.12.3'
-    compileOnly "me.gaminglounge:config-api:dev1.3.0"
+    compileOnly "me.gaminglounge:config-api:1.3.0"
 }
 
 def targetJavaVersion = 25
