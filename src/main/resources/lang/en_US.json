@@ -23,7 +23,7 @@
     "gamemodecommand.spectator.self": "Your gamemode was set to spectator.",
     "gamemodecommand.spectator.other.self": "You set <green><player>'s</green> gamemode to spectator.",
     "gamemodecommand.spectator.other.other": "Your gamemode was set to spectator by <green><player></green>.",
-    "msg.to": "<fromplayer> -> You <gold>:</gold> <message>",
+    "msg.to": "You -> <toplayer> <gold>:</gold> <message>",
     "msg.from": "<fromplayer> -> You <gold>:</gold> <message>",
     "msg.noAnswerPlayer": "<red>You first need to receive or send a message to use /r.</red>",
     "ping.self": "Your ping is: <gold><ping></gold>.",

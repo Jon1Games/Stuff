@@ -23,7 +23,7 @@
     "gamemodecommand.spectator.self": "Dein Spielmodus wurde auf Zuschauer gesetzt.",
     "gamemodecommand.spectator.other.self": "Du hast <green><player></green> in den Zuschauer Modus gesetzt.",
     "gamemodecommand.spectator.other.other": "Du wurdest von <green><player></green> in den Zuschauer Modus gesetzt.",
-    "msg.to": "<fromplayer> -> Du <gold>:</gold> <message>",
+    "msg.to": "Du -> <toplayer> <gold>:</gold> <message>",
     "msg.from": "<fromplayer> -> Du <gold>:</gold> <message>",
     "msg.noAnswerPlayer": "<red>Du must erst eine MSG senden oder Erhalten um /r nutzen zu können.</red>",
     "ping.self": "Dein Ping beträgt <gold><ping></gold>.",
