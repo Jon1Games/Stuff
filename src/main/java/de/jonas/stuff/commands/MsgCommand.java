@@ -85,7 +85,7 @@ public class MsgCommand implements Listener{
 
                 Player target = a.get(player);
                 if (target == null) {
-                    player.sendMessage(mm.deserialize(stuff.getConfig().getString("MsgCommand.Messages.NoAnswerPlayer")));
+                    player.sendMessage(mm.deserialize(stuff.getConfig().getString("msg.noAnswerPlayer")));
                     return;
                 }
                 if (!target.isOnline()) {
