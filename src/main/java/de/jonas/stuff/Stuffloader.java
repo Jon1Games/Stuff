@@ -16,7 +16,7 @@ public class Stuffloader implements PluginLoader{
         resolver.addRepository(new RemoteRepository.Builder(
             "MavenCentralLoad",
             "default",
-            "https://repo1.maven.org/maven2/")
+            MavenLibraryResolver.MAVEN_CENTRAL_DEFAULT_MIRROR)
             .build());
         resolver.addDependency(new Dependency(
             new DefaultArtifact("dev.jorel:commandapi-paper-shade:12.1.0"),
